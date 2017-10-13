@@ -1,5 +1,7 @@
 package com.example.mmhp;
 
+import android.support.annotation.NonNull;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -9,7 +11,7 @@ import java.util.Date;
  * Created by yidingfan on 2017-10-13.
  */
 
-public class event {
+public class event implements Comparable<event>{
     private String id;
     private String habit;
     private Date happend;
@@ -44,6 +46,9 @@ public class event {
     public String getHappend(){
         return dateFormat.format(this.happend);
     }
+    public Date getHabitDate(){
+        return this.happend;
+    }
     public ArrayList<String> getPub_comment(){
         return this.pub_comment;
     }
@@ -55,4 +60,10 @@ public class event {
     }
 
 
+    @Override
+    public int compareTo(event e) {
+        Date d1=this.happend;
+        Date d2=e.getHabitDate();
+        return d1.compareTo(d2);
+    }
 }
