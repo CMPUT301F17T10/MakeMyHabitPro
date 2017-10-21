@@ -1,7 +1,5 @@
 package com.example.mmhp;
 
-import android.support.annotation.NonNull;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,22 +11,22 @@ import java.util.Date;
  */
 
 
-public class habit implements Comparable<habit>{
+public class Habit implements Comparable<Habit>{
     private String name;
     private Date startDate;
     private Date lastActive;
     private ArrayList doDate;
     private int htype;
-    private eventList events;
+    private EventList events;
     private int owner;
     DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-    public habit(int uid,String name,int htype,ArrayList doDate){
+    public Habit(int uid, String name, int htype, ArrayList doDate){
         this.owner=uid;
         this.startDate=new Date();
         this.htype=htype;
         this.doDate=doDate;
     }
-    public void addEvent(event e){
+    public void addEvent(Event e){
         this.events.add(e);
         try{
         this.lastActive=dateFormat.parse(e.getHappend());
@@ -45,7 +43,7 @@ public class habit implements Comparable<habit>{
         return dateFormat.format(lastActive);
     }
 
-    public eventList getEvents() {
+    public EventList getEvents() {
         return events;
     }
 
@@ -78,7 +76,7 @@ public class habit implements Comparable<habit>{
     }
 
     @Override
-    public int compareTo(habit h) {
+    public int compareTo(Habit h) {
         Date d1=this.lastActive;
         Date d2=h.getLastActive_Date();
         return d1.compareTo(d2);

@@ -9,7 +9,7 @@ import java.util.Date;
  * Created by yidingfan on 2017-10-13.
  */
 
-public class user {
+public class User {
     private int uid;
     private String password;
     private String name;
@@ -20,11 +20,11 @@ public class user {
 
     /**
      * register function
-     * @param name the user name user want to call themselves
-     * @param id  the unique id number for each user
-     * @param pass the password user want to use
+     * @param name the User name User want to call themselves
+     * @param id  the unique id number for each User
+     * @param pass the password User want to use
      */
-    public user(String name,int id,String pass){
+    public User(String name, int id, String pass){
         this.uid=id;
         this.password=pass;
         this.resisted=new Date();
@@ -60,7 +60,7 @@ public class user {
     }
 
     /**
-     * check the uid is friend with user
+     * check the uid is friend with User
      * @param uid
      * @return
      */
@@ -70,7 +70,7 @@ public class user {
     }
 
     /**
-     * get the uid list for user's friends
+     * get the uid list for User's friends
      * @return
      */
     public ArrayList getFriends(){

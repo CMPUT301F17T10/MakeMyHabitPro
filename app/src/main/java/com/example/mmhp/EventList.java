@@ -7,22 +7,22 @@ import java.util.Collections;
  * Created by yidingfan on 2017-10-13.
  */
 
-public class eventList {
-    private ArrayList<event> list;
+public class EventList {
+    private ArrayList<Event> list;
 
-    public eventList(){
-        this.list=new ArrayList<event>();
+    public EventList(){
+        this.list=new ArrayList<Event>();
     }
 
-    public void add(event e){
+    public void add(Event e){
         this.list.add(e);
     }
 
-    public void del(event e){
+    public void del(Event e){
         this.list.remove(e);
     }
 
-    public boolean contains(event e){
+    public boolean contains(Event e){
         return this.list.contains(e);
     }
 
@@ -30,8 +30,8 @@ public class eventList {
         return this.list.isEmpty();
     }
 
-    public event getById(String id){
-        for (event e :this.list){
+    public Event getById(String id){
+        for (Event e :this.list){
             if (e.getId().equals(id)){
                 return e;
             }
