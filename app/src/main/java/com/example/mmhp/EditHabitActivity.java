@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class EditHabitActivity extends AppCompatActivity {
-
+    private Habit h;
     private String name;
     private Date startDate;
     private Date lastActive;

@@ -16,7 +16,7 @@ public class DoneHabitListActivity extends AppCompatActivity {
     private ArrayList<Habit> DoneHabitList;
     private ArrayAdapter<Habit> adapter;
     private AddHabitEventActivity A;
-
+    private Habit ha;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class TodoActivity extends AppCompatActivity {
 
     private ArrayList<Habit> TodoList;
-
+    private Habit a;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -13,7 +13,7 @@ public class EventDetailActivity extends AppCompatActivity {
     private String comment;
     private Location CurrentLocation;
     private String img;
-
+    private Event e;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

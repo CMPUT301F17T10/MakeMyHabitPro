@@ -17,6 +17,7 @@ public class AddHabitActivity extends AppCompatActivity {
     private int htype;
     private EventList events;
     private int owner;
+    private Habit h;
     DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
     @Override

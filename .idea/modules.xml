@@ -3,16 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/MakeMyHabitPro.iml" filepath="$PROJECT_DIR$/MakeMyHabitPro.iml" />
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      <module fileurl="file://$PROJECT_DIR$/MakeMyHabitPro.iml" filepath="$PROJECT_DIR$/MakeMyHabitPro.iml" />
-=======
->>>>>>> Zijian(Map)
-=======
->>>>>>> 012005d7f52c9482af22495e45cef7d9c8611e19
-=======
->>>>>>> rmeng1
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

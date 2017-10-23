@@ -6,7 +6,7 @@ import android.os.Bundle;
 import java.util.ArrayList;
 
 public class HabitActivity extends AppCompatActivity {
-
+    private Habit j;
     private ArrayList<Habit> habitList;
     private AddHabitActivity A;
     private DetailHabitActivity D;
