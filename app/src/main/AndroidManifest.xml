@@ -27,13 +27,28 @@
         </activity>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+        <activity android:name=".EventListActivity" />
+        <activity android:name=".EventDetailActivity" />
+        <activity android:name=".DoneHabitListActivity" />
+        <activity android:name=".AddHabitEventActivity"></activity>
+=======
+        <activity android:name=".HistoryListActivity"></activity>
+>>>>>>> 5227412b748b5736297c1ea3450d4a930eae41df
+=======
+>>>>>>> 012005d7f52c9482af22495e45cef7d9c8611e19
         <activity android:name=".HistoryListActivity"></activity>
 =======
         <activity android:name=".FriendActivity"></activity>
 >>>>>>> Feiyang
+<<<<<<< HEAD
 =======
         <activity android:name=".MapActivity"></activity>
 >>>>>>> Zijian(Map)
+=======
+>>>>>>> 42dc848d1f9799e114d44d5426fa0a3d21773782
+>>>>>>> 012005d7f52c9482af22495e45cef7d9c8611e19
     </application>
 
 </manifest>
