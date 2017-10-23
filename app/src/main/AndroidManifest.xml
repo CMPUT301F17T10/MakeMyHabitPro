@@ -26,10 +26,14 @@
             </intent-filter>
         </activity>
 <<<<<<< HEAD
+<<<<<<< HEAD
         <activity android:name=".HistoryListActivity"></activity>
 =======
         <activity android:name=".FriendActivity"></activity>
 >>>>>>> Feiyang
+=======
+        <activity android:name=".MapActivity"></activity>
+>>>>>>> Zijian(Map)
     </application>
 
 </manifest>

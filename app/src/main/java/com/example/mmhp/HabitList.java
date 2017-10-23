@@ -8,17 +8,29 @@ import java.util.Collections;
  */
 
 public class HabitList {
-    public ArrayList<Habit> habits;
-    public HabitList(ArrayList<Habit> habits){
-        this.habits=habits;
+
+    public ArrayList<Habit> habits = new ArrayList<Habit>();
+
+    public HabitList(Habit h){
+        this.habits.add(h);
     }
+
     public void add(Habit h){
         this.habits.add(h);
     }
+
     public void sort(){
         Collections.sort(this.habits, Collections.reverseOrder());
     }
+
     public ArrayList<Habit> getHabits(){
         return this.habits;
     }
+
+
+    public boolean contains(Habit h){
+        return habits.contains(h);
+    }
+
+
 }

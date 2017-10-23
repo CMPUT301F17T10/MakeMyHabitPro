@@ -12,26 +12,37 @@ import java.util.Date;
 
 
 public class Habit implements Comparable<Habit>{
+
     private String name;
+
     private Date startDate;
+
     private Date lastActive;
+
     private ArrayList doDate;
+
     private int htype;
+
     private EventList events;
+
     private int owner;
+
     DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+
     public Habit(int uid, String name, int htype, ArrayList doDate){
-        this.owner=uid;
-        this.startDate=new Date();
-        this.htype=htype;
-        this.doDate=doDate;
+        this.owner = uid;
+        this.startDate = new Date();
+        this.htype = htype;
+        this.doDate = doDate;
     }
+
     public void addEvent(Event e){
         this.events.add(e);
+
         try{
-        this.lastActive=dateFormat.parse(e.getHappend());
+        this.lastActive = dateFormat.parse(e.getHappend());
         }catch (ParseException e1){
-            this.lastActive=new Date();
+            this.lastActive = new Date();
         }
     }
 
@@ -77,8 +88,8 @@ public class Habit implements Comparable<Habit>{
 
     @Override
     public int compareTo(Habit h) {
-        Date d1=this.lastActive;
-        Date d2=h.getLastActive_Date();
+        Date d1 = this.lastActive;
+        Date d2 = h.getLastActive_Date();
         return d1.compareTo(d2);
     }
 }
