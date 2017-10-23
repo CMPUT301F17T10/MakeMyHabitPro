@@ -18,6 +18,12 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private Map<String,String> messages;
+    private HistoryListActivity his;
+    private MapActivity m;
+    private EventListActivity el;
+    private FriendActivity F;
+    private HabitActivity h;
+    private TodoActivity T;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,4 +106,5 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+    public void dataget(){}
 }
