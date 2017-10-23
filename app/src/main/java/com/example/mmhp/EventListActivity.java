@@ -5,10 +5,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+
 public class EventListActivity extends AppCompatActivity {
+
+    private ArrayList<Event> EventList;
+    private ArrayAdapter<Event> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,4 +41,7 @@ public class EventListActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void getEventList() {}
+    public void showList() {}
 }
