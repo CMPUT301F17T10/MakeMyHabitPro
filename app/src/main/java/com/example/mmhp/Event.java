@@ -18,10 +18,11 @@ public class Event implements Comparable<Event>{
     private String location;
     private ArrayList<String> pub_comment;
     DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-    public Event(String location, String habit, String url_img, String comment){
+    public Event(String location, String habit, String url_img, String comment, String id){
         this.location=location;
         this.habit=habit;
         this.url_img=url_img;
+        this.id = id;
         this.owner_comment=comment;
         this.happend=new Date();
     }
