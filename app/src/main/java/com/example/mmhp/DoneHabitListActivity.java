@@ -15,6 +15,7 @@ public class DoneHabitListActivity extends AppCompatActivity {
     private ArrayList<Habit> HabitList;
     private ArrayList<Habit> DoneHabitList;
     private ArrayAdapter<Habit> adapter;
+    private AddHabitEventActivity A;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +34,7 @@ public class DoneHabitListActivity extends AppCompatActivity {
         });
     }
 
-
+    private void dataGet(){}
     public void getHabitList() {}
     public void showList() {}
     public void sortHabitList(){}

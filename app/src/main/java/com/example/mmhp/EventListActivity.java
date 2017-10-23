@@ -15,6 +15,8 @@ public class EventListActivity extends AppCompatActivity {
 
     private ArrayList<Event> EventList;
     private ArrayAdapter<Event> adapter;
+    private DoneHabitListActivity D;
+    private EventDetailActivity E;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
