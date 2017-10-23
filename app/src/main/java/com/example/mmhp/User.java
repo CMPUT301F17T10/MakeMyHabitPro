@@ -50,8 +50,9 @@ public class User {
      * @param uid
      */
     public void add_friend(int uid){
-        if (this.friends.isEmpty()){
+        if (this.friends==null){
             this.friends=new ArrayList();
+            this.friends.add(uid);
         }
         if (!this.friends.contains(uid)){
             this.friends.add(uid);

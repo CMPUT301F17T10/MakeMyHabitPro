@@ -5,10 +5,12 @@ import android.os.Bundle;
 
 public class LogInActivity extends AppCompatActivity {
     private User local_user;
+    private MainActivity main;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
     }
+    private void dataGet(){}
 
 }
