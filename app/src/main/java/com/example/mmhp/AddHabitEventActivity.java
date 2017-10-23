@@ -19,6 +19,8 @@ public class AddHabitEventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_habit_event);
     }
+
+    private void dataGet(){}
     public void getEventList(){}
     public void editEventList(){}
 }

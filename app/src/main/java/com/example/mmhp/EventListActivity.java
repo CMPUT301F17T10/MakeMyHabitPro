@@ -42,6 +42,7 @@ public class EventListActivity extends AppCompatActivity {
         });
     }
 
+    private void dataGet(){}
     public void getEventList() {}
     public void showList() {}
 }

@@ -20,6 +20,7 @@ public class EventDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_event_detail_avtivity);
     }
 
+    private void dataGet(){}
     public void getEventList(){}
     public void getEvent(){}
     public void editEventList(){}

@@ -32,6 +32,8 @@ public class DoneHabitListActivity extends AppCompatActivity {
             }
         });
     }
+
+
     public void getHabitList() {}
     public void showList() {}
     public void sortHabitList(){}
