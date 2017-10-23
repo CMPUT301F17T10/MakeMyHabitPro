@@ -25,7 +25,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<<<<<<< HEAD
         <activity android:name=".HistoryListActivity"></activity>
+=======
+        <activity android:name=".FriendActivity"></activity>
+>>>>>>> Feiyang
     </application>
 
 </manifest>
