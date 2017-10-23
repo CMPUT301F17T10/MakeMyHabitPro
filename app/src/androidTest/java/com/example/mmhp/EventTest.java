@@ -9,7 +9,6 @@ import android.test.ActivityInstrumentationTestCase2;
 import java.util.ArrayList;
 import java.util.Date;
 
-
 public class EventTest extends ActivityInstrumentationTestCase2{
 
     public EventTest() {
