@@ -1,5 +1,6 @@
 package com.example.mmhp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,6 +13,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.gson.Gson;
 
 import java.util.Map;
 
@@ -24,19 +30,27 @@ public class MainActivity extends AppCompatActivity
     private FriendActivity F;
     private HabitActivity h;
     private TodoActivity T;
+    private User local_user;
+    private String user_data;
+    public static final String EXTRA_MESSAGE = "com.example.MMHP.USERDATA";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        Intent intent = getIntent();
+        user_data=  intent.getStringExtra(LogInActivity.EXTRA_MESSAGE);
+        Gson gson = new Gson();
+        local_user=gson.fromJson(user_data,User.class);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        Toast.makeText(getApplicationContext(), local_user.to_string(),Toast.LENGTH_SHORT).show();
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                end();
             }
         });
 
@@ -49,7 +63,9 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
-
+    private void end(){
+        this.finish();
+    }
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -88,17 +104,17 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.MyHabit) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.Todo) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.Eventlist) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.Histortlist) {
+            Historylist();
+        } else if (id == R.id.Friend) {
 
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.Map) {
 
         }
 
@@ -107,4 +123,9 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
     public void dataget(){}
+    public void Historylist(){
+        Intent intent = new Intent(this, HistoryListActivity.class);
+        intent.putExtra(EXTRA_MESSAGE,user_data);
+        startActivityForResult(intent,RESULT_OK);
+    }
 }

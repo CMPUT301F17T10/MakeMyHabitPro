@@ -25,22 +25,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".EventListActivity" />
         <activity android:name=".EventDetailActivity" />
         <activity android:name=".DoneHabitListActivity" />
-        <activity android:name=".AddHabitEventActivity"></activity>
-        <activity android:name=".HistoryListActivity"></activity>
-
-        <activity android:name=".FriendActivity"></activity>
-
-        <activity android:name=".MapActivity"></activity>
+        <activity android:name=".AddHabitEventActivity" />
+        <activity android:name=".HistoryListActivity" />
+        <activity android:name=".FriendActivity" />
+        <activity android:name=".MapActivity" />
         <activity android:name=".HabitActivity" />
         <activity android:name=".AddHabitActivity" />
         <activity android:name=".DetailHabitActivity" />
         <activity android:name=".EditHabitActivity" />
-        <activity android:name=".TodoActivity"></activity>
-
+        <activity android:name=".TodoActivity" />
+        <activity android:name=".FilterActivity"></activity>
     </application>
 
 </manifest>
