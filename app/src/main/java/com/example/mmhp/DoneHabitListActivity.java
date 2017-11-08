@@ -51,12 +51,15 @@ public class DoneHabitListActivity extends AppCompatActivity {
 
     private void filter(ArrayList<Habit> HabitList){
 
-        for (Habit h:HabitList) {
-            if (h.getDone() == true){
-                DoneHabitList.add(h);
+        DoneHabitList = new ArrayList<Habit>();
+
+        if (HabitList != null) {
+            for (Habit h : HabitList) {
+                if (h.getDone() == true) {
+                    DoneHabitList.add(h);
+                }
             }
         }
-
     }
 
 
