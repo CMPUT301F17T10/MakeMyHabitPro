@@ -23,7 +23,7 @@ public class Habit implements Comparable<Habit>{
 
     private int htype;
 
-    private EventList events;
+    private EventList events = new EventList();
 
     private int owner;
 

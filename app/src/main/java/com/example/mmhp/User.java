@@ -10,13 +10,13 @@ import java.util.Date;
  */
 
 public class User {
-    private int uid;
+    private String uid;
     private String password;
     private String name;
-    private ArrayList friends;
+    private ArrayList<String> friends =new ArrayList<String>();
     private Date resisted;
-    private Date last_log_in;
-    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+    private Date last_log_in = new Date();
+
 
     /**
      * register function
@@ -24,7 +24,7 @@ public class User {
      * @param id  the unique id number for each User
      * @param pass the password User want to use
      */
-    public User(String name, int id, String pass){
+    public User(String name, String id, String pass){
         this.uid=id;
         this.password=pass;
         this.resisted=new Date();
@@ -49,9 +49,9 @@ public class User {
      * add friend with others
      * @param uid
      */
-    public void add_friend(int uid){
+    public void add_friend(String uid){
         if (this.friends==null){
-            this.friends=new ArrayList();
+            this.friends=new ArrayList<String>();
             this.friends.add(uid);
         }
         if (!this.friends.contains(uid)){
@@ -66,7 +66,7 @@ public class User {
      * @return
      */
 
-    public boolean isFriend(int uid){
+    public boolean isFriend(String uid){
         return  this.friends.contains(uid);
     }
 
@@ -91,13 +91,15 @@ public class User {
         return this.name;
     }
 
-    public int getUid(){
+    public String getUid(){
         return this.uid;
     }
     public  String getReDate(){
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         return dateFormat.format(this.resisted);
     }
     public String getLast(){
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         return  dateFormat.format(this.last_log_in);
     }
     public String to_string(){
