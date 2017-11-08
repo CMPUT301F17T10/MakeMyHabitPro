@@ -27,6 +27,8 @@ public class Habit implements Comparable<Habit>{
 
     private int owner;
 
+    private Boolean done;
+
     DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
     public Habit(int uid, String name, int htype, ArrayList doDate){
@@ -34,6 +36,7 @@ public class Habit implements Comparable<Habit>{
         this.startDate = new Date();
         this.htype = htype;
         this.doDate = doDate;
+        this.done = false;
     }
 
     public void addEvent(Event e){
@@ -65,6 +68,10 @@ public class Habit implements Comparable<Habit>{
     public int getOwner() {
         return owner;
     }
+
+    public Boolean getDone() {return done;}
+
+    public void setDone() {this.done = true;}
 
     public void setDoDate(ArrayList doDate) {
         this.doDate = doDate;
