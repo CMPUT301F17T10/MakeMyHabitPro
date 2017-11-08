@@ -59,7 +59,10 @@
 
         <activity
             android:name=".MapsActivity_01"
-            android:label="@string/title_activity_maps_01"></activity>
+            android:label="@string/title_activity_maps_01" />
+        <activity
+            android:name=".GoogleMapsActivity"
+            android:label="@string/title_activity_google_maps"></activity>
     </application>
 
 </manifest>

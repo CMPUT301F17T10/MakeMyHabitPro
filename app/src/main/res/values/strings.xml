@@ -20,4 +20,6 @@
         completions."
     </string>
     <string name="title_activity_maps_01">Map</string>
+    <string name="title_activity_google__map__01">Map</string>
+    <string name="title_activity_google_maps">Map</string>
 </resources>
