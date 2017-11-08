@@ -9,6 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 
 public class EventListActivity extends AppCompatActivity {
@@ -19,10 +21,20 @@ public class EventListActivity extends AppCompatActivity {
     private EventDetailActivity E;
     private EventList el;
     private Event e;
+    private User local_user;
+    private String user_data;
+    private static final String FILENAME="Eventl.SAV";
+    public String UID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_list);
+
+        Intent Mainintent = getIntent();
+        user_data=  Mainintent.getStringExtra(LogInActivity.EXTRA_MESSAGE);
+        Gson gson = new Gson();
+        local_user=gson.fromJson(user_data,User.class);
+        UID=local_user.getUid();
 
         Button addEventButton = (Button) findViewById(R.id.addevent);
         ListView EventList = (ListView) findViewById(R.id.eventlist);

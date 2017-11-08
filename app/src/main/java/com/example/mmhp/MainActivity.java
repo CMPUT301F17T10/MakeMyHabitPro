@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.Todo) {
 
         } else if (id == R.id.Eventlist) {
-
+            Eventl();
         } else if (id == R.id.Histortlist) {
             Historylist();
         } else if (id == R.id.Friend) {
@@ -125,6 +125,12 @@ public class MainActivity extends AppCompatActivity
     public void dataget(){}
     public void Historylist(){
         Intent intent = new Intent(this, HistoryListActivity.class);
+        intent.putExtra(EXTRA_MESSAGE,user_data);
+        startActivityForResult(intent,RESULT_OK);
+    }
+
+    public void Eventl(){
+        Intent intent = new Intent(this, EventListActivity.class);
         intent.putExtra(EXTRA_MESSAGE,user_data);
         startActivityForResult(intent,RESULT_OK);
     }
