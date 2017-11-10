@@ -27,6 +27,7 @@ public class EventDetailActivity extends AppCompatActivity {
 
     private static final String FILENAME="Eventl.SAV";
     private EventList Eventl;
+    private Event event;
     private ArrayList<Event> EventList;
     private EditText editComment;
     private Image image;
@@ -36,6 +37,7 @@ public class EventDetailActivity extends AppCompatActivity {
     private Location CurrentLocation;
     private String img;
     private int position;
+    private String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +66,7 @@ public class EventDetailActivity extends AppCompatActivity {
 
         Button deleteButton = (Button) findViewById(R.id.delete);
 
-        saveButton.setOnClickListener(new View.OnClickListener() {
+        deleteButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
                 setResult(RESULT_OK);
@@ -81,9 +83,9 @@ public class EventDetailActivity extends AppCompatActivity {
     public void editEventList(){}
 
     private void saveEvent(){
-        String comment = editComment.getText().toString();
+        comment = editComment.getText().toString();
         if (comment != null) {
-            Event newEvent = new Event(comment);
+            Event newEvent = new Event(habit, comment, id);
             EventList.add(newEvent);
         }else{
             Toast.makeText(getApplicationContext(), "Comment cannot be empty!",Toast.LENGTH_SHORT).show();}
@@ -105,6 +107,10 @@ public class EventDetailActivity extends AppCompatActivity {
         }else{
             EventList = new ArrayList<Event>();
         }
+
+        event = EventList.get(position);
+        habit = event.getHabit();
+        id = event.getId();
     }
 
 

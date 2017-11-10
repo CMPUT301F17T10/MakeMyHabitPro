@@ -23,21 +23,26 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class AddHabitEventActivity extends AppCompatActivity {
 
     private static final String FILENAME="Eventl.SAV";
+    private static final String FILENAME1="Habits.SAV";
     private EventList Eventl;
     private ArrayList<Event> EventList;
+    private ArrayList<Habit> HabitList;
     private EditText editComment;
     private Image image;
     private Location location;
-    private Event event;
+    private Event newEvent;
+    private HabitList Hlist;
     private Habit habit;
     private String comment;
     private Location CurrentLocation;
     private String img;
     private int position;
+    private String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,9 +75,10 @@ public class AddHabitEventActivity extends AppCompatActivity {
     public void editEventList(){}
 
     private void saveEvent(){
-        String comment = editComment.getText().toString();
+        comment = editComment.getText().toString();
         if (comment != null) {
-            Event newEvent = new Event(comment);
+            id=getUUID();
+            newEvent = new Event(habit, comment, id);
             EventList.add(newEvent);
         }else{
             Toast.makeText(getApplicationContext(), "Comment cannot be empty!",Toast.LENGTH_SHORT).show();}
@@ -84,14 +90,31 @@ public class AddHabitEventActivity extends AppCompatActivity {
         // TODO Auto-generated method stub
         super.onStart();
         loadFromFile();
+        loadFromFile1();
 
         if(Eventl!=null){
             EventList = Eventl.getEvents();
         }else{
             EventList = new ArrayList<Event>();
         }
+
+        if(Hlist!=null){
+            HabitList=Hlist.getHabits();
+        }else{
+            HabitList=new ArrayList<Habit>();
+        }
+
+        habit = HabitList.get(position);
+
     }
 
+
+    public static String getUUID(){
+        UUID uuid= UUID.randomUUID();
+        String str = uuid.toString();
+        String uuidStr=str.replace("-", "");
+        return uuidStr;
+    }
 
     private void loadFromFile() {
         try {
@@ -109,6 +132,25 @@ public class AddHabitEventActivity extends AppCompatActivity {
             EventList = new ArrayList<Event>();
         } catch (IOException e) {
             // TODO Auto-generated catch block
+            throw new RuntimeException();
+        }
+    }
+
+    private void loadFromFile1() {
+        try {
+            FileInputStream fis=openFileInput(FILENAME1);
+            BufferedReader in= new BufferedReader(new InputStreamReader(fis));
+            Gson gson= new Gson();
+            Hlist = gson.fromJson(in, HabitList.class);
+
+
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            Toast.makeText(getApplicationContext(), "No records Find",Toast.LENGTH_SHORT).show();
+
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
             throw new RuntimeException();
         }
     }

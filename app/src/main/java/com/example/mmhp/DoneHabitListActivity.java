@@ -23,7 +23,7 @@ public class DoneHabitListActivity extends AppCompatActivity {
     private static final String FILENAME="Habits.SAV";
     private HabitList Hlist;
     private ArrayList<Habit> HabitList;
-    private ArrayList<Habit> DoneHabitList;
+    //private ArrayList<Habit> DoneHabitList;
     private ArrayAdapter<Habit> adapter;
     private ListView oldDoneHabitList;
 
@@ -32,7 +32,7 @@ public class DoneHabitListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_done_habit_list);
 
-        ListView oldDoneHabitList = (ListView) findViewById(R.id.donehabitlist);
+        oldDoneHabitList = (ListView) findViewById(R.id.habitlist);
 
         oldDoneHabitList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -49,18 +49,18 @@ public class DoneHabitListActivity extends AppCompatActivity {
     public void showList() {}
     public void sortHabitList(){}
 
-    private void filter(ArrayList<Habit> HabitList){
-
-        DoneHabitList = new ArrayList<Habit>();
-
-        if (HabitList != null) {
-            for (Habit h : HabitList) {
-                if (h.getDone() == true) {
-                    DoneHabitList.add(h);
-                }
-            }
-        }
-    }
+//    private void filter(ArrayList<Habit> HabitList){
+//
+//        DoneHabitList = new ArrayList<Habit>();
+//
+//        if (HabitList != null) {
+//            for (Habit h : HabitList) {
+//                if (h.getDone() == true) {
+//                    DoneHabitList.add(h);
+//                }
+//            }
+//        }
+//    }
 
 
     @Override
@@ -74,10 +74,10 @@ public class DoneHabitListActivity extends AppCompatActivity {
             HabitList=new ArrayList<Habit>();
         }
 
-        filter(HabitList);
+        //filter(HabitList);
 
         adapter = new ArrayAdapter<Habit>(this,
-                R.layout.list_item, DoneHabitList);//adapter converts tweet to string
+                R.layout.list_item, HabitList);//adapter converts tweet to string
         oldDoneHabitList.setAdapter(adapter);
 
     }
