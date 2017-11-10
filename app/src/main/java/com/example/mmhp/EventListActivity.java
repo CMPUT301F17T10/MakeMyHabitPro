@@ -42,7 +42,7 @@ public class EventListActivity extends AppCompatActivity {
         UID=local_user.getUid();
 
         Button addEventButton = (Button) findViewById(R.id.addevent);
-        ListView oldEventList = (ListView) findViewById(R.id.eventlist);
+        oldEventList = (ListView) findViewById(R.id.eventlist);
 
         addEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
