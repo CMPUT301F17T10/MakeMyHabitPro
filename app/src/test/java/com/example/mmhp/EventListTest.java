@@ -11,13 +11,11 @@ public class EventListTest {
     @Test
     public void add() throws Exception {
 
-        String id ="DJB";
-        String location1 = "Calgary";
-        String habit = "habit 1";
-        String url = "url_image";
-        String comment = "Comment";
 
-        Event event1 = new Event(location1, habit, url, comment, id);
+        Habit habit = "habit 1";
+
+
+        Event event1 = new Event("location",habit,"comment","1","Ulr_img");
 
         EventList event2= new EventList();
 
@@ -29,13 +27,11 @@ public class EventListTest {
     @Test
     public void del() throws Exception {
 
-        String id = "DJB";
-        String location1 = "Edmonton";
-        String habit = "habit 1";
-        String url = "url_image";
-        String comment = "Comment";
 
-        Event event1 = new Event(location1, habit, url, comment, id);
+        Habit habit = "habit 1";
+
+
+        Event event1 = new Event("location",habit,"comment","1","Ulr_img");
         EventList event2= new EventList();
         event2.add(event1);
         assertTrue(event2.contains(event1));
@@ -54,13 +50,11 @@ public class EventListTest {
     @Test
     public void getById() throws Exception {
 
-        String id = "DJB";
-        String location1 = "Edmonton";
-        String habit = "habit 1";
-        String url = "url_image";
-        String comment = "Comment";
 
-        Event event1 = new Event(location1, habit, url, comment, id);
+        Habit habit = "habit 1";
+
+
+        Event event1 = new Event("location",habit,"comment","1","Ulr_img");
         EventList event2= new EventList();
         event2.add(event1);
         assertEquals(event1,event2.getById("DJB"));

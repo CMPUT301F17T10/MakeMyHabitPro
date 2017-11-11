@@ -17,9 +17,9 @@ public class Event implements Comparable<Event>{
     private Date happend;
     private String url_img;
     private String owner_comment;
-    private Location location;
+    private String location;
     private ArrayList<String> pub_comment;
-    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+
 
     public Event(Habit habit, String comment, String id) {
         this.habit = habit;
@@ -29,7 +29,7 @@ public class Event implements Comparable<Event>{
     }
 
 
-    public Event(Habit habit, String comment, String id, Location location) {
+    public Event(String location, Habit habit, String comment, String id) {
         this.location = location;
         this.habit = habit;
         this.id = id;
@@ -45,7 +45,7 @@ public class Event implements Comparable<Event>{
         this.happend=new Date();
     }
 
-    public Event(Habit habit, String comment, String id, String url_img, Location location){
+    public Event(String location, Habit habit, String comment, String id, String url_img){
         this.location=location;
         this.habit=habit;
         this.url_img=url_img;
@@ -71,6 +71,7 @@ public class Event implements Comparable<Event>{
         return this.habit;
     }
     public String getHappend(){
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         return dateFormat.format(this.happend);
     }
     public Date getHabitDate(){
@@ -82,7 +83,7 @@ public class Event implements Comparable<Event>{
     public String getUrl_img(){
         return this.url_img;
     }
-    public Location getLocation(){
+    public String getLocation(){
         return  this.location;
     }
 

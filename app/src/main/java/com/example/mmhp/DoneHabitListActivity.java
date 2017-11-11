@@ -44,10 +44,10 @@ public class DoneHabitListActivity extends AppCompatActivity {
         });
     }
 
-    private void dataGet(){}
-    public void getHabitList() {}
-    public void showList() {}
-    public void sortHabitList(){}
+//    private void dataGet(){}
+//    public void getHabitList() {}
+//    public void showList() {}
+//    public void sortHabitList(){}
 
 //    private void filter(ArrayList<Habit> HabitList){
 //

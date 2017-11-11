@@ -77,10 +77,10 @@ public class EventDetailActivity extends AppCompatActivity {
         });
     }
 
-    private void dataGet(){}
-    public void getEventList(){}
-    public void getEvent(){}
-    public void editEventList(){}
+//    private void dataGet(){}
+//    public void getEventList(){}
+//    public void getEvent(){}
+//    public void editEventList(){}
 
     private void saveEvent(){
         comment = editComment.getText().toString();
@@ -102,11 +102,9 @@ public class EventDetailActivity extends AppCompatActivity {
         super.onStart();
         loadFromFile();
 
-        if(Eventl!=null){
-            EventList = Eventl.getEvents();
-        }else{
-            EventList = new ArrayList<Event>();
-        }
+
+        EventList = Eventl.getEvents();
+
 
         event = EventList.get(position);
         habit = event.getHabit();
@@ -141,7 +139,7 @@ public class EventDetailActivity extends AppCompatActivity {
             BufferedWriter out = new BufferedWriter(new OutputStreamWriter(fos));
 
             Gson gson = new Gson();
-            gson.toJson(EventList, out);
+            gson.toJson(Eventl, EventList.class, out);
             out.flush();
             fos.close();
         }

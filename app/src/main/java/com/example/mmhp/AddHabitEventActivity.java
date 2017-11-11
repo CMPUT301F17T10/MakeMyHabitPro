@@ -70,9 +70,9 @@ public class AddHabitEventActivity extends AppCompatActivity {
         });
     }
 
-    private void dataGet(){}
-    public void getEventList(){}
-    public void editEventList(){}
+//    private void dataGet(){}
+//    public void getEventList(){}
+//    public void editEventList(){}
 
     private void saveEvent(){
         comment = editComment.getText().toString();
@@ -98,11 +98,9 @@ public class AddHabitEventActivity extends AppCompatActivity {
             EventList = new ArrayList<Event>();
         }
 
-        if(Hlist!=null){
-            HabitList=Hlist.getHabits();
-        }else{
-            HabitList=new ArrayList<Habit>();
-        }
+
+        HabitList=Hlist.getHabits();
+
 
         habit = HabitList.get(position);
 
@@ -162,7 +160,7 @@ public class AddHabitEventActivity extends AppCompatActivity {
             BufferedWriter out = new BufferedWriter(new OutputStreamWriter(fos));
 
             Gson gson = new Gson();
-            gson.toJson(EventList, out);
+            gson.toJson(Eventl, EventList.class ,out);
             out.flush();
             fos.close();
         }

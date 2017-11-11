@@ -62,9 +62,9 @@ public class EventListActivity extends AppCompatActivity {
         });
     }
 
-    private void dataGet(){}
-    public void getEventList() {}
-    public void showList() {}
+//    private void dataGet(){}
+//    public void getEventList() {}
+//    public void showList() {}
 
     @Override
     protected void onStart() {
