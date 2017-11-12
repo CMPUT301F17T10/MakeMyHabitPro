@@ -76,7 +76,7 @@ public class AddHabitEventActivity extends AppCompatActivity {
 
     private void saveEvent(){
         comment = editComment.getText().toString();
-        if (comment != null) {
+        if (comment != null && comment.length() < 20) {
             id=getUUID();
             newEvent = new Event(habit, comment, id);
             EventList.add(newEvent);

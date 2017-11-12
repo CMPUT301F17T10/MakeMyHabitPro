@@ -105,6 +105,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.MyHabit) {
+            HabitA();
             // Handle the camera action
         } else if (id == R.id.Todo) {
 
@@ -133,5 +134,14 @@ public class MainActivity extends AppCompatActivity
         Intent intent = new Intent(this, EventListActivity.class);
         intent.putExtra(EXTRA_MESSAGE,user_data);
         startActivityForResult(intent,RESULT_OK);
+    }
+
+    public void HabitA(){
+        Intent intent = new Intent(this, HabitActivity.class);
+        intent.putExtra(EXTRA_MESSAGE,user_data);
+
+        startActivityForResult(intent,RESULT_OK);
+        //    Intent intent=new Intent(MainActivity.this,HabitActivity.class);
+        //    startActivity(intent);
     }
 }

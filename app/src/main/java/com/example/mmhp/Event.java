@@ -87,6 +87,11 @@ public class Event implements Comparable<Event>{
         return  this.location;
     }
 
+    @Override
+    public String toString() {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        return name+" \n"+dateFormat.format(happend);
+    }
 
     @Override
     public int compareTo(Event e) {
