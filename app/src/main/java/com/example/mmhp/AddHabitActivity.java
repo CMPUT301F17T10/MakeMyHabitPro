@@ -80,7 +80,7 @@ public class AddHabitActivity extends AppCompatActivity {
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int dayofMonth = calendar.get(Calendar.DAY_OF_MONTH);
-        final DatePickerDialog dateDialog = new DatePickerDialog(this, R.style.DateTime, new DatePickerDialog.OnDateSetListener() {
+        final DatePickerDialog dateDialog = new DatePickerDialog(this,  new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 String startDt = Integer.toString(year);
@@ -114,7 +114,8 @@ public class AddHabitActivity extends AppCompatActivity {
         typeSp.setOnItemSelectedListener((new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String[] types = getResources().getStringArray(R.array.type);
+                String[] types = {"study","work","social","entertainment","sport","other"};
+                //String[] types = getResources().getStringArray(R.array.type);
                 typeSelect=types[i].toString();
             }
 
@@ -182,8 +183,8 @@ public class AddHabitActivity extends AppCompatActivity {
         }
         else{
             habit=gson.fromJson(jsonString,HabitR.class);
-            habitEntityList=habit.getHabit();
-            int flag=0;
+          //  habitEntityList=habit.getHabit();
+           // int flag=0;
             //     for(i=0;i<habitEntityList.size();i++){
             //          if(habitEntityList.get(i).getUserId()==UID){
             //              flag=1;

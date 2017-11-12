@@ -80,7 +80,7 @@ public class HabitActivity extends AppCompatActivity {
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int dayofMonth = calendar.get(Calendar.DAY_OF_MONTH);
-        final DatePickerDialog dateDialog = new DatePickerDialog(this, R.style.DateTime, new DatePickerDialog.OnDateSetListener() {
+        final DatePickerDialog dateDialog = new DatePickerDialog(this,new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 String startDt = Integer.toString(year);
@@ -115,7 +115,8 @@ public class HabitActivity extends AppCompatActivity {
         typeSp.setOnItemSelectedListener((new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String[] types = getResources().getStringArray(R.array.type);
+                String[] types = {"study","work","social","entertainment","sport","other"};
+                //String[] types = getResources().getStringArray(R.array.type);
                 startDateEt.setText(types[i].toString());
             }
 
