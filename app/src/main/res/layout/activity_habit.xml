@@ -94,10 +94,8 @@
                 android:text="Type"/>
             <Spinner
                 android:id="@+id/typeSpinner"
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-
         </LinearLayout>
 
         <LinearLayout
@@ -180,7 +178,7 @@
                 android:orientation="vertical">
                 <Button
                     android:id="@+id/addHabit"
-                    android:onClick="addH"
+                    android:onClick="addHabit"
                     android:text="add"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
