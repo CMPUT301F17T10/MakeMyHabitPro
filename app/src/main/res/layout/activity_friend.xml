@@ -6,4 +6,107 @@
     android:layout_height="match_parent"
     tools:context="com.example.mmhp.FriendActivity">
 
+    <ListView
+        android:layout_width="250dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="16dp"
+        android:visibility="visible"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:layout_editor_absoluteY="130dp" />
+
+    <Button
+        android:id="@+id/Accept "
+        android:layout_width="47dp"
+        android:layout_height="34dp"
+        android:layout_marginRight="68dp"
+        android:text="Y"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_editor_absoluteY="130dp" />
+
+    <SearchView
+        android:id="@+id/searchView"
+        android:layout_width="350dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="50dp"
+        android:fadingEdge="horizontal|vertical"
+        android:visibility="visible"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </SearchView>
+
+    <Button
+        android:id="@+id/Go back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="<"
+        tools:layout_editor_absoluteY="0dp" />
+
+    <TextView
+        android:id="@+id/Titl"
+        android:layout_width="100dp"
+        android:layout_height="27dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="16dp"
+        android:text="My Follower"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintBottom_toTopOf="@+id/searchView"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ListView
+        android:layout_width="250dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="16dp"
+        android:visibility="visible"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:layout_editor_absoluteY="89dp" >
+
+    </ListView>
+
+    <Button
+        android:id="@+id/Deny"
+        android:layout_width="47dp"
+        android:layout_height="34dp"
+        android:layout_marginRight="16dp"
+        android:text="N"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_editor_absoluteY="130dp" />
+
+    <Button
+        android:id="@+id/deny"
+        android:layout_width="47dp"
+        android:layout_height="34dp"
+        android:layout_marginRight="16dp"
+        android:text="N"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_editor_absoluteY="89dp" />
+
+    <Button
+        android:id="@+id/accept "
+        android:layout_width="47dp"
+        android:layout_height="34dp"
+        android:layout_marginRight="68dp"
+        android:text="Y"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_editor_absoluteY="89dp" />
+
+    <ListView
+        android:layout_width="253dp"
+        android:layout_height="335dp"
+        android:layout_marginLeft="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:layout_editor_absoluteY="172dp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="17dp"
+        android:layout_height="339dp"
+        android:layout_marginRight="24dp"
+        android:text="A B C D E F G H  I  J K L M N O P Q R S T U V W X Y Z"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_editor_absoluteY="164dp" />
+
 </android.support.constraint.ConstraintLayout>
