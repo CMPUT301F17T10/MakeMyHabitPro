@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 
 public class AddHabitActivity extends AppCompatActivity {
@@ -129,7 +130,9 @@ public class AddHabitActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
                 Toast.makeText(AddHabitActivity.this, "type:"+types[i], Toast.LENGTH_LONG).show();
+                typeSelect = types[i].toString();
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {}
         });
@@ -196,10 +199,10 @@ public class AddHabitActivity extends AppCompatActivity {
         habit.setDetail(commEd.getText().toString());
         habit.setStartDate(dateEd.getText().toString());
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-
-        habit.setLastActive(simpleDateFormat);
+        habit.setType(typeSelect);
+        habit.setLastActive(new Date());
 
         try{
             str=readFile(FILENAME);

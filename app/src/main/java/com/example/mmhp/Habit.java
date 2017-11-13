@@ -1,5 +1,6 @@
 package com.example.mmhp;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -135,8 +136,9 @@ public class Habit implements Comparable<Habit>{
         return Sat;
     }
 
-    public Date getLastActive() {
-        return lastActive;
+    public String getLastActive() {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        return dateFormat.format(this.lastActive);
     }
 
 
