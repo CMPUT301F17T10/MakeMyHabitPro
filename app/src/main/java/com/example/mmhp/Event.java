@@ -90,7 +90,7 @@ public class Event implements Comparable<Event>{
     @Override
     public String toString() {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        return habit.getName()+" \n"+dateFormat.format(happend);
+        return habit.getTitle()+" \n"+dateFormat.format(happend);
     }
 
     @Override
