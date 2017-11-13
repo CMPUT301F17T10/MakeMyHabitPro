@@ -32,7 +32,7 @@ public class HistoryListActivity extends AppCompatActivity {
     private ArrayList<Habit> Habits;
     private ArrayAdapter<Habit> adapter;
     private ListView Habitlist;
-    private int htype =0;
+    private String htype = "sport";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,11 +55,11 @@ public class HistoryListActivity extends AppCompatActivity {
     }
     private void dataGet(){}
 
-    private void filter(int t){
+    private void filter(String t){
         ArrayList<Habit> f =new ArrayList<Habit>();
         for (Habit h:Habits
              ) {
-           if (h.getHtype()==t){
+           if (h.getType()==t){
                f.add(h);
            }
         }

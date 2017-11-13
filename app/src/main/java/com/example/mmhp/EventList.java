@@ -30,6 +30,10 @@ public class EventList {
         return this.list.isEmpty();
     }
 
+    public ArrayList<Event> getEvents (){
+        return this.list;
+    }
+
     public Event getById(String id){
         for (Event e :this.list){
             if (e.getId().equals(id)){

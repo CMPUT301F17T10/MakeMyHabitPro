@@ -1,5 +1,7 @@
 package com.example.mmhp;
 
+import android.location.Location;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -11,14 +13,39 @@ import java.util.Date;
 
 public class Event implements Comparable<Event>{
     private String id;
-    private String habit;
+    private Habit habit;
     private Date happend;
     private String url_img;
     private String owner_comment;
     private String location;
     private ArrayList<String> pub_comment;
-    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-    public Event(String location, String habit, String url_img, String comment, String id){
+
+
+    public Event(Habit habit, String comment, String id) {
+        this.habit = habit;
+        this.id = id;
+        this.owner_comment = comment;
+        this.happend = new Date();
+    }
+
+
+    public Event(String location, Habit habit, String comment, String id) {
+        this.location = location;
+        this.habit = habit;
+        this.id = id;
+        this.owner_comment = comment;
+        this.happend = new Date();
+    }
+
+    public Event(Habit habit, String comment, String id, String url_img) {
+        this.habit=habit;
+        this.url_img=url_img;
+        this.id = id;
+        this.owner_comment=comment;
+        this.happend=new Date();
+    }
+
+    public Event(String location, Habit habit, String comment, String id, String url_img){
         this.location=location;
         this.habit=habit;
         this.url_img=url_img;
@@ -26,6 +53,7 @@ public class Event implements Comparable<Event>{
         this.owner_comment=comment;
         this.happend=new Date();
     }
+
     public void pub_comment(String comment){
         if(this.pub_comment.isEmpty()){
             this.pub_comment=new ArrayList<String>();
@@ -39,10 +67,11 @@ public class Event implements Comparable<Event>{
     public String getOwner_comment(){
         return this.owner_comment;
     }
-    public String getHabit(){
+    public Habit getHabit(){
         return this.habit;
     }
     public String getHappend(){
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         return dateFormat.format(this.happend);
     }
     public Date getHabitDate(){
@@ -58,6 +87,11 @@ public class Event implements Comparable<Event>{
         return  this.location;
     }
 
+    @Override
+    public String toString() {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        return habit.getTitle()+" \n"+dateFormat.format(happend);
+    }
 
     @Override
     public int compareTo(Event e) {

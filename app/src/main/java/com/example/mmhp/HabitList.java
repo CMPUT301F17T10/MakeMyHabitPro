@@ -15,9 +15,9 @@ public class HabitList {
         this.habits.add(h);
     }
 
-    public void add(Habit h){
-        this.habits.add(h);
-    }
+    //   public void add(Habit h){
+    //       this.habits.add(h);
+//    }
 
     public void sort(){
         Collections.sort(this.habits, Collections.reverseOrder());
