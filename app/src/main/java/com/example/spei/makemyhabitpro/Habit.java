@@ -27,6 +27,7 @@ public class Habit implements Comparable<Habit>{
     private boolean Sat;
     private Date lastActive;
 
+    public Habit(){}
     public Habit(String userId, String title, String reason, String detail, String type,String startDate) {
         this.lastActive = new Date();
         this.userId = userId;
