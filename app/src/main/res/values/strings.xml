@@ -20,4 +20,5 @@
         completions."
     </string>
     <string name="title_activity_maps_01">Map</string>
+    <string name="title_activity_main">MainActivity</string>
 </resources>

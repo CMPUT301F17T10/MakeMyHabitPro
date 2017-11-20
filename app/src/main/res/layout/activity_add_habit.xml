@@ -73,6 +73,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/startDate"
                 android:inputType="date"
+                android:focusableInTouchMode="false"
+                android:onClick="selectDate"
                 />
         </LinearLayout>
         <LinearLayout
@@ -80,7 +82,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <TextView
-                android:layout_width="30dp"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:text="Type"/>
             <Spinner
@@ -176,6 +178,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"/>
+                <Button
+                    android:id="@+id/readfil"
+                    android:text="readfil"
+                    android:onClick="readfil"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"/>
+                <Button
+                    android:id="@+id/deletefile"
+                    android:text="deletefile"
+                    android:onClick="delteFile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"/>
+
+
 
 
 
