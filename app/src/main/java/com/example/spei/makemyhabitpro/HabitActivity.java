@@ -100,11 +100,9 @@ public class HabitActivity extends AppCompatActivity {
         Spinner titleSp=(Spinner)findViewById(R.id.titleSpinner);
         String user="";
 
-
-
         if (jsonString.length() > 0) {
             startDateEt=(EditText)findViewById(R.id.startDate);
-            //startDateEt.setText("jsonString lenth great 0");
+
             Gson gson1 = new Gson();
             Type habitListType = new TypeToken<ArrayList<Habit>>(){}.getType();
             final ArrayList<Habit> habitList = gson1.fromJson(jsonString, habitListType);
@@ -119,7 +117,6 @@ public class HabitActivity extends AppCompatActivity {
             if(titles.size()==0){
                 saveBt.setEnabled(false);
                 deleteBt.setEnabled(false);
-
             }
 
             startDateEt=(EditText)findViewById(R.id.startDate);
@@ -159,6 +156,10 @@ public class HabitActivity extends AppCompatActivity {
             //     habit.setDetail(detailEt.getText().toString());
             //      habitList.set(i,habit);
         }
+        else{
+            saveBt.setEnabled(false);
+            deleteBt.setEnabled(false);
+        }
 
     }
     //button
@@ -171,6 +172,9 @@ public class HabitActivity extends AppCompatActivity {
         habitList.remove(habitListIndex);
         jsonString=gson.toJson(habitList);
         writeFile(jsonString);
+        Intent intent = new Intent(this, HabitActivity.class);
+        intent.putExtra(EXTRA_MESSAGE,user_data);
+        startActivityForResult(intent,RESULT_OK);
 
     }
     public void saveHabit(View view){
@@ -182,23 +186,16 @@ public class HabitActivity extends AppCompatActivity {
         habitList.set(habitListIndex,habit);
         jsonString=gson3.toJson(habitList);
 
-//        String str="";
-//        str="userId:"+habit.getUserId()+"// title:"+habit.getTitle()+"// reason:"+habit.getReason()+
-//                "// detail:"+habit.getDetail()+"// startDate:"+habit.getStartDate()+"// type:"+habit.getType()+"// lastActivi:"
-//                +habit.getlastActive()+"// sun:"+habit.getSun()+"// mon:"+habit.getMon()+"// tue:"+habit.getTue()+"// wen:"+habit.getWen()
-//                +"// tue:"+habit.getTue()+"// fri:"+habit.getFri()+"// sat:"+habit.getSat();
-//        detailEt=(EditText)findViewById(R.id.commonEt);
-//        detailEt.setText(jsonString.toString());
+
 
         writeFile(jsonString);
 
+        Intent intent = new Intent(this, HabitActivity.class);
+        intent.putExtra(EXTRA_MESSAGE,user_data);
+        startActivityForResult(intent,RESULT_OK);
 
-        //    startDateEt=(EditText)findViewById(R.id.startDate);
-        //   startDateEt.setText( String.valueOf( habitList.get(12).getTitle().toString()));
-        //   habitList.set((Integer)list.get(titleIndex),getHabit(UID));
-        //   Gson gson=new Gson();
-        //   jsonString=gson.toJson(habitList);
-        //   writeFile(jsonString);
+
+
     }
     public void addHabit(View view){
         Intent intent = new Intent(this, AddHabitActivity.class);

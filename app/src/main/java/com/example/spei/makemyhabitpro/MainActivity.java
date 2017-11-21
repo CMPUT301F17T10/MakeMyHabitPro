@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity
             HabitA();
             // Handle the camera action
         } else if (id == R.id.Todo) {
-
+            Todo();
         } else if (id == R.id.Eventlist) {
             Eventl();
         } else if (id == R.id.Histortlist) {
@@ -141,5 +141,11 @@ public class MainActivity extends AppCompatActivity
         startActivityForResult(intent,RESULT_OK);
         //    Intent intent=new Intent(MainActivity.this,HabitActivity.class);
         //    startActivity(intent);
+    }
+
+    public void Todo(){
+        Intent intent = new Intent(this, TodoActivity.class);
+        intent.putExtra(EXTRA_MESSAGE,user_data);
+        startActivityForResult(intent,RESULT_OK);
     }
 }

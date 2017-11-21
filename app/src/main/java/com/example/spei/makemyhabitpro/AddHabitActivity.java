@@ -30,6 +30,8 @@ import java.util.List;
 
 public class AddHabitActivity extends AppCompatActivity {
 
+    public static final String EXTRA_MESSAGE = "com.example.MMHP.USERDATA";
+
     private String typeSelect;
     private String startDt;
     private int i;
@@ -43,6 +45,7 @@ public class AddHabitActivity extends AppCompatActivity {
     private boolean Sun,Mon,Tue,Wen,Thu,Fri,Sat;
     private static final String FILENAME="Habits.SAV";
     private String jsonString;
+
 
     private String user_data;
     private User local_user;
@@ -83,17 +86,7 @@ public class AddHabitActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
         });
-        /////////////////////////////////
 
-        jsonString = readFile();
-        if (jsonString.toString().length() > 0) {
-
-
-            //title spinner
-            //   Spinner titleSp = (Spinner) findViewById(R.id.titleSpinner);
-
-
-        }
     }
 
     public void saveNewHabit(View view){
@@ -103,15 +96,20 @@ public class AddHabitActivity extends AppCompatActivity {
         Habit habit=new Habit();
 
         jsonString=readFile();
+        ArrayList<String> titles =new ArrayList<String>();
 
-        if(jsonString.length()>0){
+        if(jsonString.toString().length()>0){
             Gson gson1 = new Gson();
-            startDateEt=(EditText)findViewById(R.id.startDate);
-            //  startDateEt.setText("lenth>0");
             Type habitListType = new TypeToken<ArrayList<Habit>>(){}.getType();
             ArrayList<Habit> habitList = gson1.fromJson(jsonString, habitListType);
+            for(i=0;i<habitList.size();i++){
+                if(UID.equals(habitList.get(i).getUserId())){
+                    titles.add(habitList.get(i).getTitle());
+                }
+            }
             habitList.add(getHabit(UID));
             jsonString=gson1.toJson(habitList,habitListType);
+
         }
         else{
             habitList=new ArrayList<Habit>();
@@ -120,8 +118,27 @@ public class AddHabitActivity extends AppCompatActivity {
             jsonString=gson1.toJson(habitList);
         }
 
-        writeFile(jsonString);
 
+
+        if(titles.contains(titleEt.getText().toString())){
+            Toast.makeText(AddHabitActivity.this,titleEt.getText().toString()+" already exist",Toast.LENGTH_LONG).show();
+        }
+        else if(titleEt.getText().toString().length()==0||startDateEt.getText().toString().length()==0||
+                reasonEt.getText().toString().length()==0)
+        {
+            Toast.makeText(AddHabitActivity.this,"Some field is empty",Toast.LENGTH_LONG).show();
+        }
+        else if(!sunCh.isChecked()&&!monCh.isChecked()&&!tueCh.isChecked()&&!wenCh.isChecked()&&!thuCh.isChecked()&&!friCh.isChecked()
+                &&!satCh.isChecked()){
+            Toast.makeText(AddHabitActivity.this,"Check the plan, Pleas",Toast.LENGTH_LONG).show();
+
+        }
+        else{
+            writeFile(jsonString);
+            Intent intent = new Intent(this, HabitActivity.class);
+            intent.putExtra(EXTRA_MESSAGE, user_data);
+            startActivityForResult(intent, RESULT_OK);
+        }
     }
 
 
@@ -179,11 +196,12 @@ public class AddHabitActivity extends AppCompatActivity {
         }
         return str;
     }
-//    public void readfil(View view){
-//        detailEt=(EditText)findViewById(R.id.commonEt);
-//        jsonString=readFile();
-//        detailEt.setText(jsonString.toString());
-//    }
+    public void readfil(View view){
+        detailEt=(EditText)findViewById(R.id.commonEt);
+        jsonString=readFile();
+        detailEt.setText(jsonString.toString());
+    }
+
 
     public Habit getHabit(String uer) {
         Habit habit = new Habit();
