@@ -61,6 +61,7 @@ public class Event implements Comparable<Event>{
     public ArrayList<String> getPub_comment(){
         return this.pub_comment;
     }
+    public void setPub_comment(ArrayList<String> pub_comment){this.pub_comment = pub_comment;}
     public String getUrl_img(){
         return this.url_img;
     }

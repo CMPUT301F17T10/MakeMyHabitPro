@@ -33,6 +33,7 @@ public class PubCommentActivity extends AppCompatActivity {
     private Event event;
     private ArrayList<Event> EventList;
     private ListView oldpubcomment;
+    private EditText editComment;
     private ArrayAdapter<String> adapter;
 
     @Override
@@ -45,14 +46,18 @@ public class PubCommentActivity extends AppCompatActivity {
 
         oldpubcomment = (ListView)findViewById(R.id.pub_commentList);
 
-        EditText editComment = (EditText)findViewById(R.id.pub_comment);
-        pub_comment = editComment.getText().toString();
+        editComment = (EditText)findViewById(R.id.pub_comment);
+
 
         Button add = (Button) findViewById(R.id.pub_commentAdd);
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addComment();
+                pub_comment = editComment.getText().toString();
+                pub_commentList.add(pub_comment);
+                //event.setPub_comment(pub_commentList);
+                adapter.notifyDataSetChanged();
+                saveInFile();
 
             }
         });
@@ -82,7 +87,7 @@ public class PubCommentActivity extends AppCompatActivity {
         pub_commentList = event.getPub_comment();
 
         adapter = new ArrayAdapter<String>(this,
-                R.layout.activity_pub_comment);
+                android.R.layout.simple_list_item_1, pub_commentList);
 
         oldpubcomment.setAdapter(adapter);
 
