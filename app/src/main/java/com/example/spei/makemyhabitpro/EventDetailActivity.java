@@ -33,6 +33,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import static com.example.spei.makemyhabitpro.R.id.imageView;
+import static com.example.spei.makemyhabitpro.R.id.saveBt;
 
 public class EventDetailActivity extends AppCompatActivity {
 
@@ -51,6 +52,10 @@ public class EventDetailActivity extends AppCompatActivity {
     private String comment;
     private int position;
     private String id;
+    private String UID;
+    private Button saveButton;
+    private Button deleteButton;
+    private Button imageButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +64,7 @@ public class EventDetailActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         position = intent.getIntExtra("position01",0);
+        UID =  intent.getStringExtra("UID");
 
 
 
@@ -86,7 +92,7 @@ public class EventDetailActivity extends AppCompatActivity {
         });
 
 
-        Button imageButton = (Button) findViewById(R.id.eventImageButton3);
+        imageButton = (Button) findViewById(R.id.eventImageButton3);
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -101,7 +107,7 @@ public class EventDetailActivity extends AppCompatActivity {
             }
         });
 
-        Button saveButton = (Button) findViewById(R.id.save_edit);
+        saveButton = (Button) findViewById(R.id.save_edit);
         saveButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
@@ -112,7 +118,7 @@ public class EventDetailActivity extends AppCompatActivity {
             }
         });
 
-        Button deleteButton = (Button) findViewById(R.id.delete);
+        deleteButton = (Button) findViewById(R.id.delete);
 
         deleteButton.setOnClickListener(new View.OnClickListener() {
 
@@ -121,6 +127,17 @@ public class EventDetailActivity extends AppCompatActivity {
 
                 deleteEvent();
 
+            }
+        });
+
+        Button pub_commentButton = (Button) findViewById(R.id.pub_comment);
+
+        pub_commentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(EventDetailActivity.this, PubCommentActivity.class);
+                intent.putExtra("position02", position);
+                startActivityForResult(intent,RESULT_OK);
             }
         });
     }
@@ -184,6 +201,14 @@ public class EventDetailActivity extends AppCompatActivity {
         encodeImage = event.getUrl_img();
         location = event.getLocation();
 
+        if (!UID.equals(event.getUID())){
+            saveButton.setEnabled(false);
+            deleteButton.setEnabled(false);
+            editComment.setEnabled(false);
+            editLocation.setEnabled(false);
+            imageView.setEnabled(false);
+            imageButton.setEnabled(false);
+        }
 
 
         titletext.setText("Title: "+habit.getTitle());

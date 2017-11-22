@@ -17,7 +17,7 @@ public class Event implements Comparable<Event>{
     private String url_img;
     private String owner_comment;
     private String location;
-    private ArrayList<String> pub_comment = new ArrayList<String>();
+    private ArrayList<String> pub_comment;
 
 
     public Event(Habit habit, String comment, String id, String UID) {
@@ -28,6 +28,7 @@ public class Event implements Comparable<Event>{
         this.happend = new Date();
         this.location = "None";
         this.url_img = "None";
+        pub_comment = new ArrayList<String>();
     }
 
 

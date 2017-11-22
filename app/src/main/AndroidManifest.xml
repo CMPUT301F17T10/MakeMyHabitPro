@@ -33,7 +33,8 @@
         <activity android:name=".DoneHabitListActivity" />
         <activity android:name=".AddHabitEventActivity" />
         <activity android:name=".HabitActivity" />
-        <activity android:name=".AddHabitActivity"></activity>
+        <activity android:name=".AddHabitActivity" />
+        <activity android:name=".PubCommentActivity"></activity>
     </application>
 
 </manifest>

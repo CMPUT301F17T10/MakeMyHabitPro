@@ -59,6 +59,7 @@ public class EventListActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Intent intent = new Intent(EventListActivity.this, EventDetailActivity.class);
                 intent.putExtra("position01", position);
+                intent.putExtra("UID", UID);
                 startActivityForResult(intent,RESULT_OK);
             }
         });
