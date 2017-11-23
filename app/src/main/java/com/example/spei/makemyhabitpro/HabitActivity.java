@@ -52,6 +52,7 @@ public class HabitActivity extends AppCompatActivity {
     private EditText reasonEt;
     private EditText detailEt;
     private EditText startDateEt;
+
     private CheckBox sunCh,monCh,tueCh,wenCh,thuCh,friCh,satCh;
     private int titleIndex;
     private int habitListIndex;
@@ -71,8 +72,10 @@ public class HabitActivity extends AppCompatActivity {
         titleEt = (EditText) findViewById(R.id.titleEt);
         reasonEt = (EditText) findViewById(R.id.reasonEt);
 
+
         Button saveBt = (Button) findViewById(R.id.saveBt);
         Button deleteBt = (Button) findViewById(R.id.deleteBt);
+
 
         Gson gson2 = new Gson();
         local_user = gson2.fromJson(user_data, User.class);

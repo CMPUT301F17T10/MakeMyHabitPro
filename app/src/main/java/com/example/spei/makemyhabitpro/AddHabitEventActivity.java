@@ -95,7 +95,7 @@ public class AddHabitEventActivity extends AppCompatActivity {
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setResult(RESULT_OK);
+
                 Bitmap image =  ((BitmapDrawable) imageView.getDrawable()).getBitmap();
 
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
