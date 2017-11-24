@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by spei on 11/17/17.
@@ -16,7 +17,7 @@ public class User {
     private ArrayList<String> friends =new ArrayList<String>();
     private Date resisted;
     private Date last_log_in = new Date();
-
+    private int exp;
 
     /**
      * register function
@@ -29,6 +30,7 @@ public class User {
         this.password=pass;
         this.resisted=new Date();
         this.name=name;
+        this.exp=0;
     }
 
     /**
@@ -36,12 +38,20 @@ public class User {
      * @param pass
      * @return true for success, false for failure
      */
-    public Boolean log_in(String pass){
+    public int log_in(String pass){
         if (this.password.equals(pass)){
-            this.last_log_in=new Date();
-            return true;
+
+            Date today=new Date();
+            long diff = today.getTime() - this.last_log_in.getTime();
+            long diffdate = diff / (60 * 60 * 1000);
+            if (diffdate>=24){
+                this.exp=this.exp+5;
+                return 1;}
+            else{
+                return 2;
+            }
         }else{
-            return false;
+            return 3;
         }
     }
 
@@ -103,7 +113,13 @@ public class User {
         return  dateFormat.format(this.last_log_in);
     }
     public String to_string(){
-        String S="Name: "+this.name+"\n";
+        String S="Name: "+this.name;
         return S;
+    }
+    public String get_lvl(){
+        int lvl=this.exp/100;
+        String s="lvl "+Integer.toString(lvl);
+
+        return s;
     }
 }

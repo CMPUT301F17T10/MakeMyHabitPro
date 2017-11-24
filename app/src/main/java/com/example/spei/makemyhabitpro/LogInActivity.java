@@ -111,7 +111,7 @@ public class LogInActivity extends AppCompatActivity {
         for (User u:registerd
                 ) {
             if (u.getName().equals(Email)){
-                if(u.log_in(Pass)){
+                if(u.log_in(Pass)==1|u.log_in(Pass)==2){
                     return u;
                 }
             }

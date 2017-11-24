@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         Toast.makeText(getApplicationContext(), local_user.to_string(),Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), local_user.get_lvl(),Toast.LENGTH_SHORT).show();
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
