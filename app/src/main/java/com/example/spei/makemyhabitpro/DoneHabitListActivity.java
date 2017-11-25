@@ -28,7 +28,7 @@ public class DoneHabitListActivity extends AppCompatActivity {
     private Habit habit;
     private String UID;
     private ArrayList<Habit> HabitList;
-    //private ArrayList<Habit> DoneHabitList;
+    private ArrayList<Habit> myHabitList;
     private ArrayAdapter<Habit> adapter;
     private ListView oldDoneHabitList;
 
@@ -46,7 +46,7 @@ public class DoneHabitListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Intent intent = new Intent(DoneHabitListActivity.this, AddHabitEventActivity.class);
-                habit = HabitList.get(position);
+                habit = myHabitList.get(position);
 
                 Gson gson = new Gson();
                 String habitS=gson.toJson(habit);
@@ -95,8 +95,16 @@ public class DoneHabitListActivity extends AppCompatActivity {
 
         //filter(HabitList);
 
+        myHabitList = new ArrayList<Habit>();
+        for (Habit habit : HabitList) {
+            if (UID.equals(habit.getUserId())) {
+                myHabitList.add(habit);
+            }
+
+        }
+
         adapter = new ArrayAdapter<Habit>(this,
-                R.layout.list_item, HabitList);//adapter converts tweet to string
+                R.layout.list_item, myHabitList);//adapter converts tweet to string
         oldDoneHabitList.setAdapter(adapter);
 
     }

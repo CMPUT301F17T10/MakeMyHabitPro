@@ -40,7 +40,7 @@ public class EventDetailActivity extends AppCompatActivity {
     private static final int RESULT_LOAD_IMAGE = 1;
     private static final String FILENAME="Eventl.SAV";
     private Event event;
-    private ArrayList<Event> EventList;
+    private ArrayList<Event> eventList;
     private EditText editComment;
     private EditText editLocation;
     private String encodeImage;
@@ -51,11 +51,13 @@ public class EventDetailActivity extends AppCompatActivity {
     private Habit habit;
     private String comment;
     private int position;
+    private String eventId;
     private String id;
     private String UID;
     private Button saveButton;
     private Button deleteButton;
     private Button imageButton;
+    private Button locationButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +65,7 @@ public class EventDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_event_detail);
 
         Intent intent = getIntent();
-        position = intent.getIntExtra("position01",0);
+        eventId = intent.getStringExtra("eventId");
         UID =  intent.getStringExtra("UID");
 
 
@@ -106,6 +108,18 @@ public class EventDetailActivity extends AppCompatActivity {
 
             }
         });
+
+        locationButton = (Button) findViewById(R.id.locationbutton);
+        locationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setResult(RESULT_OK);
+
+
+
+            }
+        });
+
 
         saveButton = (Button) findViewById(R.id.save_edit);
         saveButton.setOnClickListener(new View.OnClickListener() {
@@ -177,7 +191,7 @@ public class EventDetailActivity extends AppCompatActivity {
     }
 
     private void deleteEvent(){
-        EventList.remove(position);
+        eventList.remove(position);
         Toast.makeText(getApplicationContext(), " Delete the event",Toast.LENGTH_SHORT).show();
         saveInFile();
         finish();
@@ -189,13 +203,23 @@ public class EventDetailActivity extends AppCompatActivity {
         super.onStart();
         loadFromFile();
 
-        if(EventList == null){
+        if(eventList == null){
 
-            EventList = new ArrayList<Event>();
+            eventList = new ArrayList<Event>();
         }
 
 
-        event = EventList.get(position);
+        int temp = 0;
+        for (Event event1 : eventList) {
+            if (eventId.equals(event1.getId())) {
+                position = temp;
+                break;
+            }
+            temp++;
+
+        }
+
+        event = eventList.get(position);
         habit = event.getHabit();
         id = event.getId();
         encodeImage = event.getUrl_img();
@@ -208,6 +232,7 @@ public class EventDetailActivity extends AppCompatActivity {
             editLocation.setEnabled(false);
             imageView.setEnabled(false);
             imageButton.setEnabled(false);
+            locationButton.setEnabled(false);
         }
 
 
@@ -273,12 +298,12 @@ public class EventDetailActivity extends AppCompatActivity {
             Type listType = new TypeToken<ArrayList<Event>>() {
             }.getType();
 
-            EventList = gson.fromJson(in, listType);
+            eventList = gson.fromJson(in, listType);
 
 
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
-            EventList = new ArrayList<Event>();
+            eventList = new ArrayList<Event>();
         } catch (IOException e) {
             // TODO Auto-generated catch block
             throw new RuntimeException();
@@ -294,7 +319,7 @@ public class EventDetailActivity extends AppCompatActivity {
             BufferedWriter out = new BufferedWriter(new OutputStreamWriter(fos));
 
             Gson gson = new Gson();
-            gson.toJson(EventList,out);
+            gson.toJson(eventList,out);
             out.flush();
             fos.close();
         }

@@ -1,5 +1,6 @@
 package com.example.spei.makemyhabitpro;
 
+import android.app.usage.UsageEvents;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -13,14 +14,26 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    private static final String FILENAME="Eventl.SAV";
     private Map<String,String> messages;
     private HistoryListActivity his;
     private MapActivity m;
@@ -28,8 +41,12 @@ public class MainActivity extends AppCompatActivity
     private FriendActivity F;
 //    private HabitActivity h;
     private TodoActivity T;
+    private ArrayAdapter<Event> adapter;
     private User local_user;
     private String user_data;
+    private ArrayList<Event> mainList;
+    private ListView oldmailList;
+    private String UID;
     public static final String EXTRA_MESSAGE = "com.example.MMHP.USERDATA";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +58,7 @@ public class MainActivity extends AppCompatActivity
         user_data=  intent.getStringExtra(LogInActivity.EXTRA_MESSAGE);
         Gson gson = new Gson();
         local_user=gson.fromJson(user_data,User.class);
+        UID=local_user.getUid();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         Toast.makeText(getApplicationContext(), local_user.to_string(),Toast.LENGTH_SHORT).show();
@@ -61,6 +79,20 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        oldmailList = (ListView) findViewById(R.id.mainList);
+        oldmailList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Intent intent = new Intent(MainActivity.this, EventDetailActivity.class);
+
+                Event clickEvent = mainList.get(position);
+                String clickId = clickEvent.getId();
+                intent.putExtra("eventId", clickId);
+                intent.putExtra("UID", UID);
+                startActivityForResult(intent,RESULT_OK);
+            }
+        });
     }
     private void end(){
         this.finish();
@@ -148,5 +180,47 @@ public class MainActivity extends AppCompatActivity
         Intent intent = new Intent(this, TodoActivity.class);
         intent.putExtra(EXTRA_MESSAGE,user_data);
         startActivityForResult(intent,RESULT_OK);
+    }
+
+    @Override
+    protected void onStart() {
+        // TODO Auto-generated method stub
+        super.onStart();
+        loadFromFile();
+
+        if(mainList == null){
+
+            mainList = new ArrayList<Event>();
+        }
+
+        adapter = new ArrayAdapter<Event>(this,
+                R.layout.list_item, mainList);
+
+        oldmailList.setAdapter(adapter);
+
+
+    }
+
+    private void loadFromFile() {
+        try {
+            FileInputStream fis = openFileInput(FILENAME);
+            BufferedReader in = new BufferedReader(new InputStreamReader(fis));
+
+            Gson gson = new Gson();
+
+
+            Type listType = new TypeToken<ArrayList<Event>>() {
+            }.getType();
+
+            mainList = gson.fromJson(in, listType);
+
+
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            mainList = new ArrayList<Event>();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            throw new RuntimeException();
+        }
     }
 }

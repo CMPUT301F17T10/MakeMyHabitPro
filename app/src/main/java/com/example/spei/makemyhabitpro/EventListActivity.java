@@ -3,6 +3,7 @@ package com.example.spei.makemyhabitpro;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.EventLog;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -22,7 +23,8 @@ import java.util.ArrayList;
 
 public class EventListActivity extends AppCompatActivity {
 
-    private ArrayList<Event> EventList;
+    private ArrayList<Event> eventList;
+    private ArrayList<Event> myEventList;
     private ListView oldEventList;
     private ArrayAdapter<Event> adapter;
     private User local_user;
@@ -58,7 +60,10 @@ public class EventListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Intent intent = new Intent(EventListActivity.this, EventDetailActivity.class);
-                intent.putExtra("position01", position);
+
+                Event clickEvent = myEventList.get(position);
+                String clickId = clickEvent.getId();
+                intent.putExtra("eventId", clickId);
                 intent.putExtra("UID", UID);
                 startActivityForResult(intent,RESULT_OK);
             }
@@ -75,13 +80,24 @@ public class EventListActivity extends AppCompatActivity {
         super.onStart();
         loadFromFile();
 
-        if(EventList == null){
+        if(eventList == null){
 
-            EventList = new ArrayList<Event>();
+            eventList = new ArrayList<Event>();
         }
 
+
+
+        myEventList = new ArrayList<Event>();
+        for (Event event : eventList) {
+            if (UID.equals(event.getUID())) {
+                myEventList.add(event);
+            }
+
+        }
+
+
         adapter = new ArrayAdapter<Event>(this,
-                R.layout.list_item, EventList);
+                R.layout.list_item, myEventList);
 
         oldEventList.setAdapter(adapter);
 
@@ -99,12 +115,12 @@ public class EventListActivity extends AppCompatActivity {
             Type listType = new TypeToken<ArrayList<Event>>() {
             }.getType();
 
-            EventList = gson.fromJson(in, listType);
+            eventList = gson.fromJson(in, listType);
 
 
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
-            EventList = new ArrayList<Event>();
+            eventList = new ArrayList<Event>();
         } catch (IOException e) {
             // TODO Auto-generated catch block
             throw new RuntimeException();
