@@ -4,7 +4,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by spei on 11/17/17.
@@ -18,7 +17,7 @@ public class User {
     private Date resisted;
     private Date last_log_in = new Date();
     private int exp;
-
+    private boolean exped=false;
     /**
      * register function
      * @param name the User name User want to call themselves
@@ -44,10 +43,13 @@ public class User {
             Date today=new Date();
             long diff = today.getTime() - this.last_log_in.getTime();
             long diffdate = diff / (60 * 60 * 1000);
-            if (diffdate>=24){
+            if (diffdate>=24|!exped){
                 this.exp=this.exp+5;
+                this.last_log_in=today;
+                this.exped=true;
                 return 1;}
             else{
+
                 return 2;
             }
         }else{

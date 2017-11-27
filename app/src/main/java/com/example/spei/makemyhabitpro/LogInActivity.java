@@ -50,7 +50,7 @@ public class LogInActivity extends AppCompatActivity {
                 if(!emailText.getText().toString().equals("") && !passText.getText().toString().equals("")) {
                     String Input_email=emailText.getText().toString();
                     String Input_pass=passText.getText().toString();
-                    local_user=logIn(Input_email,Input_pass);
+                    local_user=elogin(Input_email,Input_pass);
 
                     // 4.a check if username and password are OK
                     if(local_user != null )
@@ -59,6 +59,7 @@ public class LogInActivity extends AppCompatActivity {
                         Gson gson = new Gson();
                         String user=gson.toJson(local_user);
                         Toast.makeText(getApplicationContext(), "Welcome",Toast.LENGTH_SHORT).show();
+                        updateUser();
                         to_Main(user);
 
 
@@ -88,8 +89,10 @@ public class LogInActivity extends AppCompatActivity {
                     User reg= new User(Input_email,uid,Input_pass);
                     registerd.add(reg);
                     saveInFile();
+                    ElasticsearchUser.RegUserTask RegUserTask
+                            = new ElasticsearchUser.RegUserTask();
+                    RegUserTask.execute(reg);
                     Toast.makeText(getApplicationContext(), "Signed Up",Toast.LENGTH_SHORT).show();
-
 
                 } else {
                     // The fields are not filled.
@@ -102,7 +105,16 @@ public class LogInActivity extends AppCompatActivity {
 
         });
     }
-    private void dataGet(){}
+    protected void updateUser(){
+
+        ElasticsearchUser.DeleteUser update= new ElasticsearchUser.DeleteUser();
+        if (local_user!=null){
+            update.execute(local_user.getName());
+            ElasticsearchUser.RegUserTask RegUserTask
+                    = new ElasticsearchUser.RegUserTask();
+            RegUserTask.execute(local_user);
+        }
+    }
     private User logIn(String Email,String Pass){
 
         if (registerd.isEmpty()){
@@ -117,6 +129,36 @@ public class LogInActivity extends AppCompatActivity {
             }
         }
         return null;
+    }
+    private User elogin(String Email,String Pass){
+        ElasticsearchUser.GetUserTask get= new ElasticsearchUser.GetUserTask();
+        User u;
+        get.execute(Email);
+        try {
+            u = get.get();
+        } catch (Exception e) {
+            return null;
+        }
+        if (u.getName().equals(Email)){
+            if(u.log_in(Pass)==1|u.log_in(Pass)==2){
+                return u;
+            }
+        }
+        return null;
+    }
+    private boolean existedUser (String name) {
+        ElasticsearchUser.IsExist isExist = new ElasticsearchUser.IsExist();
+        isExist.execute(name);
+
+        try {
+            if (isExist.get()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            return false;
+        }
     }
     private void to_Main(String u){
         Intent intent = new Intent(this, MainActivity.class);
