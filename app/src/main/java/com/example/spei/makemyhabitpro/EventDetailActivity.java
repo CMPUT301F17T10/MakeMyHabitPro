@@ -43,7 +43,8 @@ public class EventDetailActivity extends AppCompatActivity {
     private ArrayList<Event> eventList;
     private EditText editComment;
     private EditText editLocation;
-    private String encodeImage;
+    private Bitmap image;
+    private Bitmap newImage;
     private ImageView imageView;
     private TextView titletext;
     private TextView detailtext;
@@ -99,11 +100,11 @@ public class EventDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 setResult(RESULT_OK);
-                Bitmap image =  ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+                newImage =  ((BitmapDrawable) imageView.getDrawable()).getBitmap();
 
-                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                image.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-                encodeImage = Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT);
+                if (newImage.getByteCount() < 65536){
+                    event.setImg(newImage);
+                }else {Toast.makeText(getApplicationContext(), " The image need to be under 65536 bytes.",Toast.LENGTH_SHORT).show();}
 
 
             }
@@ -173,12 +174,10 @@ public class EventDetailActivity extends AppCompatActivity {
         comment = editComment.getText().toString();
         if (comment != null && !comment.equals("") && comment.length() < 20) {
             event.setOwner_comment(comment);
-            if (encodeImage != null && location != null){
-                event.setLocation(location);
-                event.setUrl_img(encodeImage);
-            }else if (encodeImage != null) {
-                event.setUrl_img(encodeImage);
-            }else if(location != null){
+            if (newImage != null ){
+                event.setImg(newImage);
+            }
+            if(location != null){
                 event.setLocation(location);
             }
 
@@ -222,7 +221,7 @@ public class EventDetailActivity extends AppCompatActivity {
         event = eventList.get(position);
         habit = event.getHabit();
         id = event.getId();
-        encodeImage = event.getUrl_img();
+        image = event.getImg();
         location = event.getLocation();
 
         if (!UID.equals(event.getUID())){
@@ -239,7 +238,7 @@ public class EventDetailActivity extends AppCompatActivity {
         titletext.setText("Title: "+habit.getTitle());
         detailtext.setText("Detail: "+habit.getDetail());
         editComment.setText(event.getOwner_comment());
-        if (!encodeImage.equals("None")) {}
+        imageView.setImageBitmap(image);
         if (!location.equals("None")) {editLocation.setText(location);}
     }
 

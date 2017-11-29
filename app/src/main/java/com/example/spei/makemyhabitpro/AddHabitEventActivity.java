@@ -3,7 +3,9 @@ package com.example.spei.makemyhabitpro;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -43,7 +45,8 @@ public class AddHabitEventActivity extends AppCompatActivity {
     private TextView detailtext;
     private EditText editComment;
     private ImageView imageView;
-    private String encodeImage;
+    private Bitmap image;
+    private Bitmap img;
     private String location;
     private Event newEvent;
     private Habit habit;
@@ -96,11 +99,11 @@ public class AddHabitEventActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Bitmap image =  ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+                image =  ((BitmapDrawable) imageView.getDrawable()).getBitmap();
 
-                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                image.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-                encodeImage = Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT);
+                if (image.getByteCount() < 65536){
+                    newEvent.setImg(image);
+                }else {Toast.makeText(getApplicationContext(), " The image need to be under 65536 bytes.",Toast.LENGTH_SHORT).show();}
 
 
 
@@ -139,12 +142,10 @@ public class AddHabitEventActivity extends AppCompatActivity {
             id=getUUID();
             newEvent = new Event(habit, comment, id, UID);
 
-            if (encodeImage != null && location != null){
-                newEvent.setLocation(location);
-                newEvent.setUrl_img(encodeImage);
-            }else if (encodeImage != null) {
-                newEvent.setUrl_img(encodeImage);
-            }else if(location != null){
+            if (image != null ) {
+                newEvent.setImg(image);
+            }else {newEvent.setImg(img);}
+            if(location != null){
                 newEvent.setLocation(location);
             }
 
@@ -171,6 +172,10 @@ public class AddHabitEventActivity extends AppCompatActivity {
 
             EventList = new ArrayList<Event>();
         }
+
+        Drawable drawable = this.getResources().getDrawable(R.drawable.download);
+        img = ((BitmapDrawable) drawable).getBitmap();
+        imageView.setImageBitmap(img);
 
 
 

@@ -1,5 +1,10 @@
 package com.example.spei.makemyhabitpro;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -14,7 +19,7 @@ public class Event implements Comparable<Event>{
     private String UID;
     private Habit habit;
     private Date happend;
-    private String url_img;
+    private Bitmap img;
     private String owner_comment;
     private String location;
     private ArrayList<String> pub_comment;
@@ -25,9 +30,9 @@ public class Event implements Comparable<Event>{
         this.id = id;
         this.UID = UID;
         this.owner_comment = comment;
-        this.happend = new Date();
-        this.location = "None";
-        this.url_img = "None";
+        happend = new Date();
+        location = "None";
+
         pub_comment = new ArrayList<String>();
     }
 
@@ -62,15 +67,15 @@ public class Event implements Comparable<Event>{
         return this.pub_comment;
     }
     public void setPub_comment(ArrayList<String> pub_comment){this.pub_comment = pub_comment;}
-    public String getUrl_img(){
-        return this.url_img;
+    public Bitmap getImg(){
+        return this.img;
     }
     public String getLocation(){
         return  this.location;
     }
 
-    public void setUrl_img(String url_img) {
-        this.url_img = url_img;
+    public void setImg(Bitmap img) {
+        this.img = img;
     }
 
     public void setOwner_comment(String owner_comment) {
@@ -93,4 +98,7 @@ public class Event implements Comparable<Event>{
         Date d2=e.getHabitDate();
         return d1.compareTo(d2);
     }
+
+
+
 }
