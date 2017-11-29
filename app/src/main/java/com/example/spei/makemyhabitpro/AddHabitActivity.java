@@ -101,21 +101,21 @@ public class AddHabitActivity extends AppCompatActivity {
         if(jsonString.toString().length()>0){
             Gson gson1 = new Gson();
             Type habitListType = new TypeToken<ArrayList<Habit>>(){}.getType();
-            ArrayList<Habit> habitList = gson1.fromJson(jsonString, habitListType);
-            for(i=0;i<habitList.size();i++){
-                if(UID.equals(habitList.get(i).getUserId())){
-                    titles.add(habitList.get(i).getTitle());
+            this.habitList = gson1.fromJson(jsonString, habitListType);
+            for(i=0;i<this.habitList.size();i++){
+                if(UID.equals(this.habitList.get(i).getUserId())){
+                    titles.add(this.habitList.get(i).getTitle());
                 }
             }
-            habitList.add(getHabit(UID));
-            jsonString=gson1.toJson(habitList,habitListType);
+            this.habitList.add(getHabit(UID));
+            jsonString=gson1.toJson(this.habitList,habitListType);
 
         }
         else{
-            habitList=new ArrayList<Habit>();
-            habitList.add(getHabit(UID));
+            this.habitList=new ArrayList<Habit>();
+            this.habitList.add(getHabit(UID));
             Gson gson1=new Gson();
-            jsonString=gson1.toJson(habitList);
+            jsonString=gson1.toJson(this.habitList);
         }
 
 
@@ -135,13 +135,40 @@ public class AddHabitActivity extends AppCompatActivity {
         }
         else{
             writeFile(jsonString);
+
+
+
+            for (Habit h:this.habitList){
+                if (exist(h)){
+                    continue;
+                }
+                ElasticsearchHabit.AddHabitTask task=new ElasticsearchHabit.AddHabitTask();
+                task.execute(h);
+            }
+
+
             Intent intent = new Intent(this, HabitActivity.class);
             intent.putExtra(EXTRA_MESSAGE, user_data);
             startActivityForResult(intent, RESULT_OK);
+
         }
     }
 
+    private boolean exist(Habit h){
+        ElasticsearchHabit.IsExist e=new ElasticsearchHabit.IsExist();
+        e.execute(h.getUserId() + h.getTitle().toUpperCase());
+        try {
+            if(e.get()){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }catch (Exception E) {
+                return false;
+        }
 
+    }
     public void selectDate(View view){
         //create date picker
         java.util.Calendar calendar = java.util.Calendar.getInstance();

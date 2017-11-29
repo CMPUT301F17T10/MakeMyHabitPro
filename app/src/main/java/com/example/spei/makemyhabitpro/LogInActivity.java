@@ -131,6 +131,9 @@ public class LogInActivity extends AppCompatActivity {
         return null;
     }
     private User elogin(String Email,String Pass){
+        if (!existedUser(Email)){
+            return null;
+        }
         ElasticsearchUser.GetUserTask get= new ElasticsearchUser.GetUserTask();
         User u;
         get.execute(Email);

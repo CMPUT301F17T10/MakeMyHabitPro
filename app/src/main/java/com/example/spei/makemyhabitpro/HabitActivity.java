@@ -62,6 +62,8 @@ public class HabitActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Download elastic Search
+
         setContentView(R.layout.activity_habit);
 
         Intent Mainintent = getIntent();
@@ -80,7 +82,7 @@ public class HabitActivity extends AppCompatActivity {
         Gson gson2 = new Gson();
         local_user = gson2.fromJson(user_data, User.class);
         UID = local_user.getUid();
-
+        dl_elastic_search();
         //create type spinner
         final Spinner typeSp = (Spinner) findViewById(R.id.typeSpinner);
         final String[] types = {"study", "work", "social", "entertainment", "sport", "other"};
@@ -104,7 +106,6 @@ public class HabitActivity extends AppCompatActivity {
         String user="";
 
         if (jsonString.length() > 0) {
-            startDateEt=(EditText)findViewById(R.id.startDate);
 
             Gson gson1 = new Gson();
             Type habitListType = new TypeToken<ArrayList<Habit>>(){}.getType();
@@ -122,7 +123,7 @@ public class HabitActivity extends AppCompatActivity {
                 deleteBt.setEnabled(false);
             }
 
-            startDateEt=(EditText)findViewById(R.id.startDate);
+
             //   startDateEt.setText(UID);
             //   detailEt=(EditText)findViewById(R.id.commonEt);
             //  detailEt.setText(user.toString());
@@ -160,6 +161,7 @@ public class HabitActivity extends AppCompatActivity {
             //      habitList.set(i,habit);
         }
         else{
+
             saveBt.setEnabled(false);
             deleteBt.setEnabled(false);
         }
@@ -172,6 +174,9 @@ public class HabitActivity extends AppCompatActivity {
         Type habitListType = new TypeToken<ArrayList<Habit>>(){}.getType();
         final ArrayList<Habit> habitList = gson.fromJson(jsonString, habitListType);
         int habitListIndex=(Integer)list.get(titleIndex);
+        Habit r=habitList.get(habitListIndex);
+        ElasticsearchHabit.DeleteHabitTask deleteHabitTask=new ElasticsearchHabit.DeleteHabitTask();
+        deleteHabitTask.execute(r);
         habitList.remove(habitListIndex);
         jsonString=gson.toJson(habitList);
         writeFile(jsonString);
@@ -179,6 +184,23 @@ public class HabitActivity extends AppCompatActivity {
         intent.putExtra(EXTRA_MESSAGE,user_data);
         startActivityForResult(intent,RESULT_OK);
 
+    }
+    public void dl_elastic_search(){
+        String habit_query = "{\n" +
+                "  \"query\": { \n" +
+                " \"match\" : { \"userId\" : \"" + UID +  "\" }}\n" +
+                "}";
+        Gson gson3 = new Gson();
+        Type habitListType = new TypeToken<ArrayList<Habit>>(){}.getType();
+        ElasticsearchHabit.GetHabits getHabits=new ElasticsearchHabit.GetHabits();
+        getHabits.execute(habit_query);
+        ArrayList<Habit> habits = new ArrayList<Habit>();
+        try {
+            habits = getHabits.get();
+        }catch (Exception e){
+        }
+        jsonString=gson3.toJson(habits);
+        writeFile(jsonString);
     }
     public void saveHabit(View view){
         Gson gson3 = new Gson();
@@ -188,7 +210,13 @@ public class HabitActivity extends AppCompatActivity {
         habit=getHabit(UID);
         habitList.set(habitListIndex,habit);
         jsonString=gson3.toJson(habitList);
+        for(Habit h:habitList){
+            ElasticsearchHabit.DeleteHabitTask deleteHabitTask=new ElasticsearchHabit.DeleteHabitTask();
+            deleteHabitTask.execute(h);
+            ElasticsearchHabit.AddHabitTask addHabitTask=new ElasticsearchHabit.AddHabitTask();
+            addHabitTask.execute(h);
 
+        }
 
 
         writeFile(jsonString);

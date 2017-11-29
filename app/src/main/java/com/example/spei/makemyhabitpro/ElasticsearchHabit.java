@@ -161,7 +161,7 @@ public class ElasticsearchHabit {
 
             try {
                 // TODO get the results of the query
-                //Log.d("AAA",String.valueOf(search_parameters[0]));
+                Log.d("AAA",String.valueOf(search));
                 SearchResult result = client.execute(search);
                 if (result.isSucceeded()) {
                     List<Habit> foundHistories
