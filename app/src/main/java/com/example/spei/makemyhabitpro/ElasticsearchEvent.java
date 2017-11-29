@@ -7,6 +7,7 @@ import com.searchly.jestdroid.DroidClientConfig;
 import com.searchly.jestdroid.JestClientFactory;
 import com.searchly.jestdroid.JestDroidClient;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.searchbox.client.JestResult;
@@ -125,12 +126,12 @@ public class ElasticsearchEvent {
 
 
     // TODO we need a function which gets tweets from elastic search
-    public static class GetEvents extends AsyncTask<String, Void,EventList> {
+    public static class GetEvents extends AsyncTask<String, Void,ArrayList<Event>> {
         @Override
-        protected EventList doInBackground(String... search_parameters) {
+        protected ArrayList<Event> doInBackground(String... search_parameters) {
             verifySettings();
 
-            EventList events = new EventList();
+            ArrayList<Event> events = new ArrayList<Event>();
 
             // TODO Build the query
             Search search = new Search.Builder(search_parameters[0])

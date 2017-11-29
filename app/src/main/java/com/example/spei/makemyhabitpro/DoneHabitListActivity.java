@@ -86,7 +86,7 @@ public class DoneHabitListActivity extends AppCompatActivity {
     protected void onStart() {
         // TODO Auto-generated method stub
         super.onStart();
-        loadFromFile();
+        //loadFromFile();
 //        if(Hlist!=null){
 //            HabitList=Hlist.getHabits();
 //        }else{
@@ -96,12 +96,28 @@ public class DoneHabitListActivity extends AppCompatActivity {
         //filter(HabitList);
 
         myHabitList = new ArrayList<Habit>();
-        for (Habit habit : HabitList) {
-            if (UID.equals(habit.getUserId())) {
-                myHabitList.add(habit);
-            }
 
+        String habit_query = "{\n" +
+                "  \"query\": { \n" +
+                " \"match\" : { \"userId\" : \"" + UID +  "\" }}\n" +
+                "}";
+        ElasticsearchHabit.GetHabits getHabits=new ElasticsearchHabit.GetHabits();
+        getHabits.execute(habit_query);
+        try {
+            myHabitList = getHabits.get();
+        }catch (Exception e){
         }
+
+
+
+
+
+//        for (Habit habit : HabitList) {
+//            if (UID.equals(habit.getUserId())) {
+//                myHabitList.add(habit);
+//            }
+//
+//        }
 
         adapter = new ArrayAdapter<Habit>(this,
                 R.layout.list_item, myHabitList);//adapter converts tweet to string
