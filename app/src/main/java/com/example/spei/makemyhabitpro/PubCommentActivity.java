@@ -64,6 +64,8 @@ public class PubCommentActivity extends AppCompatActivity {
                     deleteEventTask.execute(event);
                     ElasticsearchEvent.AddEventTask addEventTask = new ElasticsearchEvent.AddEventTask();
                     addEventTask.execute(event);
+
+                    connection.updateAll();
                 }else{
                     connection.editEvent(event);
                 }

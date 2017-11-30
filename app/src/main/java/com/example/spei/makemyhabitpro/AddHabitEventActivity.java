@@ -100,8 +100,9 @@ public class AddHabitEventActivity extends AppCompatActivity {
 
                 image =  ((BitmapDrawable) imageView.getDrawable()).getBitmap();
 
-                if (image.getByteCount() > 65536){
+                if (image.getByteCount() >= 65536){
                     Toast.makeText(getApplicationContext(), " The image need to be under 65536 bytes.",Toast.LENGTH_SHORT).show();
+                    image = null;
                 }
 
 
@@ -152,6 +153,7 @@ public class AddHabitEventActivity extends AppCompatActivity {
             if (connection.isConnected()) {
                 ElasticsearchEvent.AddEventTask task = new ElasticsearchEvent.AddEventTask();
                 task.execute(newEvent);
+                connection.updateAll();
 
             }else {
                 connection.addEvent(newEvent);

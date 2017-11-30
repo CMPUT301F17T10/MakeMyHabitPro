@@ -103,8 +103,9 @@ public class EventDetailActivity extends AppCompatActivity {
                 setResult(RESULT_OK);
                 newImage =  ((BitmapDrawable) imageView.getDrawable()).getBitmap();
 
-                if (newImage.getByteCount() > 65536){
+                if (newImage.getByteCount() >= 65536){
                     Toast.makeText(getApplicationContext(), " The image need to be under 65536 bytes.",Toast.LENGTH_SHORT).show();
+                    newImage = null;
                 }
 
 
@@ -188,6 +189,8 @@ public class EventDetailActivity extends AppCompatActivity {
                 deleteEventTask.execute(event);
                 ElasticsearchEvent.AddEventTask addEventTask = new ElasticsearchEvent.AddEventTask();
                 addEventTask.execute(event);
+
+                connection.updateAll();
             }else{
                 connection.editEvent(event);
             }
@@ -206,6 +209,8 @@ public class EventDetailActivity extends AppCompatActivity {
         if (connection.isConnected()) {
             ElasticsearchEvent.DeleteEventTask deleteEventTask = new ElasticsearchEvent.DeleteEventTask();
             deleteEventTask.execute(deleteEvent);
+
+            connection.updateAll();
         }else {
             connection.deleteEvent(deleteEvent);
         }

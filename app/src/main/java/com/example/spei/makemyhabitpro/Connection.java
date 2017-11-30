@@ -55,6 +55,7 @@ public class Connection {
                 ElasticsearchHabit.AddHabitTask addHabitTask = new ElasticsearchHabit.AddHabitTask();
                 addHabitTask.execute(i);
             }
+            addH.clear();
         }
 
         if (deleteH != null) {
@@ -63,6 +64,7 @@ public class Connection {
                 deleteHabitTask.execute(j);
 
             }
+            deleteH.clear();
         }
 
         if (editH != null) {
@@ -72,6 +74,7 @@ public class Connection {
                 ElasticsearchHabit.AddHabitTask addHabitTask = new ElasticsearchHabit.AddHabitTask();
                 addHabitTask.execute(k);
             }
+            editH.clear();
         }
 
 
@@ -80,6 +83,7 @@ public class Connection {
                 ElasticsearchEvent.AddEventTask addEventTask = new ElasticsearchEvent.AddEventTask();
                 addEventTask.execute(x);
             }
+            addE.clear();
         }
 
         if (deleteE != null) {
@@ -88,6 +92,7 @@ public class Connection {
                 deleteEventTask.execute(y);
 
             }
+            deleteE.clear();
         }
 
         if (editE != null) {
@@ -97,6 +102,7 @@ public class Connection {
                 ElasticsearchEvent.AddEventTask addEventTask = new ElasticsearchEvent.AddEventTask();
                 addEventTask.execute(z);
             }
+            editE.clear();
         }
     }
 
