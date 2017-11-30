@@ -190,6 +190,11 @@ public class EventDetailActivity extends AppCompatActivity {
     }
 
     private void deleteEvent(){
+        Event deleteEvent = eventList.get(position);
+
+        ElasticsearchEvent.DeleteEventTask deleteEventTask=new ElasticsearchEvent.DeleteEventTask();
+        deleteEventTask.execute(deleteEvent);
+
         eventList.remove(position);
         Toast.makeText(getApplicationContext(), " Delete the event",Toast.LENGTH_SHORT).show();
         saveInFile();

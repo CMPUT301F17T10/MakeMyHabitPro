@@ -78,22 +78,36 @@ public class EventListActivity extends AppCompatActivity {
     protected void onStart() {
         // TODO Auto-generated method stub
         super.onStart();
-        loadFromFile();
+        //loadFromFile();
 
-        if(eventList == null){
+//        if(eventList == null){
+//
+//            eventList = new ArrayList<Event>();
+//        }
 
-            eventList = new ArrayList<Event>();
-        }
 
 
 
         myEventList = new ArrayList<Event>();
-        for (Event event : eventList) {
-            if (UID.equals(event.getUID())) {
-                myEventList.add(event);
-            }
 
+        String event_query = "{\n" +
+                "  \"query\": { \n" +
+                " \"match\" : { \"UID\" : \"" + UID +  "\" }}\n" +
+                "}";
+        ElasticsearchEvent.GetEvents getEvents=new ElasticsearchEvent.GetEvents();
+        getEvents.execute(event_query);
+        try {
+            myEventList = getEvents.get();
+        }catch (Exception e){
         }
+
+
+//        for (Event event : eventList) {
+//            if (UID.equals(event.getUID())) {
+//                myEventList.add(event);
+//            }
+//
+//        }
 
 
         adapter = new ArrayAdapter<Event>(this,

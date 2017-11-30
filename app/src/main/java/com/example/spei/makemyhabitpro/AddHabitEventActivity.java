@@ -149,6 +149,11 @@ public class AddHabitEventActivity extends AppCompatActivity {
                 newEvent.setLocation(location);
             }
 
+            ElasticsearchEvent.AddEventTask task=new ElasticsearchEvent.AddEventTask();
+            task.execute(newEvent);
+
+
+
             EventList.add(newEvent);
 
             Toast.makeText(getApplicationContext(), " Add a new event",Toast.LENGTH_SHORT).show();
