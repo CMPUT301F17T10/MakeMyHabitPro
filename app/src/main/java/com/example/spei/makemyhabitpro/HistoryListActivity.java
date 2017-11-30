@@ -10,12 +10,14 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class HistoryListActivity extends AppCompatActivity {
@@ -29,7 +31,7 @@ public class HistoryListActivity extends AppCompatActivity {
     private ArrayList<Habit> Habits;
     private ArrayAdapter<Habit> adapter;
     private ListView Habitlist;
-    private String htype = "sport";
+    private String htype = "study";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,19 +51,31 @@ public class HistoryListActivity extends AppCompatActivity {
             }
 
         });
+        loadFromFile();
+        Hlist=new HabitList(Habits.get(0));
+        for (Habit h : Habits){
+            Hlist.add(h);
+        }
+        this.adapter = new ArrayAdapter<Habit>(this,
+                R.layout.list_item, Habits);//adapter converts tweet to string
+        this.Habitlist.setAdapter(adapter);
+        filter(htype);
+        this.adapter.notifyDataSetChanged();
+
     }
     private void dataGet(){}
 
     private void filter(String t){
         ArrayList<Habit> f =new ArrayList<Habit>();
-        for (Habit h:Habits
+        ArrayList<Habit> H= this.Hlist.getHabits();
+        Habits.clear();
+        for (Habit h:H
                 ) {
-            if (h.getType()==t){
-                f.add(h);
+            if (h.getType().equals(t)){
+                Habits.add(h);
             }
         }
-        Habits=f;
-        adapter.notifyDataSetChanged();
+
     }
     private  void to_filter(){
         Intent fintent = new Intent(this, FilterActivity.class);
@@ -84,24 +98,16 @@ public class HistoryListActivity extends AppCompatActivity {
     protected void onStart() {
         // TODO Auto-generated method stub
         super.onStart();
-        loadFromFile();
-        if(Hlist!=null){
-            Hlist.sort();
-            Habits=Hlist.getHabits();
-        }else{
-            Habits=new ArrayList<Habit>();
-        }
-        adapter = new ArrayAdapter<Habit>(this,
-                R.layout.list_item, Habits);//adapter converts tweet to string
-        Habitlist.setAdapter(adapter);
-        filter(htype);
+
+
     }
     private void loadFromFile() {
         try {
             FileInputStream fis=openFileInput(FILENAME);
             BufferedReader in= new BufferedReader(new InputStreamReader(fis));
             Gson gson= new Gson();
-            Hlist = gson.fromJson(in, HabitList.class);
+            Type habitListType = new TypeToken<ArrayList<Habit>>(){}.getType();
+            Habits = gson.fromJson(in, habitListType);
 
 
         } catch (FileNotFoundException e) {

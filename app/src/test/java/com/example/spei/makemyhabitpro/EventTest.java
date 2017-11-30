@@ -4,7 +4,6 @@ import android.location.Location;
 import android.test.ActivityInstrumentationTestCase2;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by spei on 11/18/17.
@@ -53,12 +52,12 @@ public class EventTest extends ActivityInstrumentationTestCase2 {
         assertEquals("pub", pub.get(0));
     }
 
-    public void testGetUrl_img (){
+    /*public void testGetUrl_img (){
         Habit habit = new Habit("userId", "title", "reason", "detail", "type","startDate");
         Event event = new Event(habit, "comment", "id", "UID");
         event.setUrl_img("Url_img");
         assertEquals("Url_img", event.getUrl_img());
-    }
+    }*/
 
     public void testLocation(){
         Habit habit = new Habit("userId", "title", "reason", "detail", "type","startDate");
