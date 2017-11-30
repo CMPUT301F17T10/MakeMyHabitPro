@@ -31,6 +31,7 @@ public class DoneHabitListActivity extends AppCompatActivity {
     private ArrayList<Habit> myHabitList;
     private ArrayAdapter<Habit> adapter;
     private ListView oldDoneHabitList;
+    private Connection connection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,8 @@ public class DoneHabitListActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         UID =  intent.getStringExtra("UID");
+
+        connection = new Connection(this);
 
         oldDoneHabitList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -86,38 +89,43 @@ public class DoneHabitListActivity extends AppCompatActivity {
     protected void onStart() {
         // TODO Auto-generated method stub
         super.onStart();
-        //loadFromFile();
-//        if(Hlist!=null){
-//            HabitList=Hlist.getHabits();
-//        }else{
-//            HabitList=new ArrayList<Habit>();
-//        }
 
-        //filter(HabitList);
 
         myHabitList = new ArrayList<Habit>();
 
-        String habit_query = "{\n" +
-                "  \"query\": { \n" +
-                " \"match\" : { \"userId\" : \"" + UID +  "\" }}\n" +
-                "}";
-        ElasticsearchHabit.GetHabits getHabits=new ElasticsearchHabit.GetHabits();
-        getHabits.execute(habit_query);
-        try {
-            myHabitList = getHabits.get();
-        }catch (Exception e){
+        if (connection.isConnected()) {
+
+            String habit_query = "{\n" +
+                    "  \"query\": { \n" +
+                    " \"match\" : { \"userId\" : \"" + UID + "\" }}\n" +
+                    "}";
+            ElasticsearchHabit.GetHabits getHabits = new ElasticsearchHabit.GetHabits();
+            getHabits.execute(habit_query);
+            try {
+                myHabitList = getHabits.get();
+            } catch (Exception e) {
+            }
+        }else{
+            loadFromFile();
+
+            if(HabitList == null){
+
+                HabitList = new ArrayList<Habit>();
+            }
+
+            for (Habit habit : HabitList) {
+                if (UID.equals(habit.getUserId())) {
+                    myHabitList.add(habit);
+                }
+
+            }
         }
 
 
 
 
 
-//        for (Habit habit : HabitList) {
-//            if (UID.equals(habit.getUserId())) {
-//                myHabitList.add(habit);
-//            }
-//
-//        }
+
 
         adapter = new ArrayAdapter<Habit>(this,
                 R.layout.list_item, myHabitList);//adapter converts tweet to string

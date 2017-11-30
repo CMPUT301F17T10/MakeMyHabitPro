@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity
     private ArrayList<Event> mainList;
     private ListView oldmailList;
     private String UID;
+    private Connection connection;
     public static final String EXTRA_MESSAGE = "com.example.MMHP.USERDATA";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +60,8 @@ public class MainActivity extends AppCompatActivity
         Gson gson = new Gson();
         local_user=gson.fromJson(user_data,User.class);
         UID=local_user.getUid();
+
+        connection = new Connection(this);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         Toast.makeText(getApplicationContext(), local_user.to_string(),Toast.LENGTH_SHORT).show();
@@ -186,12 +189,27 @@ public class MainActivity extends AppCompatActivity
     protected void onStart() {
         // TODO Auto-generated method stub
         super.onStart();
-        loadFromFile();
 
-        if(mainList == null){
-
+        if (connection.isConnected()){
             mainList = new ArrayList<Event>();
+
+
+            ElasticsearchEvent.GetEvents getEvents=new ElasticsearchEvent.GetEvents();
+            getEvents.execute("");
+            try {
+                mainList = getEvents.get();
+            }catch (Exception e){
+            }
+        }else {
+            loadFromFile();
+
+            if (mainList == null) {
+
+                mainList = new ArrayList<Event>();
+            }
         }
+
+
 
         adapter = new ArrayAdapter<Event>(this,
                 R.layout.list_item, mainList);

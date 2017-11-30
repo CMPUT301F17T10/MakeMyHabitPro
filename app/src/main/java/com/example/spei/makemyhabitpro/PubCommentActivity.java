@@ -35,6 +35,7 @@ public class PubCommentActivity extends AppCompatActivity {
     private ListView oldpubcomment;
     private EditText editComment;
     private ArrayAdapter<String> adapter;
+    private Connection connection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,8 @@ public class PubCommentActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         position = intent.getIntExtra("position02",0);
+
+        connection = new Connection(this);
 
         oldpubcomment = (ListView)findViewById(R.id.pub_commentList);
 
@@ -55,7 +58,18 @@ public class PubCommentActivity extends AppCompatActivity {
             public void onClick(View view) {
                 pub_comment = editComment.getText().toString();
                 pub_commentList.add(pub_comment);
-                //event.setPub_comment(pub_commentList);
+
+                if (connection.isConnected()){
+                    ElasticsearchEvent.DeleteEventTask deleteEventTask = new ElasticsearchEvent.DeleteEventTask();
+                    deleteEventTask.execute(event);
+                    ElasticsearchEvent.AddEventTask addEventTask = new ElasticsearchEvent.AddEventTask();
+                    addEventTask.execute(event);
+                }else{
+                    connection.editEvent(event);
+                }
+
+
+
                 adapter.notifyDataSetChanged();
                 saveInFile();
 
@@ -81,6 +95,16 @@ public class PubCommentActivity extends AppCompatActivity {
 //
 //            EventList = new ArrayList<Event>();
 //        }
+
+        if (connection.isConnected()){
+            ElasticsearchEvent.GetEvents getEvents=new ElasticsearchEvent.GetEvents();
+            getEvents.execute("");
+            try {
+                EventList = getEvents.get();
+            }catch (Exception e){
+            }
+        }
+
 
 
         event = EventList.get(position);

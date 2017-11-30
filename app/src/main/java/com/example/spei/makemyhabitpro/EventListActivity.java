@@ -31,6 +31,7 @@ public class EventListActivity extends AppCompatActivity {
     private String user_data;
     private static final String FILENAME="Eventl.SAV";
     private String UID;
+    private Connection connection;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,9 +43,9 @@ public class EventListActivity extends AppCompatActivity {
         local_user=gson.fromJson(user_data,User.class);
         UID=local_user.getUid();
 
+        connection = new Connection(this);
+
         Button addEventButton = (Button) findViewById(R.id.addevent);
-
-
         addEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,36 +79,39 @@ public class EventListActivity extends AppCompatActivity {
     protected void onStart() {
         // TODO Auto-generated method stub
         super.onStart();
-        //loadFromFile();
-
-//        if(eventList == null){
-//
-//            eventList = new ArrayList<Event>();
-//        }
-
-
-
 
         myEventList = new ArrayList<Event>();
 
-        String event_query = "{\n" +
-                "  \"query\": { \n" +
-                " \"match\" : { \"UID\" : \"" + UID +  "\" }}\n" +
-                "}";
-        ElasticsearchEvent.GetEvents getEvents=new ElasticsearchEvent.GetEvents();
-        getEvents.execute(event_query);
-        try {
-            myEventList = getEvents.get();
-        }catch (Exception e){
+        if (connection.isConnected()) {
+
+            String event_query = "{\n" +
+                    "  \"query\": { \n" +
+                    " \"match\" : { \"UID\" : \"" + UID + "\" }}\n" +
+                    "}";
+            ElasticsearchEvent.GetEvents getEvents = new ElasticsearchEvent.GetEvents();
+            getEvents.execute(event_query);
+            try {
+                myEventList = getEvents.get();
+            } catch (Exception e) {
+            }
+        }else{
+            loadFromFile();
+
+            if(eventList == null){
+
+                eventList = new ArrayList<Event>();
+            }
+
+            for (Event event : eventList) {
+                if (UID.equals(event.getUID())) {
+                    myEventList.add(event);
+                }
+
+            }
         }
 
 
-//        for (Event event : eventList) {
-//            if (UID.equals(event.getUID())) {
-//                myEventList.add(event);
-//            }
-//
-//        }
+
 
 
         adapter = new ArrayAdapter<Event>(this,
