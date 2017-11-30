@@ -1,7 +1,6 @@
 package com.example.spei.makemyhabitpro;
 
 import android.app.Service;
-import android.bluetooth.BluetoothClass;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;

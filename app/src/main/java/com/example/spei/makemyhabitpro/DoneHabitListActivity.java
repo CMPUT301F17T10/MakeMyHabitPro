@@ -122,11 +122,6 @@ public class DoneHabitListActivity extends AppCompatActivity {
         }
 
 
-
-
-
-
-
         adapter = new ArrayAdapter<Habit>(this,
                 R.layout.list_item, myHabitList);//adapter converts tweet to string
         oldDoneHabitList.setAdapter(adapter);
