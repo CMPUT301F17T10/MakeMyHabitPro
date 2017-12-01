@@ -190,23 +190,30 @@ public class MainActivity extends AppCompatActivity
         // TODO Auto-generated method stub
         super.onStart();
 
-        if (connection.isConnected()){
+//        if (connection.isConnected()){
+//            mainList = new ArrayList<Event>();
+//
+//
+//            ElasticsearchEvent.GetEvents getEvents=new ElasticsearchEvent.GetEvents();
+//            getEvents.execute("");
+//            try {
+//                mainList = getEvents.get();
+//            }catch (Exception e){
+//            }
+//        }else {
+//            loadFromFile();
+//
+//            if (mainList == null) {
+//
+//                mainList = new ArrayList<Event>();
+//            }
+//        }
+
+        loadFromFile();
+
+        if (mainList == null) {
+
             mainList = new ArrayList<Event>();
-
-
-            ElasticsearchEvent.GetEvents getEvents=new ElasticsearchEvent.GetEvents();
-            getEvents.execute("");
-            try {
-                mainList = getEvents.get();
-            }catch (Exception e){
-            }
-        }else {
-            loadFromFile();
-
-            if (mainList == null) {
-
-                mainList = new ArrayList<Event>();
-            }
         }
 
 

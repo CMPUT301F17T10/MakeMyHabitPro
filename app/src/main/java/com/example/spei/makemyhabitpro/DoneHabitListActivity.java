@@ -93,32 +93,47 @@ public class DoneHabitListActivity extends AppCompatActivity {
 
         myHabitList = new ArrayList<Habit>();
 
-        if (connection.isConnected()) {
+//        if (connection.isConnected()) {
+//
+//            String habit_query = "{\n" +
+//                    "  \"query\": { \n" +
+//                    " \"match\" : { \"userId\" : \"" + UID + "\" }}\n" +
+//                    "}";
+//            ElasticsearchHabit.GetHabits getHabits = new ElasticsearchHabit.GetHabits();
+//            getHabits.execute(habit_query);
+//            try {
+//                myHabitList = getHabits.get();
+//            } catch (Exception e) {
+//            }
+//        }else{
+//            loadFromFile();
+//
+//            if(HabitList == null){
+//
+//                HabitList = new ArrayList<Habit>();
+//            }
+//
+//            for (Habit habit : HabitList) {
+//                if (UID.equals(habit.getUserId())) {
+//                    myHabitList.add(habit);
+//                }
+//
+//            }
+//        }
 
-            String habit_query = "{\n" +
-                    "  \"query\": { \n" +
-                    " \"match\" : { \"userId\" : \"" + UID + "\" }}\n" +
-                    "}";
-            ElasticsearchHabit.GetHabits getHabits = new ElasticsearchHabit.GetHabits();
-            getHabits.execute(habit_query);
-            try {
-                myHabitList = getHabits.get();
-            } catch (Exception e) {
+
+        loadFromFile();
+
+        if(HabitList == null){
+
+            HabitList = new ArrayList<Habit>();
+        }
+
+        for (Habit habit : HabitList) {
+            if (UID.equals(habit.getUserId())) {
+                myHabitList.add(habit);
             }
-        }else{
-            loadFromFile();
 
-            if(HabitList == null){
-
-                HabitList = new ArrayList<Habit>();
-            }
-
-            for (Habit habit : HabitList) {
-                if (UID.equals(habit.getUserId())) {
-                    myHabitList.add(habit);
-                }
-
-            }
         }
 
 

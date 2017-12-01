@@ -150,14 +150,14 @@ public class AddHabitEventActivity extends AppCompatActivity {
             }
 
 
-            if (connection.isConnected()) {
-                ElasticsearchEvent.AddEventTask task = new ElasticsearchEvent.AddEventTask();
-                task.execute(newEvent);
-                connection.updateAll();
-
-            }else {
-                connection.addEvent(newEvent);
-            }
+//            if (connection.isConnected()) {
+//                ElasticsearchEvent.AddEventTask task = new ElasticsearchEvent.AddEventTask();
+//                task.execute(newEvent);
+//                connection.updateAll();
+//
+//            }else {
+//                connection.addEvent(newEvent);
+//            }
 
             EventList.add(newEvent);
             saveInFile();

@@ -59,16 +59,16 @@ public class PubCommentActivity extends AppCompatActivity {
                 pub_comment = editComment.getText().toString();
                 pub_commentList.add(pub_comment);
 
-                if (connection.isConnected()){
-                    ElasticsearchEvent.DeleteEventTask deleteEventTask = new ElasticsearchEvent.DeleteEventTask();
-                    deleteEventTask.execute(event);
-                    ElasticsearchEvent.AddEventTask addEventTask = new ElasticsearchEvent.AddEventTask();
-                    addEventTask.execute(event);
-
-                    connection.updateAll();
-                }else{
-                    connection.editEvent(event);
-                }
+//                if (connection.isConnected()){
+//                    ElasticsearchEvent.DeleteEventTask deleteEventTask = new ElasticsearchEvent.DeleteEventTask();
+//                    deleteEventTask.execute(event);
+//                    ElasticsearchEvent.AddEventTask addEventTask = new ElasticsearchEvent.AddEventTask();
+//                    addEventTask.execute(event);
+//
+//                    connection.updateAll();
+//                }else{
+//                    connection.editEvent(event);
+//                }
 
 
 
@@ -98,14 +98,14 @@ public class PubCommentActivity extends AppCompatActivity {
 //            EventList = new ArrayList<Event>();
 //        }
 
-        if (connection.isConnected()){
-            ElasticsearchEvent.GetEvents getEvents=new ElasticsearchEvent.GetEvents();
-            getEvents.execute("");
-            try {
-                EventList = getEvents.get();
-            }catch (Exception e){
-            }
-        }
+//        if (connection.isConnected()){
+//            ElasticsearchEvent.GetEvents getEvents=new ElasticsearchEvent.GetEvents();
+//            getEvents.execute("");
+//            try {
+//                EventList = getEvents.get();
+//            }catch (Exception e){
+//            }
+//        }
 
 
 

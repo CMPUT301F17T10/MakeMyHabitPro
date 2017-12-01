@@ -16,7 +16,9 @@ public class HabitList {
     }
 
        public void add(Habit h){
-           this.habits.add(h);
+           if (!contains(h)){
+               this.habits.add(h);
+           }
     }
 
     public void sort(){

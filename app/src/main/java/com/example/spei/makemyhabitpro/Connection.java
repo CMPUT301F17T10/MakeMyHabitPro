@@ -41,69 +41,69 @@ public class Connection {
     }
 
 
-    public void addHabit(Habit habit){addH.add(habit);}
-    public void deleteHabit(Habit habit){deleteH.add(habit);}
-    public void editHabit(Habit habit){editH.add(habit);}
-    public void addEvent(Event event){addE.add(event);}
-    public void deleteEvent(Event event){deleteE.add(event);}
-    public void editEvent(Event event){editE.add(event);}
-
-    public void updateAll(){
-
-        if(addH != null){
-            for(Habit i : addH) {
-                ElasticsearchHabit.AddHabitTask addHabitTask = new ElasticsearchHabit.AddHabitTask();
-                addHabitTask.execute(i);
-            }
-            addH.clear();
-        }
-
-        if (deleteH != null) {
-            for (Habit j : deleteH) {
-                ElasticsearchHabit.DeleteHabitTask deleteHabitTask = new ElasticsearchHabit.DeleteHabitTask();
-                deleteHabitTask.execute(j);
-
-            }
-            deleteH.clear();
-        }
-
-        if (editH != null) {
-            for (Habit k : editH) {
-                ElasticsearchHabit.DeleteHabitTask deleteHabitTask = new ElasticsearchHabit.DeleteHabitTask();
-                deleteHabitTask.execute(k);
-                ElasticsearchHabit.AddHabitTask addHabitTask = new ElasticsearchHabit.AddHabitTask();
-                addHabitTask.execute(k);
-            }
-            editH.clear();
-        }
-
-
-        if(addE != null){
-            for(Event x : addE) {
-                ElasticsearchEvent.AddEventTask addEventTask = new ElasticsearchEvent.AddEventTask();
-                addEventTask.execute(x);
-            }
-            addE.clear();
-        }
-
-        if (deleteE != null) {
-            for (Event y : deleteE) {
-                ElasticsearchEvent.DeleteEventTask deleteEventTask = new ElasticsearchEvent.DeleteEventTask();
-                deleteEventTask.execute(y);
-
-            }
-            deleteE.clear();
-        }
-
-        if (editE != null) {
-            for (Event z : editE) {
-                ElasticsearchEvent.DeleteEventTask deleteEventTask = new ElasticsearchEvent.DeleteEventTask();
-                deleteEventTask.execute(z);
-                ElasticsearchEvent.AddEventTask addEventTask = new ElasticsearchEvent.AddEventTask();
-                addEventTask.execute(z);
-            }
-            editE.clear();
-        }
-    }
-
-}
+//    public void addHabit(Habit habit){addH.add(habit);}
+//    public void deleteHabit(Habit habit){deleteH.add(habit);}
+//    public void editHabit(Habit habit){editH.add(habit);}
+//    public void addEvent(Event event){addE.add(event);}
+//    public void deleteEvent(Event event){deleteE.add(event);}
+//    public void editEvent(Event event){editE.add(event);}
+//
+//    public void updateAll(){
+//
+//        if(addH != null){
+//            for(Habit i : addH) {
+//                ElasticsearchHabit.AddHabitTask addHabitTask = new ElasticsearchHabit.AddHabitTask();
+//                addHabitTask.execute(i);
+//            }
+//            addH.clear();
+//        }
+//
+//        if (deleteH != null) {
+//            for (Habit j : deleteH) {
+//                ElasticsearchHabit.DeleteHabitTask deleteHabitTask = new ElasticsearchHabit.DeleteHabitTask();
+//                deleteHabitTask.execute(j);
+//
+//            }
+//            deleteH.clear();
+//        }
+//
+//        if (editH != null) {
+//            for (Habit k : editH) {
+//                ElasticsearchHabit.DeleteHabitTask deleteHabitTask = new ElasticsearchHabit.DeleteHabitTask();
+//                deleteHabitTask.execute(k);
+//                ElasticsearchHabit.AddHabitTask addHabitTask = new ElasticsearchHabit.AddHabitTask();
+//                addHabitTask.execute(k);
+//            }
+//            editH.clear();
+//        }
+//
+//
+//        if(addE != null){
+//            for(Event x : addE) {
+//                ElasticsearchEvent.AddEventTask addEventTask = new ElasticsearchEvent.AddEventTask();
+//                addEventTask.execute(x);
+//            }
+//            addE.clear();
+//        }
+//
+//        if (deleteE != null) {
+//            for (Event y : deleteE) {
+//                ElasticsearchEvent.DeleteEventTask deleteEventTask = new ElasticsearchEvent.DeleteEventTask();
+//                deleteEventTask.execute(y);
+//
+//            }
+//            deleteE.clear();
+//        }
+//
+//        if (editE != null) {
+//            for (Event z : editE) {
+//                ElasticsearchEvent.DeleteEventTask deleteEventTask = new ElasticsearchEvent.DeleteEventTask();
+//                deleteEventTask.execute(z);
+//                ElasticsearchEvent.AddEventTask addEventTask = new ElasticsearchEvent.AddEventTask();
+//                addEventTask.execute(z);
+//            }
+//            editE.clear();
+//        }
+//    }
+//
+  }

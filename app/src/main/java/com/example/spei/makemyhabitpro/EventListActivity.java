@@ -82,34 +82,48 @@ public class EventListActivity extends AppCompatActivity {
 
         myEventList = new ArrayList<Event>();
 
-        if (connection.isConnected()) {
+//        if (connection.isConnected()) {
+//
+//            String event_query = "{\n" +
+//                    "  \"query\": { \n" +
+//                    " \"match\" : { \"UID\" : \"" + UID + "\" }}\n" +
+//                    "}";
+//            ElasticsearchEvent.GetEvents getEvents = new ElasticsearchEvent.GetEvents();
+//            getEvents.execute(event_query);
+//            try {
+//                myEventList = getEvents.get();
+//            } catch (Exception e) {
+//            }
+//        }else{
+//            loadFromFile();
+//
+//            if(eventList == null){
+//
+//                eventList = new ArrayList<Event>();
+//            }
+//
+//            for (Event event : eventList) {
+//                if (UID.equals(event.getUID())) {
+//                    myEventList.add(event);
+//                }
+//
+//            }
+//        }
 
-            String event_query = "{\n" +
-                    "  \"query\": { \n" +
-                    " \"match\" : { \"UID\" : \"" + UID + "\" }}\n" +
-                    "}";
-            ElasticsearchEvent.GetEvents getEvents = new ElasticsearchEvent.GetEvents();
-            getEvents.execute(event_query);
-            try {
-                myEventList = getEvents.get();
-            } catch (Exception e) {
-            }
-        }else{
-            loadFromFile();
 
-            if(eventList == null){
+        loadFromFile();
 
-                eventList = new ArrayList<Event>();
-            }
+        if(eventList == null){
 
-            for (Event event : eventList) {
-                if (UID.equals(event.getUID())) {
-                    myEventList.add(event);
-                }
-
-            }
+            eventList = new ArrayList<Event>();
         }
 
+        for (Event event : eventList) {
+            if (UID.equals(event.getUID())) {
+                myEventList.add(event);
+            }
+
+        }
 
 
 

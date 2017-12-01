@@ -184,16 +184,16 @@ public class EventDetailActivity extends AppCompatActivity {
             }
 
 
-            if (connection.isConnected()){
-                ElasticsearchEvent.DeleteEventTask deleteEventTask = new ElasticsearchEvent.DeleteEventTask();
-                deleteEventTask.execute(event);
-                ElasticsearchEvent.AddEventTask addEventTask = new ElasticsearchEvent.AddEventTask();
-                addEventTask.execute(event);
-
-                connection.updateAll();
-            }else{
-                connection.editEvent(event);
-            }
+//            if (connection.isConnected()){
+//                ElasticsearchEvent.DeleteEventTask deleteEventTask = new ElasticsearchEvent.DeleteEventTask();
+//                deleteEventTask.execute(event);
+//                ElasticsearchEvent.AddEventTask addEventTask = new ElasticsearchEvent.AddEventTask();
+//                addEventTask.execute(event);
+//
+//                connection.updateAll();
+//            }else{
+//                connection.editEvent(event);
+//            }
 
             Toast.makeText(getApplicationContext(), " Change the event",Toast.LENGTH_SHORT).show();
             saveInFile();
@@ -206,14 +206,14 @@ public class EventDetailActivity extends AppCompatActivity {
     private void deleteEvent(){
         Event deleteEvent = eventList.get(position);
 
-        if (connection.isConnected()) {
-            ElasticsearchEvent.DeleteEventTask deleteEventTask = new ElasticsearchEvent.DeleteEventTask();
-            deleteEventTask.execute(deleteEvent);
-
-            connection.updateAll();
-        }else {
-            connection.deleteEvent(deleteEvent);
-        }
+//        if (connection.isConnected()) {
+//            ElasticsearchEvent.DeleteEventTask deleteEventTask = new ElasticsearchEvent.DeleteEventTask();
+//            deleteEventTask.execute(deleteEvent);
+//
+//            connection.updateAll();
+//        }else {
+//            connection.deleteEvent(deleteEvent);
+//        }
 
         eventList.remove(position);
         Toast.makeText(getApplicationContext(), " Delete the event",Toast.LENGTH_SHORT).show();
@@ -233,15 +233,15 @@ public class EventDetailActivity extends AppCompatActivity {
             eventList = new ArrayList<Event>();
         }
 
-        if (connection.isConnected()){
-
-            ElasticsearchEvent.GetEvents getEvents=new ElasticsearchEvent.GetEvents();
-            getEvents.execute("");
-            try {
-                eventList = getEvents.get();
-            }catch (Exception e){
-            }
-        }
+//        if (connection.isConnected()){
+//
+//            ElasticsearchEvent.GetEvents getEvents=new ElasticsearchEvent.GetEvents();
+//            getEvents.execute("");
+//            try {
+//                eventList = getEvents.get();
+//            }catch (Exception e){
+//            }
+//        }
 
         int temp = 0;
         for (Event event1 : eventList) {
