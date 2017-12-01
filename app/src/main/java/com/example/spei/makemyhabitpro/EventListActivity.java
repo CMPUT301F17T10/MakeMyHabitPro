@@ -130,7 +130,7 @@ public class EventListActivity extends AppCompatActivity {
         Collections.sort(myEventList, new Comparator<Event>() {
             @Override
             public int compare(Event e1, Event e2) {
-                return e1.getHabitDate().compareTo(e2.getHabitDate());
+                return e2.getHabitDate().compareTo(e1.getHabitDate());
             }
         });
 
