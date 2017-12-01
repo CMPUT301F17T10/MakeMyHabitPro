@@ -1,12 +1,15 @@
 package com.example.spei.makemyhabitpro;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -31,7 +34,9 @@ public class HistoryListActivity extends AppCompatActivity {
     private ArrayList<Habit> Habits;
     private ArrayAdapter<Habit> adapter;
     private ListView Habitlist;
-    private String htype = "study";
+    private String htype = "all";
+    private String searchTerm="";
+    private EditText searchEt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,45 +47,71 @@ public class HistoryListActivity extends AppCompatActivity {
         local_user=gson.fromJson(user_data,User.class);
         UID=local_user.getUid();
         Habitlist=(ListView) findViewById(R.id.Habitlist);
-        Button FilterButton = (Button) findViewById(R.id.filter);
-        FilterButton.setOnClickListener(new View.OnClickListener() {
+        searchEt = (EditText) findViewById(R.id.searchText);
+        final Button searchBt = (Button) findViewById(R.id.searchbutton);
+        searchBt.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
                 setResult(RESULT_OK);
-                to_filter();
+                searchTerm=searchEt.getText().toString();
+                filter(htype);
+                adapter.notifyDataSetChanged();
             }
-
         });
         loadFromFile();
         Hlist=new HabitList(Habits.get(0));
         for (Habit h : Habits){
             Hlist.add(h);
         }
+        Hlist.sort();
         this.adapter = new ArrayAdapter<Habit>(this,
                 R.layout.list_item, Habits);//adapter converts tweet to string
         this.Habitlist.setAdapter(adapter);
         filter(htype);
         this.adapter.notifyDataSetChanged();
+        Spinner typeSp=(Spinner)findViewById(R.id.historyType);
+        final String[] types = {"study", "work", "social", "entertainment", "sport", "other","all"};
+        ArrayAdapter<String> adapterType = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, types);
+        adapterType .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        typeSp.setAdapter(adapterType );
+        typeSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int typeIndex, long l) {
+                htype = types[typeIndex];
+                filter(htype);
+                adapter.notifyDataSetChanged();
+                //         Toast.makeText(HabitActivity.this, "your choice:"+types[i], Toast.LENGTH_LONG).show();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
 
     }
     private void dataGet(){}
 
     private void filter(String t){
-        ArrayList<Habit> f =new ArrayList<Habit>();
+        if(!t.equals("all")){
         ArrayList<Habit> H= this.Hlist.getHabits();
         Habits.clear();
         for (Habit h:H
                 ) {
             if (h.getType().equals(t)){
-                Habits.add(h);
+                search(h);
+            }
+        }}else{
+            ArrayList<Habit> H= this.Hlist.getHabits();
+            Habits.clear();
+            for (Habit h:H
+                    ) {
+
+                search(h);
+
             }
         }
 
     }
-    private  void to_filter(){
-        Intent fintent = new Intent(this, FilterActivity.class);
-        startActivityForResult(fintent,2);
-    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
@@ -92,7 +123,13 @@ public class HistoryListActivity extends AppCompatActivity {
 
         }
     }
-    private void search(String sth){}
+    private void search(Habit h){
+        String tilte=h.getTitle();
+        String detail=h.getDetail();
+        if (tilte.contains(searchTerm)|detail.contains(searchTerm)){
+            Habits.add(h);
+        }
+    }
     private void gotoMap(){}
     @Override
     protected void onStart() {

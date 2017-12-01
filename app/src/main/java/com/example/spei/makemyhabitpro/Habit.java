@@ -154,7 +154,7 @@ public class Habit implements Comparable<Habit>{
     @Override
     public String toString() {
 
-        return title + ", " + type;
+        return String.format("%s, %s, %s \n%s", title, type, lastActive,detail);
     }
 
     @Override
