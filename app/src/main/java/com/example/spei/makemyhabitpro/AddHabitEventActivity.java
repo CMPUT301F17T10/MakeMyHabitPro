@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2017Team X, CMPUT301, University of Alberta-All Rights Reserved
+ * You may use, distribute, or modify this code under terms and conditions of the Code of Student Behavior at University of Alberta.
+ * You can find a copy of the license in this project. Otherwise please contact spei@ualberta.ca
+ */
+
 package com.example.spei.makemyhabitpro;
 
 import android.content.Context;
@@ -36,6 +42,15 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.UUID;
 
+/**
+ * This class add a event to event list
+ * user need to input some parameters to create a new event
+ * @author spei
+ *
+ * @since 1.0
+ * @see java.io.BufferedReader
+ * @see AddHabitEventActivity
+ */
 public class AddHabitEventActivity extends AppCompatActivity {
 
     private static final int RESULT_LOAD_IMAGE = 1;
@@ -57,7 +72,6 @@ public class AddHabitEventActivity extends AppCompatActivity {
     private String habitS;
     private  String UID;
     private Connection connection;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,10 +146,13 @@ public class AddHabitEventActivity extends AppCompatActivity {
         }
     }
 
-    private void dataGet(){}
-    public void getEventList(){}
-    public void editEventList(){}
+//    private void dataGet(){}
+//    public void getEventList(){}
+//    public void editEventList(){}
 
+    /**
+     * save the new event
+     */
     private void saveEvent(){
         comment = editComment.getText().toString();
         if (comment != null && !comment.equals("") && comment.length() < 20) {
@@ -197,7 +214,10 @@ public class AddHabitEventActivity extends AppCompatActivity {
     }
 
 
-
+    /**
+     * create a unique id for event
+     * @return the id
+     */
 
     public static String getUUID(){
 
@@ -210,6 +230,11 @@ public class AddHabitEventActivity extends AppCompatActivity {
 //        return uuidStr;
     }
 
+    /**
+     * This mathod loads the json file.
+     * @throws RuntimeException
+     * @exception FileNotFoundException
+     */
     private void loadFromFile() {
         try {
             FileInputStream fis = openFileInput(FILENAME);
@@ -234,7 +259,9 @@ public class AddHabitEventActivity extends AppCompatActivity {
     }
 
 
-
+    /**
+     * Saves EventList into FILENAME, using Gson
+     */
     private void saveInFile() {
         try {
             FileOutputStream fos = openFileOutput(FILENAME,

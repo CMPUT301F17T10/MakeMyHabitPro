@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2017Team X, CMPUT301, University of Alberta-All Rights Reserved
+ * You may use, distribute, or modify this code under terms and conditions of the Code of Student Behavior at University of Alberta.
+ * You can find a copy of the license in this project. Otherwise please contact spei@ualberta.ca
+ */
+
 package com.example.spei.makemyhabitpro;
 
 import android.content.Context;
@@ -35,6 +41,16 @@ import java.util.ArrayList;
 import static com.example.spei.makemyhabitpro.R.id.imageView;
 import static com.example.spei.makemyhabitpro.R.id.saveBt;
 
+/**
+ * This class shows a event
+ * user can change parameters of event and add comment
+ * @author spei
+ *
+ * @since 1.0
+ * @see EventListActivity
+ * @see java.io.BufferedReader
+ * @see PubCommentActivity
+ */
 public class EventDetailActivity extends AppCompatActivity {
 
     private static final int RESULT_LOAD_IMAGE = 1;

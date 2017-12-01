@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2017Team X, CMPUT301, University of Alberta-All Rights Reserved
+ * You may use, distribute, or modify this code under terms and conditions of the Code of Student Behavior at University of Alberta.
+ * You can find a copy of the license in this project. Otherwise please contact spei@ualberta.ca
+ */
+
 package com.example.spei.makemyhabitpro;
 
 import android.content.Intent;
@@ -23,6 +29,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+/**
+ * This class shows a event list for user
+ * User add new event and check a exit event
+ * @author spei
+ *
+ * @since 1.0
+ * @see DoneHabitListActivity
+ * @see java.io.BufferedReader
+ * @see EventDetailActivity
+ * @see MainActivity
+ */
 public class EventListActivity extends AppCompatActivity {
 
     private ArrayList<Event> eventList;

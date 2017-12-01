@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2017Team X, CMPUT301, University of Alberta-All Rights Reserved
+  ~ You may use, distribute, or modify this code under terms and conditions of the Code of Student Behavior at University of Alberta.
+  ~ You can find a copy of the license in this project. Otherwise please contact spei@ualberta.ca
+  -->
+
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">

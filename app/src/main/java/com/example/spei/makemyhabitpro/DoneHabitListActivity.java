@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2017Team X, CMPUT301, University of Alberta-All Rights Reserved
+ * You may use, distribute, or modify this code under terms and conditions of the Code of Student Behavior at University of Alberta.
+ * You can find a copy of the license in this project. Otherwise please contact spei@ualberta.ca
+ */
+
 package com.example.spei.makemyhabitpro;
 
 import android.content.Intent;
@@ -22,6 +28,16 @@ import java.util.ArrayList;
 
 import static com.example.spei.makemyhabitpro.MainActivity.EXTRA_MESSAGE;
 
+/**
+ * This class shows a habit list for user
+ * user need to choose a habit to create a new event
+ * @author spei
+ *
+ * @since 1.0
+ * @see EventListActivity
+ * @see java.io.BufferedReader
+ * @see AddHabitEventActivity
+ */
 public class DoneHabitListActivity extends AppCompatActivity {
 
     private static final String FILENAME="Habits.SAV";
@@ -63,6 +79,10 @@ public class DoneHabitListActivity extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * back to EventList Activity
+     */
     public void back(){
         this.finish();
     }
@@ -93,6 +113,7 @@ public class DoneHabitListActivity extends AppCompatActivity {
 
         myHabitList = new ArrayList<Habit>();
 
+        //check the connection
 //        if (connection.isConnected()) {
 //
 //            String habit_query = "{\n" +
@@ -142,6 +163,10 @@ public class DoneHabitListActivity extends AppCompatActivity {
         oldDoneHabitList.setAdapter(adapter);
 
     }
+
+    /**
+     * lode habit list from local
+     */
     private void loadFromFile() {
         try {
             FileInputStream fis=openFileInput(FILENAME);

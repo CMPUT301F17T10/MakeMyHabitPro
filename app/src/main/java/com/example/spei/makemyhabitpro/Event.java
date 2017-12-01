@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2017Team X, CMPUT301, University of Alberta-All Rights Reserved
+ * You may use, distribute, or modify this code under terms and conditions of the Code of Student Behavior at University of Alberta.
+ * You can find a copy of the license in this project. Otherwise please contact spei@ualberta.ca
+ */
+
 package com.example.spei.makemyhabitpro;
 
 import android.content.Context;
@@ -12,6 +18,14 @@ import java.util.Date;
 
 /**
  * Created by spei on 11/17/17.
+ */
+
+/**
+ *Represents a event
+ *
+ * @author team 10
+ * @version  2.0
+ * @since 1.0
  */
 
 public class Event implements Comparable<Event>{
@@ -39,13 +53,17 @@ public class Event implements Comparable<Event>{
 
 
 
-    public void pub_comment(String comment){
-        if(this.pub_comment.isEmpty()){
-            this.pub_comment=new ArrayList<String>();
-        }
-        this.pub_comment.add(comment);
-    }
+//    public void pub_comment(String comment){
+//        if(this.pub_comment.isEmpty()){
+//            this.pub_comment=new ArrayList<String>();
+//        }
+//        this.pub_comment.add(comment);
+//    }
 
+    /**
+     * a bunch of getter and setter
+     * @return
+     */
     public String getId(){
         return this.id;
     }
@@ -86,12 +104,21 @@ public class Event implements Comparable<Event>{
         this.location = location;
     }
 
+    /**
+     * modify the form of out put
+     * @return
+     */
     @Override
     public String toString() {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         return habit.getTitle()+"  "+owner_comment+" \n"+dateFormat.format(happend);
     }
 
+    /**
+     * It has been used for sort method
+     * @param e
+     * @return
+     */
     @Override
     public int compareTo(Event e) {
         Date d1=this.happend;
