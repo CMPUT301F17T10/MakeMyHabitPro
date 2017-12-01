@@ -29,6 +29,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity
@@ -215,6 +217,13 @@ public class MainActivity extends AppCompatActivity
 
             mainList = new ArrayList<Event>();
         }
+
+        Collections.sort(mainList, new Comparator<Event>() {
+            @Override
+            public int compare(Event e1, Event e2) {
+                return e1.getHabitDate().compareTo(e2.getHabitDate());
+            }
+        });
 
 
 
