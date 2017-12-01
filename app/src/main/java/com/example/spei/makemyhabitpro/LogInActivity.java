@@ -83,6 +83,7 @@ public class LogInActivity extends AppCompatActivity {
                 if(!emailText.getText().toString().equals("") && !passText.getText().toString().equals("")) {
                     String Input_email=emailText.getText().toString();
                     String Input_pass=passText.getText().toString();
+                    if (!existedUser(Input_email)){
                     UUID uuid=UUID.randomUUID();
                     String uid = uuid.toString();
 
@@ -93,6 +94,9 @@ public class LogInActivity extends AppCompatActivity {
                             = new ElasticsearchUser.RegUserTask();
                     RegUserTask.execute(reg);
                     Toast.makeText(getApplicationContext(), "Signed Up",Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(getApplicationContext(), "USER NAME EXISTED",Toast.LENGTH_SHORT).show();
+                    }
 
                 } else {
                     // The fields are not filled.

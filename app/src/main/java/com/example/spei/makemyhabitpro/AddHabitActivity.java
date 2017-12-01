@@ -5,9 +5,9 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -27,6 +27,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 
 public class AddHabitActivity extends AppCompatActivity {
 
@@ -67,7 +68,7 @@ public class AddHabitActivity extends AppCompatActivity {
         Intent Mainintent = getIntent();
         user_data = Mainintent.getStringExtra(MainActivity.EXTRA_MESSAGE);
 
-        Button deleteBn=(Button)findViewById(R.id.deleteBt);
+        //   Button deleteBn=(Button)findViewById(R.id.deleteBt);
         Button saveBn=(Button)findViewById(R.id.saveBt);
         //type spinner
         Spinner typeSp = (Spinner) findViewById(R.id.typeSpinner);
@@ -101,21 +102,21 @@ public class AddHabitActivity extends AppCompatActivity {
         if(jsonString.toString().length()>0){
             Gson gson1 = new Gson();
             Type habitListType = new TypeToken<ArrayList<Habit>>(){}.getType();
-            this.habitList = gson1.fromJson(jsonString, habitListType);
-            for(i=0;i<this.habitList.size();i++){
-                if(UID.equals(this.habitList.get(i).getUserId())){
-                    titles.add(this.habitList.get(i).getTitle());
+            ArrayList<Habit> habitList = gson1.fromJson(jsonString, habitListType);
+            for(i=0;i<habitList.size();i++){
+                if(UID.equals(habitList.get(i).getUserId())){
+                    titles.add(habitList.get(i).getTitle());
                 }
             }
-            this.habitList.add(getHabit(UID));
-            jsonString=gson1.toJson(this.habitList,habitListType);
+            habitList.add(getHabit(UID));
+            jsonString=gson1.toJson(habitList,habitListType);
 
         }
         else{
-            this.habitList=new ArrayList<Habit>();
-            this.habitList.add(getHabit(UID));
+            habitList=new ArrayList<Habit>();
+            habitList.add(getHabit(UID));
             Gson gson1=new Gson();
-            jsonString=gson1.toJson(this.habitList);
+            jsonString=gson1.toJson(habitList);
         }
 
 
@@ -135,40 +136,14 @@ public class AddHabitActivity extends AppCompatActivity {
         }
         else{
             writeFile(jsonString);
-
-
-
-            for (Habit h:this.habitList){
-                if (exist(h)){
-                    continue;
-                }
-                ElasticsearchHabit.AddHabitTask task=new ElasticsearchHabit.AddHabitTask();
-                task.execute(h);
-            }
-
-
             Intent intent = new Intent(this, HabitActivity.class);
             intent.putExtra(EXTRA_MESSAGE, user_data);
             startActivityForResult(intent, RESULT_OK);
-
+            AddHabitActivity.this.finish();
         }
     }
 
-    private boolean exist(Habit h){
-        ElasticsearchHabit.IsExist e=new ElasticsearchHabit.IsExist();
-        e.execute(h.getUserId() + h.getTitle().toUpperCase());
-        try {
-            if(e.get()){
-                return true;
-            }
-            else{
-                return false;
-            }
-        }catch (Exception E) {
-                return false;
-        }
 
-    }
     public void selectDate(View view){
         //create date picker
         java.util.Calendar calendar = java.util.Calendar.getInstance();
@@ -223,13 +198,6 @@ public class AddHabitActivity extends AppCompatActivity {
         }
         return str;
     }
-    public void readfil(View view){
-        detailEt=(EditText)findViewById(R.id.commonEt);
-        jsonString=readFile();
-        detailEt.setText(jsonString.toString());
-    }
-
-
     public Habit getHabit(String uer) {
         Habit habit = new Habit();
         titleEt = (EditText) findViewById(R.id.titleEt);

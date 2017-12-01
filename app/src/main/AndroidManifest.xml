@@ -34,7 +34,8 @@
         <activity android:name=".AddHabitEventActivity" />
         <activity android:name=".HabitActivity" />
         <activity android:name=".AddHabitActivity" />
-        <activity android:name=".PubCommentActivity"></activity>
+        <activity android:name=".PubCommentActivity" />
+        <activity android:name=".DetailHabitActivity"></activity>
     </application>
 
 </manifest>
