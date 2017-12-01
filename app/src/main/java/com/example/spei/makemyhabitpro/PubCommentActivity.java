@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2017Team X, CMPUT301, University of Alberta-All Rights Reserved
+ * You may use, distribute, or modify this code under terms and conditions of the Code of Student Behavior at University of Alberta.
+ * You can find a copy of the license in this project. Otherwise please contact spei@ualberta.ca
+ */
+
 package com.example.spei.makemyhabitpro;
 
 import android.content.Context;
@@ -24,6 +30,15 @@ import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
+/**
+ * This class shows a public comment list
+ * Every user can add a comment
+ * @author spei
+ *
+ * @since 1.0
+ * @see EventDetailActivity
+ * @see java.io.BufferedReader
+ */
 public class PubCommentActivity extends AppCompatActivity {
 
     private static final String FILENAME="Eventl.SAV";
@@ -35,6 +50,7 @@ public class PubCommentActivity extends AppCompatActivity {
     private ListView oldpubcomment;
     private EditText editComment;
     private ArrayAdapter<String> adapter;
+    private Connection connection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +59,8 @@ public class PubCommentActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         position = intent.getIntExtra("position02",0);
+
+        connection = new Connection(this);
 
         oldpubcomment = (ListView)findViewById(R.id.pub_commentList);
 
@@ -55,7 +73,20 @@ public class PubCommentActivity extends AppCompatActivity {
             public void onClick(View view) {
                 pub_comment = editComment.getText().toString();
                 pub_commentList.add(pub_comment);
-                //event.setPub_comment(pub_commentList);
+
+//                if (connection.isConnected()){
+//                    ElasticsearchEvent.DeleteEventTask deleteEventTask = new ElasticsearchEvent.DeleteEventTask();
+//                    deleteEventTask.execute(event);
+//                    ElasticsearchEvent.AddEventTask addEventTask = new ElasticsearchEvent.AddEventTask();
+//                    addEventTask.execute(event);
+//
+//                    connection.updateAll();
+//                }else{
+//                    connection.editEvent(event);
+//                }
+
+
+
                 adapter.notifyDataSetChanged();
                 saveInFile();
 
@@ -81,6 +112,16 @@ public class PubCommentActivity extends AppCompatActivity {
 //
 //            EventList = new ArrayList<Event>();
 //        }
+
+//        if (connection.isConnected()){
+//            ElasticsearchEvent.GetEvents getEvents=new ElasticsearchEvent.GetEvents();
+//            getEvents.execute("");
+//            try {
+//                EventList = getEvents.get();
+//            }catch (Exception e){
+//            }
+//        }
+
 
 
         event = EventList.get(position);

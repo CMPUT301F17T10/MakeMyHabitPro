@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2017Team X, CMPUT301, University of Alberta-All Rights Reserved
+ * You may use, distribute, or modify this code under terms and conditions of the Code of Student Behavior at University of Alberta.
+ * You can find a copy of the license in this project. Otherwise please contact spei@ualberta.ca
+ */
+
 package com.example.spei.makemyhabitpro;
 
 import android.content.Intent;
@@ -22,6 +28,16 @@ import java.util.ArrayList;
 
 import static com.example.spei.makemyhabitpro.MainActivity.EXTRA_MESSAGE;
 
+/**
+ * This class shows a habit list for user
+ * user need to choose a habit to create a new event
+ * @author spei
+ *
+ * @since 1.0
+ * @see EventListActivity
+ * @see java.io.BufferedReader
+ * @see AddHabitEventActivity
+ */
 public class DoneHabitListActivity extends AppCompatActivity {
 
     private static final String FILENAME="Habits.SAV";
@@ -31,6 +47,7 @@ public class DoneHabitListActivity extends AppCompatActivity {
     private ArrayList<Habit> myHabitList;
     private ArrayAdapter<Habit> adapter;
     private ListView oldDoneHabitList;
+    private Connection connection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +58,8 @@ public class DoneHabitListActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         UID =  intent.getStringExtra("UID");
+
+        connection = new Connection(this);
 
         oldDoneHabitList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -60,6 +79,10 @@ public class DoneHabitListActivity extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * back to EventList Activity
+     */
     public void back(){
         this.finish();
     }
@@ -86,44 +109,64 @@ public class DoneHabitListActivity extends AppCompatActivity {
     protected void onStart() {
         // TODO Auto-generated method stub
         super.onStart();
-        //loadFromFile();
-//        if(Hlist!=null){
-//            HabitList=Hlist.getHabits();
-//        }else{
-//            HabitList=new ArrayList<Habit>();
-//        }
 
-        //filter(HabitList);
 
         myHabitList = new ArrayList<Habit>();
 
-        String habit_query = "{\n" +
-                "  \"query\": { \n" +
-                " \"match\" : { \"userId\" : \"" + UID +  "\" }}\n" +
-                "}";
-        ElasticsearchHabit.GetHabits getHabits=new ElasticsearchHabit.GetHabits();
-        getHabits.execute(habit_query);
-        try {
-            myHabitList = getHabits.get();
-        }catch (Exception e){
-        }
-
-
-
-
-
-//        for (Habit habit : HabitList) {
-//            if (UID.equals(habit.getUserId())) {
-//                myHabitList.add(habit);
+        //check the connection
+//        if (connection.isConnected()) {
+//
+//            String habit_query = "{\n" +
+//                    "  \"query\": { \n" +
+//                    " \"match\" : { \"userId\" : \"" + UID + "\" }}\n" +
+//                    "}";
+//            ElasticsearchHabit.GetHabits getHabits = new ElasticsearchHabit.GetHabits();
+//            getHabits.execute(habit_query);
+//            try {
+//                myHabitList = getHabits.get();
+//            } catch (Exception e) {
+//            }
+//        }else{
+//            loadFromFile();
+//
+//            if(HabitList == null){
+//
+//                HabitList = new ArrayList<Habit>();
 //            }
 //
+//            for (Habit habit : HabitList) {
+//                if (UID.equals(habit.getUserId())) {
+//                    myHabitList.add(habit);
+//                }
+//
+//            }
 //        }
+
+
+        loadFromFile();
+
+        if(HabitList == null){
+
+            HabitList = new ArrayList<Habit>();
+        }
+
+        for (Habit habit : HabitList) {
+            if (UID.equals(habit.getUserId())) {
+                myHabitList.add(habit);
+            }
+
+        }
+
 
         adapter = new ArrayAdapter<Habit>(this,
                 R.layout.list_item, myHabitList);//adapter converts tweet to string
         oldDoneHabitList.setAdapter(adapter);
 
     }
+
+    /**
+     * lode habit list from local
+     */
     private void loadFromFile() {
         try {
             FileInputStream fis=openFileInput(FILENAME);

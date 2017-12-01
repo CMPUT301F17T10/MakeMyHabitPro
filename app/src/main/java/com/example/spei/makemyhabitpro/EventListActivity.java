@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2017Team X, CMPUT301, University of Alberta-All Rights Reserved
+ * You may use, distribute, or modify this code under terms and conditions of the Code of Student Behavior at University of Alberta.
+ * You can find a copy of the license in this project. Otherwise please contact spei@ualberta.ca
+ */
+
 package com.example.spei.makemyhabitpro;
 
 import android.content.Intent;
@@ -20,7 +26,20 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
+/**
+ * This class shows a event list for user
+ * User add new event and check a exit event
+ * @author spei
+ *
+ * @since 1.0
+ * @see DoneHabitListActivity
+ * @see java.io.BufferedReader
+ * @see EventDetailActivity
+ * @see MainActivity
+ */
 public class EventListActivity extends AppCompatActivity {
 
     private ArrayList<Event> eventList;
@@ -31,6 +50,7 @@ public class EventListActivity extends AppCompatActivity {
     private String user_data;
     private static final String FILENAME="Eventl.SAV";
     private String UID;
+    private Connection connection;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,9 +62,9 @@ public class EventListActivity extends AppCompatActivity {
         local_user=gson.fromJson(user_data,User.class);
         UID=local_user.getUid();
 
+        connection = new Connection(this);
+
         Button addEventButton = (Button) findViewById(R.id.addevent);
-
-
         addEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,36 +98,59 @@ public class EventListActivity extends AppCompatActivity {
     protected void onStart() {
         // TODO Auto-generated method stub
         super.onStart();
-        //loadFromFile();
-
-//        if(eventList == null){
-//
-//            eventList = new ArrayList<Event>();
-//        }
-
-
-
 
         myEventList = new ArrayList<Event>();
 
-        String event_query = "{\n" +
-                "  \"query\": { \n" +
-                " \"match\" : { \"UID\" : \"" + UID +  "\" }}\n" +
-                "}";
-        ElasticsearchEvent.GetEvents getEvents=new ElasticsearchEvent.GetEvents();
-        getEvents.execute(event_query);
-        try {
-            myEventList = getEvents.get();
-        }catch (Exception e){
-        }
-
-
-//        for (Event event : eventList) {
-//            if (UID.equals(event.getUID())) {
-//                myEventList.add(event);
+//        if (connection.isConnected()) {
+//
+//            String event_query = "{\n" +
+//                    "  \"query\": { \n" +
+//                    " \"match\" : { \"UID\" : \"" + UID + "\" }}\n" +
+//                    "}";
+//            ElasticsearchEvent.GetEvents getEvents = new ElasticsearchEvent.GetEvents();
+//            getEvents.execute(event_query);
+//            try {
+//                myEventList = getEvents.get();
+//            } catch (Exception e) {
+//            }
+//        }else{
+//            loadFromFile();
+//
+//            if(eventList == null){
+//
+//                eventList = new ArrayList<Event>();
 //            }
 //
+//            for (Event event : eventList) {
+//                if (UID.equals(event.getUID())) {
+//                    myEventList.add(event);
+//                }
+//
+//            }
 //        }
+
+
+        loadFromFile();
+
+        if(eventList == null){
+
+            eventList = new ArrayList<Event>();
+        }
+
+        for (Event event : eventList) {
+            if (UID.equals(event.getUID())) {
+                myEventList.add(event);
+            }
+
+        }
+
+        Collections.sort(myEventList, new Comparator<Event>() {
+            @Override
+            public int compare(Event e1, Event e2) {
+                return e2.getHabitDate().compareTo(e1.getHabitDate());
+            }
+        });
+
 
 
         adapter = new ArrayAdapter<Event>(this,

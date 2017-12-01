@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2017Team X, CMPUT301, University of Alberta-All Rights Reserved
+ * You may use, distribute, or modify this code under terms and conditions of the Code of Student Behavior at University of Alberta.
+ * You can find a copy of the license in this project. Otherwise please contact spei@ualberta.ca
+ */
+
 package com.example.spei.makemyhabitpro;
 
 import android.content.Context;
@@ -31,6 +37,15 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.UUID;
 
+/**
+ * This class add a event to event list
+ * user need to input some parameters to create a new event
+ * @author spei
+ *
+ * @since 1.0
+ * @see java.io.BufferedReader
+ * @see AddHabitEventActivity
+ */
 public class AddHabitEventActivity extends AppCompatActivity {
 
     private static final int RESULT_LOAD_IMAGE = 1;
@@ -51,7 +66,7 @@ public class AddHabitEventActivity extends AppCompatActivity {
     private String id;
     private String habitS;
     private  String UID;
-
+    private Connection connection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,9 +79,7 @@ public class AddHabitEventActivity extends AppCompatActivity {
         habit=gson.fromJson(habitS,Habit.class);
         UID =  intent.getStringExtra("UID");
 
-
-
-
+        connection = new Connection(this);
 
         editComment = (EditText) findViewById(R.id.comment);
 
@@ -96,9 +109,10 @@ public class AddHabitEventActivity extends AppCompatActivity {
 
                 image =  ((BitmapDrawable) imageView.getDrawable()).getBitmap();
 
-                if (image.getByteCount() < 65536){
-                    newEvent.setImg(image);
-                }else {Toast.makeText(getApplicationContext(), " The image need to be under 65536 bytes.",Toast.LENGTH_SHORT).show();}
+                if (image.getByteCount() >= 65536){
+                    Toast.makeText(getApplicationContext(), " The image need to be under 65536 bytes.",Toast.LENGTH_SHORT).show();
+                    image = null;
+                }
 
 
 
@@ -127,10 +141,13 @@ public class AddHabitEventActivity extends AppCompatActivity {
         }
     }
 
-        private void dataGet(){}
-    public void getEventList(){}
-    public void editEventList(){}
+//    private void dataGet(){}
+//    public void getEventList(){}
+//    public void editEventList(){}
 
+    /**
+     * save the new event
+     */
     private void saveEvent(){
         comment = editComment.getText().toString();
         if (comment != null && !comment.equals("") && comment.length() < 20) {
@@ -144,17 +161,21 @@ public class AddHabitEventActivity extends AppCompatActivity {
                 newEvent.setLocation(location);
             }
 
-            ElasticsearchEvent.AddEventTask task=new ElasticsearchEvent.AddEventTask();
-            task.execute(newEvent);
 
-
+//            if (connection.isConnected()) {
+//                ElasticsearchEvent.AddEventTask task = new ElasticsearchEvent.AddEventTask();
+//                task.execute(newEvent);
+//                connection.updateAll();
+//
+//            }else {
+//                connection.addEvent(newEvent);
+//            }
 
             EventList.add(newEvent);
+            saveInFile();
 
             habit.doIt();
             Toast.makeText(getApplicationContext(), " Add a new event",Toast.LENGTH_SHORT).show();
-
-            saveInFile();
 
             finish();
         }else{
@@ -166,13 +187,16 @@ public class AddHabitEventActivity extends AppCompatActivity {
     protected void onStart() {
         // TODO Auto-generated method stub
         super.onStart();
+
+
         loadFromFile();
 
 
-        if(EventList == null){
+        if (EventList == null) {
 
             EventList = new ArrayList<Event>();
         }
+
 
         Drawable drawable = this.getResources().getDrawable(R.drawable.download);
         img = ((BitmapDrawable) drawable).getBitmap();
@@ -186,7 +210,10 @@ public class AddHabitEventActivity extends AppCompatActivity {
     }
 
 
-
+    /**
+     * create a unique id for event
+     * @return the id
+     */
 
     public static String getUUID(){
 
@@ -199,6 +226,11 @@ public class AddHabitEventActivity extends AppCompatActivity {
 //        return uuidStr;
     }
 
+    /**
+     * This mathod loads the json file.
+     * @throws RuntimeException
+     * @exception FileNotFoundException
+     */
     private void loadFromFile() {
         try {
             FileInputStream fis = openFileInput(FILENAME);
@@ -222,26 +254,10 @@ public class AddHabitEventActivity extends AppCompatActivity {
         }
     }
 
-//    private void loadFromFile1() {
-//        try {
-//            FileInputStream fis=openFileInput(FILENAME);
-//            BufferedReader in= new BufferedReader(new InputStreamReader(fis));
-//            Type habitListType = new TypeToken<ArrayList<Habit>>(){}.getType();
-//            Gson gson= new Gson();
-//            HabitList = gson.fromJson(in, habitListType);
-//
-//
-//        } catch (FileNotFoundException e) {
-//            // TODO Auto-generated catch block
-//            Toast.makeText(getApplicationContext(), "No records Find",Toast.LENGTH_SHORT).show();
-//
-//        } catch (IOException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//            throw new RuntimeException();
-//        }
-//    }
 
+    /**
+     * Saves EventList into FILENAME, using Gson
+     */
     private void saveInFile() {
         try {
             FileOutputStream fos = openFileOutput(FILENAME,

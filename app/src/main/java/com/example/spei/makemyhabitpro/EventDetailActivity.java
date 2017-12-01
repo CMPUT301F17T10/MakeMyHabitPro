@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2017Team X, CMPUT301, University of Alberta-All Rights Reserved
+ * You may use, distribute, or modify this code under terms and conditions of the Code of Student Behavior at University of Alberta.
+ * You can find a copy of the license in this project. Otherwise please contact spei@ualberta.ca
+ */
+
 package com.example.spei.makemyhabitpro;
 
 import android.content.Context;
@@ -35,6 +41,16 @@ import java.util.ArrayList;
 import static com.example.spei.makemyhabitpro.R.id.imageView;
 import static com.example.spei.makemyhabitpro.R.id.saveBt;
 
+/**
+ * This class shows a event
+ * user can change parameters of event and add comment
+ * @author spei
+ *
+ * @since 1.0
+ * @see EventListActivity
+ * @see java.io.BufferedReader
+ * @see PubCommentActivity
+ */
 public class EventDetailActivity extends AppCompatActivity {
 
     private static final int RESULT_LOAD_IMAGE = 1;
@@ -59,6 +75,7 @@ public class EventDetailActivity extends AppCompatActivity {
     private Button deleteButton;
     private Button imageButton;
     private Button locationButton;
+    private Connection connection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +86,7 @@ public class EventDetailActivity extends AppCompatActivity {
         eventId = intent.getStringExtra("eventId");
         UID =  intent.getStringExtra("UID");
 
-
+        connection = new Connection(this);
 
         editComment = (EditText) findViewById(R.id.comment);
         editLocation = (EditText) findViewById(R.id.location);
@@ -102,9 +119,10 @@ public class EventDetailActivity extends AppCompatActivity {
                 setResult(RESULT_OK);
                 newImage =  ((BitmapDrawable) imageView.getDrawable()).getBitmap();
 
-                if (newImage.getByteCount() < 65536){
-                    event.setImg(newImage);
-                }else {Toast.makeText(getApplicationContext(), " The image need to be under 65536 bytes.",Toast.LENGTH_SHORT).show();}
+                if (newImage.getByteCount() >= 65536){
+                    Toast.makeText(getApplicationContext(), " The image need to be under 65536 bytes.",Toast.LENGTH_SHORT).show();
+                    newImage = null;
+                }
 
 
             }
@@ -181,6 +199,18 @@ public class EventDetailActivity extends AppCompatActivity {
                 event.setLocation(location);
             }
 
+
+//            if (connection.isConnected()){
+//                ElasticsearchEvent.DeleteEventTask deleteEventTask = new ElasticsearchEvent.DeleteEventTask();
+//                deleteEventTask.execute(event);
+//                ElasticsearchEvent.AddEventTask addEventTask = new ElasticsearchEvent.AddEventTask();
+//                addEventTask.execute(event);
+//
+//                connection.updateAll();
+//            }else{
+//                connection.editEvent(event);
+//            }
+
             Toast.makeText(getApplicationContext(), " Change the event",Toast.LENGTH_SHORT).show();
             saveInFile();
             finish();
@@ -192,12 +222,19 @@ public class EventDetailActivity extends AppCompatActivity {
     private void deleteEvent(){
         Event deleteEvent = eventList.get(position);
 
-        ElasticsearchEvent.DeleteEventTask deleteEventTask=new ElasticsearchEvent.DeleteEventTask();
-        deleteEventTask.execute(deleteEvent);
+//        if (connection.isConnected()) {
+//            ElasticsearchEvent.DeleteEventTask deleteEventTask = new ElasticsearchEvent.DeleteEventTask();
+//            deleteEventTask.execute(deleteEvent);
+//
+//            connection.updateAll();
+//        }else {
+//            connection.deleteEvent(deleteEvent);
+//        }
 
         eventList.remove(position);
         Toast.makeText(getApplicationContext(), " Delete the event",Toast.LENGTH_SHORT).show();
         saveInFile();
+
         finish();
     }
 
@@ -212,6 +249,15 @@ public class EventDetailActivity extends AppCompatActivity {
             eventList = new ArrayList<Event>();
         }
 
+//        if (connection.isConnected()){
+//
+//            ElasticsearchEvent.GetEvents getEvents=new ElasticsearchEvent.GetEvents();
+//            getEvents.execute("");
+//            try {
+//                eventList = getEvents.get();
+//            }catch (Exception e){
+//            }
+//        }
 
         int temp = 0;
         for (Event event1 : eventList) {

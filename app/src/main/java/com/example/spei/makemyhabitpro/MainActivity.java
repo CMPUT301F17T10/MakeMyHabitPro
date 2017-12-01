@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2017Team X, CMPUT301, University of Alberta-All Rights Reserved
+ * You may use, distribute, or modify this code under terms and conditions of the Code of Student Behavior at University of Alberta.
+ * You can find a copy of the license in this project. Otherwise please contact spei@ualberta.ca
+ */
+
 package com.example.spei.makemyhabitpro;
 
 import android.app.usage.UsageEvents;
@@ -29,6 +35,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity
@@ -47,6 +55,7 @@ public class MainActivity extends AppCompatActivity
     private ArrayList<Event> mainList;
     private ListView oldmailList;
     private String UID;
+    private Connection connection;
     public static final String EXTRA_MESSAGE = "com.example.MMHP.USERDATA";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +68,8 @@ public class MainActivity extends AppCompatActivity
         Gson gson = new Gson();
         local_user=gson.fromJson(user_data,User.class);
         UID=local_user.getUid();
+
+        connection = new Connection(this);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         Toast.makeText(getApplicationContext(), local_user.to_string(),Toast.LENGTH_SHORT).show();
@@ -186,12 +197,41 @@ public class MainActivity extends AppCompatActivity
     protected void onStart() {
         // TODO Auto-generated method stub
         super.onStart();
+
+//        if (connection.isConnected()){
+//            mainList = new ArrayList<Event>();
+//
+//
+//            ElasticsearchEvent.GetEvents getEvents=new ElasticsearchEvent.GetEvents();
+//            getEvents.execute("");
+//            try {
+//                mainList = getEvents.get();
+//            }catch (Exception e){
+//            }
+//        }else {
+//            loadFromFile();
+//
+//            if (mainList == null) {
+//
+//                mainList = new ArrayList<Event>();
+//            }
+//        }
+
         loadFromFile();
 
-        if(mainList == null){
+        if (mainList == null) {
 
             mainList = new ArrayList<Event>();
         }
+
+        Collections.sort(mainList, new Comparator<Event>() {
+            @Override
+            public int compare(Event e1, Event e2) {
+                return e2.getHabitDate().compareTo(e1.getHabitDate());
+            }
+        });
+
+
 
         adapter = new ArrayAdapter<Event>(this,
                 R.layout.list_item, mainList);
