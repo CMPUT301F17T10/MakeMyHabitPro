@@ -54,7 +54,7 @@ import static com.example.spei.makemyhabitpro.R.id.saveBt;
  */
 public class EventDetailActivity extends AppCompatActivity {
 
-    private static final int RESULT_LOAD_IMAGE = 1;
+    private static final int RESULT_LOAD_IMAGE = 147;
     private static final String FILENAME="Eventl.SAV";
     private Event event;
     private ArrayList<Event> eventList;
@@ -96,16 +96,70 @@ public class EventDetailActivity extends AppCompatActivity {
         titletext = (TextView) findViewById(R.id.habittextView);
         detailtext = (TextView) findViewById(R.id.habitdetailtextView);
 
-
-
-
-
-
         imageView = (ImageView) findViewById(R.id.eventImageView3);
+        imageButton = (Button) findViewById(R.id.eventImageButton3);
+
+        locationButton = (Button) findViewById(R.id.locationbutton);
+
+
+
+        loadFromFile();
+
+        if(eventList == null){
+
+            eventList = new ArrayList<Event>();
+        }
+
+//        if (connection.isConnected()){
+//
+//            ElasticsearchEvent.GetEvents getEvents=new ElasticsearchEvent.GetEvents();
+//            getEvents.execute("");
+//            try {
+//                eventList = getEvents.get();
+//            }catch (Exception e){
+//            }
+//        }
+
+        int temp = 0;
+        for (Event event1 : eventList) {
+            if (eventId.equals(event1.getId())) {
+                position = temp;
+                break;
+            }
+            temp++;
+
+        }
+
+        event = eventList.get(position);
+        habit = event.getHabit();
+        id = event.getId();
+        String encodeImage4 = event.getImg();
+        byte [] encodeByte=Base64.decode(encodeImage4,Base64.DEFAULT);
+        image = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+        location = event.getLocation();
+
+        if (!UID.equals(event.getUID())){
+            saveButton.setEnabled(false);
+            deleteButton.setEnabled(false);
+            editComment.setEnabled(false);
+            editLocation.setEnabled(false);
+            imageView.setEnabled(false);
+            imageButton.setEnabled(false);
+            locationButton.setEnabled(false);
+        }
+
+
+        titletext.setText("Title: "+habit.getTitle());
+        detailtext.setText("Detail: "+habit.getDetail());
+        editComment.setText(event.getOwner_comment());
+        imageView.setImageBitmap(image);
+        if (!location.equals("None")) {editLocation.setText(location);}
+
+
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setResult(RESULT_OK);
+                imageView.setImageDrawable(null);
 
                 Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
@@ -113,7 +167,7 @@ public class EventDetailActivity extends AppCompatActivity {
         });
 
 
-        imageButton = (Button) findViewById(R.id.eventImageButton3);
+
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -129,7 +183,7 @@ public class EventDetailActivity extends AppCompatActivity {
             }
         });
 
-        locationButton = (Button) findViewById(R.id.locationbutton);
+
         locationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -178,7 +232,7 @@ public class EventDetailActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RESULT_LOAD_IMAGE && requestCode == RESULT_OK && data != null) {
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
             Uri selectedImage = data.getData();
             imageView.setImageURI(selectedImage);
         }
@@ -243,62 +297,7 @@ public class EventDetailActivity extends AppCompatActivity {
         finish();
     }
 
-    @Override
-    protected void onStart() {
-        // TODO Auto-generated method stub
-        super.onStart();
-        loadFromFile();
 
-        if(eventList == null){
-
-            eventList = new ArrayList<Event>();
-        }
-
-//        if (connection.isConnected()){
-//
-//            ElasticsearchEvent.GetEvents getEvents=new ElasticsearchEvent.GetEvents();
-//            getEvents.execute("");
-//            try {
-//                eventList = getEvents.get();
-//            }catch (Exception e){
-//            }
-//        }
-
-        int temp = 0;
-        for (Event event1 : eventList) {
-            if (eventId.equals(event1.getId())) {
-                position = temp;
-                break;
-            }
-            temp++;
-
-        }
-
-        event = eventList.get(position);
-        habit = event.getHabit();
-        id = event.getId();
-        String encodeImage4 = event.getImg();
-        byte [] encodeByte=Base64.decode(encodeImage4,Base64.DEFAULT);
-        image = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-        location = event.getLocation();
-
-        if (!UID.equals(event.getUID())){
-            saveButton.setEnabled(false);
-            deleteButton.setEnabled(false);
-            editComment.setEnabled(false);
-            editLocation.setEnabled(false);
-            imageView.setEnabled(false);
-            imageButton.setEnabled(false);
-            locationButton.setEnabled(false);
-        }
-
-
-        titletext.setText("Title: "+habit.getTitle());
-        detailtext.setText("Detail: "+habit.getDetail());
-        editComment.setText(event.getOwner_comment());
-        imageView.setImageBitmap(image);
-        if (!location.equals("None")) {editLocation.setText(location);}
-    }
 
 
 

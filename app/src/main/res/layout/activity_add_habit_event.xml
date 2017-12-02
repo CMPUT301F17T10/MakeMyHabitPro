@@ -95,14 +95,13 @@
         android:id="@+id/uploadimage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Uploadimage"
-        tools:layout_constraintBottom_creator="1"
-        android:layout_marginStart="33dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_constraintLeft_creator="1"
         android:layout_marginBottom="141dp"
+        android:layout_marginLeft="33dp"
+        android:text="Upload image"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="33dp" />
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1" />
 
     <EditText
         android:id="@+id/editText2"
