@@ -103,6 +103,7 @@ public class EventDetailActivity extends AppCompatActivity {
 
 
 
+
         loadFromFile();
 
         if(eventList == null){
@@ -138,17 +139,6 @@ public class EventDetailActivity extends AppCompatActivity {
         image = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
         location = event.getLocation();
 
-        if (!UID.equals(event.getUID())){
-            saveButton.setEnabled(false);
-            deleteButton.setEnabled(false);
-            editComment.setEnabled(false);
-            editLocation.setEnabled(false);
-            imageView.setEnabled(false);
-            imageButton.setEnabled(false);
-            locationButton.setEnabled(false);
-        }
-
-
         titletext.setText("Title: "+habit.getTitle());
         detailtext.setText("Detail: "+habit.getDetail());
         editComment.setText(event.getOwner_comment());
@@ -156,10 +146,11 @@ public class EventDetailActivity extends AppCompatActivity {
         if (!location.equals("None")) {editLocation.setText(location);}
 
 
+
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                imageView.setImageDrawable(null);
+                //imageView.setImageDrawable(null);
 
                 Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
@@ -174,7 +165,7 @@ public class EventDetailActivity extends AppCompatActivity {
                 setResult(RESULT_OK);
                 newImage =  ((BitmapDrawable) imageView.getDrawable()).getBitmap();
 
-                if (newImage.getByteCount() >= 65536){
+                if (newImage.getByteCount() >= 65536*100){
                     Toast.makeText(getApplicationContext(), " The image need to be under 65536 bytes.",Toast.LENGTH_SHORT).show();
                     newImage = null;
                 }
@@ -298,6 +289,32 @@ public class EventDetailActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    protected void onStart() {
+        // TODO Auto-generated method stub
+        super.onStart();
+
+
+
+
+        if (!UID.equals(event.getUID())){
+            saveButton.setEnabled(false);
+            deleteButton.setEnabled(false);
+            editComment.setEnabled(false);
+            editLocation.setEnabled(false);
+            imageView.setEnabled(false);
+            imageButton.setEnabled(false);
+            locationButton.setEnabled(false);
+        }
+
+
+
+
+
+
+
+
+    }
 
 
 

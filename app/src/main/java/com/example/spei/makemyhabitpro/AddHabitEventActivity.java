@@ -102,7 +102,7 @@ public class AddHabitEventActivity extends AppCompatActivity {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                imageView.setImageDrawable(null);
+                //imageView.setImageDrawable(null);
 
                 Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
@@ -118,7 +118,7 @@ public class AddHabitEventActivity extends AppCompatActivity {
                 image =  ((BitmapDrawable) imageView.getDrawable()).getBitmap();
 
                 int test = image.getByteCount();
-                if (image.getByteCount() >= 65536){
+                if (image.getByteCount() >= 65536*100){
                     Toast.makeText(getApplicationContext(), " The image need to be under 65536 bytes.",Toast.LENGTH_SHORT).show();
                     image = null;
                 }
