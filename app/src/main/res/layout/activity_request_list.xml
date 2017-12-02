@@ -12,8 +12,10 @@
     android:weightSum="1">
 
     <ListView
-        android:id="@+id/Friendlist"
+        android:id="@+id/rlist"
         android:layout_width="match_parent"
+        android:choiceMode="singleChoice"
+        android:listSelector="@android:color/darker_gray"
         android:layout_height="278dp"
         android:layout_weight="0.33" />
 
@@ -25,18 +27,17 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/Fsearchbutton"
+        android:id="@+id/Accept"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.01"
-        android:text="Search" />
+        android:text="ACCEPT" />
 
     <Button
-        android:id="@+id/Request"
+        android:id="@+id/reject"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.05"
-        android:text="RequestList" />
+        android:layout_weight="0.02"
+        android:text="REJECT" />
 
 </LinearLayout>
-

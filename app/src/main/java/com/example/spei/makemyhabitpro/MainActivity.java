@@ -6,12 +6,9 @@
 
 package com.example.spei.makemyhabitpro;
 
-import android.app.usage.UsageEvents;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -20,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -72,7 +70,7 @@ public class MainActivity extends AppCompatActivity
         connection = new Connection(this);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        Toast.makeText(getApplicationContext(), local_user.to_string(),Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), local_user.toString(),Toast.LENGTH_SHORT).show();
         Toast.makeText(getApplicationContext(), local_user.get_lvl(),Toast.LENGTH_SHORT).show();
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -156,7 +154,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.Histortlist) {
             Historylist();
         } else if (id == R.id.Friend) {
-
+            Friend();
         } else if (id == R.id.Map) {
 
         }
@@ -189,6 +187,11 @@ public class MainActivity extends AppCompatActivity
 
     public void Todo(){
         Intent intent = new Intent(this, TodoActivity.class);
+        intent.putExtra(EXTRA_MESSAGE,user_data);
+        startActivityForResult(intent,RESULT_OK);
+    }
+    private void Friend(){
+        Intent intent=new Intent(this,FriendActivity.class);
         intent.putExtra(EXTRA_MESSAGE,user_data);
         startActivityForResult(intent,RESULT_OK);
     }

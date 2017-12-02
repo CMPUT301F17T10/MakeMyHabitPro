@@ -35,11 +35,12 @@ public class LogInActivity extends AppCompatActivity {
     private MainActivity main;
     private static final String FILENAME="USER.SAV";
     private static final String HabitFIle="Habits.SAV";
+    private static final String EVENTFILE="Eventl.SAV";
     private ArrayList<User> registerd;
     private EditText emailText;
     private EditText passText;
     public static final String EXTRA_MESSAGE = "com.example.MMHP.USERDATA";
-
+    private boolean conn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +50,7 @@ public class LogInActivity extends AppCompatActivity {
         emailText = (EditText) findViewById(R.id.Email);
         passText = (EditText) findViewById(R.id.logPass);
         Connection c= new Connection(this);
-        final Boolean conn=c.isConnected();
+        conn=c.isConnected();
 
         LoginButton.setOnClickListener(new View.OnClickListener() {
 
@@ -71,8 +72,9 @@ public class LogInActivity extends AppCompatActivity {
                         String user=gson.toJson(local_user);
                         Toast.makeText(getApplicationContext(), "Welcome",Toast.LENGTH_SHORT).show();
                         if (conn){
-                        updateUser();
-                        getHabits();
+                            updateUser();
+                            getHabits();
+                            getEvents();
                         }
                         to_Main(user);
 
@@ -184,7 +186,108 @@ public class LogInActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra(EXTRA_MESSAGE,u);
         startActivityForResult(intent,RESULT_OK);
+
+
     }
+    public void onDestroy() {
+
+        super.onDestroy();
+        if(conn & local_user!=null){
+            updateHabits();
+            updateEvents();
+        }
+
+    }
+
+    private void updateHabits(){
+        String query= "{\n"+
+                "\"query\":"+ "{\n"+
+                "\"match\":"+"{\n"+"\"userId\":\""+local_user.getUid()+"\""+
+                "}\n"+
+                "}\n"+
+                "}\n";
+        ElasticsearchHabit.GetHabits getHabittask= new ElasticsearchHabit.GetHabits();
+        getHabittask.execute(query);
+        ArrayList<Habit> h = new ArrayList<Habit>();
+        try {
+            h = getHabittask.get();
+        }catch (Exception e){
+            h = new ArrayList<Habit>();
+        }
+
+        ArrayList<Habit> habits= new ArrayList<Habit>();
+        try {
+            FileInputStream fis=openFileInput(HabitFIle);
+            BufferedReader in= new BufferedReader(new InputStreamReader(fis));
+            Gson gson= new Gson();
+
+
+            Type listType =new TypeToken<ArrayList<Habit>>(){}.getType();
+            habits = gson.fromJson(in, listType);
+            if (habits==null){
+                habits= new ArrayList<Habit>();
+            }
+
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            habits= new ArrayList<Habit>();
+        }
+
+
+        for (Habit H:h){
+            ElasticsearchHabit.DeleteHabitTask d=new ElasticsearchHabit.DeleteHabitTask();
+            d.execute(H);
+        }
+        for (Habit ha:habits){
+            ElasticsearchHabit.AddHabitTask a=new ElasticsearchHabit.AddHabitTask();
+            a.execute(ha);
+        }
+    }
+    private void updateEvents(){
+        String query= "{\n"+
+                "\"query\""+":"+ "{\n"+
+                "\"match_all\""+":"+"{\n"+
+                "}\n"+
+                "}\n"+
+                "}\n";
+        ElasticsearchEvent.GetEvents getEvent= new ElasticsearchEvent.GetEvents();
+        getEvent.execute(query);
+        ArrayList<Event> h = new ArrayList<Event>();
+        try {
+            h = getEvent.get();
+        }catch (Exception e){
+            h = new ArrayList<Event>();
+        }
+        ArrayList<Event> events= new ArrayList<Event>();
+        try {
+            FileInputStream fis=openFileInput(EVENTFILE);
+            BufferedReader in= new BufferedReader(new InputStreamReader(fis));
+            Gson gson= new Gson();
+
+
+            Type listType =new TypeToken<ArrayList<Event>>(){}.getType();
+            events = gson.fromJson(in, listType);
+            if (events==null){
+                events= new ArrayList<Event>();
+            }
+
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            events= new ArrayList<Event>();
+        }
+
+
+        for (Event e:h){
+            ElasticsearchEvent.DeleteEventTask d=new ElasticsearchEvent.DeleteEventTask();
+            d.execute(e);
+        }
+        for (Event E:events){
+            ElasticsearchEvent.AddEventTask a=new ElasticsearchEvent.AddEventTask();
+            a.execute(E);
+        }
+
+    }
+
     protected void onStart() {
         // TODO Auto-generated method stub
         super.onStart();
@@ -229,8 +332,8 @@ public class LogInActivity extends AppCompatActivity {
     }
     public void getHabits(){
         String query= "{\n"+
-            "\"query\""+":"+ "{\n"+
-            "\"match_all\""+":"+"{\n"+
+            "\"query\":"+ "{\n"+
+            "\"match\":"+"{\n"+"\"userId\":\""+local_user.getUid()+"\""+
             "}\n"+
         "}\n"+
         "}\n";
@@ -251,6 +354,34 @@ public class LogInActivity extends AppCompatActivity {
         out.flush();
 
         fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void getEvents(){
+        String query= "{\n"+
+                "\"query\""+":"+ "{\n"+
+                "\"match_all\""+":"+"{\n"+
+                "}\n"+
+                "}\n"+
+                "}\n";
+        ElasticsearchEvent.GetEvents getEvent= new ElasticsearchEvent.GetEvents();
+        getEvent.execute(query);
+        ArrayList<Event> h = new ArrayList<Event>();
+        try {
+            h = getEvent.get();
+        }catch (Exception e){
+            h = new ArrayList<Event>();
+        }
+        try{
+            FileOutputStream fos = openFileOutput(EVENTFILE, Context.MODE_PRIVATE);//goes stream based on filename
+            BufferedWriter out = new BufferedWriter( new OutputStreamWriter(fos)); //create buffer writer
+            Gson g = new Gson();
+            Type listType =new TypeToken<ArrayList<Event>>(){}.getType();
+            g.toJson(h,listType,out);
+            out.flush();
+
+            fos.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

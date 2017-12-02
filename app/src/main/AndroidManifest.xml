@@ -1,20 +1,16 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) 2017Team X, CMPUT301, University of Alberta-All Rights Reserved
   ~ You may use, distribute, or modify this code under terms and conditions of the Code of Student Behavior at University of Alberta.
   ~ You can find a copy of the license in this project. Otherwise please contact spei@ualberta.ca
-  -->
-
+-->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.spei.makemyhabitpro">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-
 
     <application
         android:allowBackup="true"
@@ -46,7 +42,9 @@
         <activity android:name=".HabitActivity" />
         <activity android:name=".AddHabitActivity" />
         <activity android:name=".PubCommentActivity" />
-        <activity android:name=".DetailHabitActivity"></activity>
+        <activity android:name=".DetailHabitActivity" />
+        <activity android:name=".SearchFriendActivity" />
+        <activity android:name=".RequestListActivity"></activity>
     </application>
 
 </manifest>

@@ -20,6 +20,7 @@ public class User {
     private String password;
     private String name;
     private ArrayList<String> friends =new ArrayList<String>();
+    private ArrayList<String> request=new ArrayList<String>();
     private Date resisted;
     private Date last_log_in = new Date();
     private int exp;
@@ -75,6 +76,9 @@ public class User {
         if (!this.friends.contains(uid)){
             this.friends.add(uid);
         }
+        if(this.request.contains(uid)){
+        this.request.remove(uid);
+        }
 
     }
 
@@ -92,11 +96,16 @@ public class User {
      * get the uid list for User's friends
      * @return
      */
-    public ArrayList getFriends(){
+    public ArrayList<String> getFriends(){
         return this.friends;
     }
+    public ArrayList<String> getRequest(){return this.request;}
 
-
+    public void request(String uid){
+        if (!this.request.contains(uid)){
+            this.request.add(uid);
+        }
+    }
     public void setName(String name){
         this.name=name;
     }
@@ -120,7 +129,8 @@ public class User {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         return  dateFormat.format(this.last_log_in);
     }
-    public String to_string(){
+    @Override
+    public String toString(){
         String S="Name: "+this.name;
         return S;
     }
