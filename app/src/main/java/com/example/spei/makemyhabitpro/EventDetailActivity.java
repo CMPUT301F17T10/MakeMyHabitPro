@@ -296,7 +296,6 @@ public class EventDetailActivity extends AppCompatActivity {
 
 
 
-
         if (!UID.equals(event.getUID())){
             saveButton.setEnabled(false);
             deleteButton.setEnabled(false);
@@ -306,9 +305,6 @@ public class EventDetailActivity extends AppCompatActivity {
             imageButton.setEnabled(false);
             locationButton.setEnabled(false);
         }
-
-
-
 
 
 
