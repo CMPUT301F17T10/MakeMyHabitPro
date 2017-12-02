@@ -9,8 +9,6 @@ package com.example.spei.makemyhabitpro;
 import android.location.Location;
 import android.test.ActivityInstrumentationTestCase2;
 
-import java.util.ArrayList;
-
 /**
  * Created by spei on 11/18/17.
  */
@@ -50,13 +48,13 @@ public class EventTest extends ActivityInstrumentationTestCase2 {
 
 
 
-    public void testGetPub_comment (){
+    /*public void testGetPub_comment (){
         Habit habit = new Habit("userId", "title", "reason", "detail", "type","startDate");
         Event event = new Event(habit, "comment", "id", "UID");
         event.pub_comment("pub");
         ArrayList<String> pub = event.getPub_comment();
         assertEquals("pub", pub.get(0));
-    }
+    }*/
 
     /*public void testGetUrl_img (){
         Habit habit = new Habit("userId", "title", "reason", "detail", "type","startDate");

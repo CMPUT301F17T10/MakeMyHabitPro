@@ -34,6 +34,7 @@ public class LogInActivity extends AppCompatActivity {
     private User local_user;
     private MainActivity main;
     private static final String FILENAME="USER.SAV";
+    private static final String HabitFIle="Habits.SAV";
     private ArrayList<User> registerd;
     private EditText emailText;
     private EditText passText;
@@ -47,7 +48,8 @@ public class LogInActivity extends AppCompatActivity {
         Button SignupButton = (Button) findViewById(R.id.Signup_button);
         emailText = (EditText) findViewById(R.id.Email);
         passText = (EditText) findViewById(R.id.logPass);
-
+        Connection c= new Connection(this);
+        final Boolean conn=c.isConnected();
 
         LoginButton.setOnClickListener(new View.OnClickListener() {
 
@@ -56,8 +58,11 @@ public class LogInActivity extends AppCompatActivity {
                 if(!emailText.getText().toString().equals("") && !passText.getText().toString().equals("")) {
                     String Input_email=emailText.getText().toString();
                     String Input_pass=passText.getText().toString();
-                    local_user=elogin(Input_email,Input_pass);
-
+                    if (conn == true) {
+                        local_user = elogin(Input_email, Input_pass);
+                    }else{
+                        local_user = logIn(Input_email,Input_pass);
+                    }
                     // 4.a check if username and password are OK
                     if(local_user != null )
                     {
@@ -65,7 +70,10 @@ public class LogInActivity extends AppCompatActivity {
                         Gson gson = new Gson();
                         String user=gson.toJson(local_user);
                         Toast.makeText(getApplicationContext(), "Welcome",Toast.LENGTH_SHORT).show();
+                        if (conn){
                         updateUser();
+                        getHabits();
+                        }
                         to_Main(user);
 
 
@@ -89,20 +97,19 @@ public class LogInActivity extends AppCompatActivity {
                 if(!emailText.getText().toString().equals("") && !passText.getText().toString().equals("")) {
                     String Input_email=emailText.getText().toString();
                     String Input_pass=passText.getText().toString();
-                    if (!existedUser(Input_email)){
+
                     UUID uuid=UUID.randomUUID();
                     String uid = uuid.toString();
 
                     User reg= new User(Input_email,uid,Input_pass);
                     registerd.add(reg);
                     saveInFile();
+                    if (conn){
                     ElasticsearchUser.RegUserTask RegUserTask
                             = new ElasticsearchUser.RegUserTask();
-                    RegUserTask.execute(reg);
+                    RegUserTask.execute(reg);}
                     Toast.makeText(getApplicationContext(), "Signed Up",Toast.LENGTH_SHORT).show();
-                    }else{
-                        Toast.makeText(getApplicationContext(), "USER NAME EXISTED",Toast.LENGTH_SHORT).show();
-                    }
+
 
                 } else {
                     // The fields are not filled.
@@ -218,6 +225,34 @@ public class LogInActivity extends AppCompatActivity {
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
             registerd= new ArrayList<User>();
+        }
+    }
+    public void getHabits(){
+        String query= "{\n"+
+            "\"query\""+":"+ "{\n"+
+            "\"match_all\""+":"+"{\n"+
+            "}\n"+
+        "}\n"+
+        "}\n";
+        ElasticsearchHabit.GetHabits getHabittask= new ElasticsearchHabit.GetHabits();
+        getHabittask.execute(query);
+        ArrayList<Habit> h = new ArrayList<Habit>();
+        try {
+            h = getHabittask.get();
+        }catch (Exception e){
+            h = new ArrayList<Habit>();
+        }
+        try{
+        FileOutputStream fos = openFileOutput(HabitFIle, Context.MODE_PRIVATE);//goes stream based on filename
+        BufferedWriter out = new BufferedWriter( new OutputStreamWriter(fos)); //create buffer writer
+        Gson g = new Gson();
+        Type listType =new TypeToken<ArrayList<Habit>>(){}.getType();
+        g.toJson(h,listType,out);
+        out.flush();
+
+        fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

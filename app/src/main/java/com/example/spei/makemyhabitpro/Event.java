@@ -6,10 +6,7 @@
 
 package com.example.spei.makemyhabitpro;
 
-import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -111,8 +108,10 @@ public class Event implements Comparable<Event>{
     @Override
     public String toString() {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        return habit.getTitle()+"  "+owner_comment+" \n"+dateFormat.format(happend);
-    }
+
+        return habit.getTitle() + "  " + owner_comment + " \n" + dateFormat.format(happend) + " \n";
+
+        }
 
     /**
      * It has been used for sort method

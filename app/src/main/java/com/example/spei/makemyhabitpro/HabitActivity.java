@@ -82,13 +82,13 @@ public class HabitActivity extends AppCompatActivity {
 
         ListView habitLt = (ListView) findViewById(R.id.habitLt);
 
-        ArrayList<String> titles = null;
+        ArrayList<String> titles = new ArrayList<String>();
         if (jsonString.length() > 0) {
             Gson gson1 = new Gson();
             Type habitListType = new TypeToken<ArrayList<Habit>>() {
             }.getType();
             final ArrayList<Habit> habitList = gson1.fromJson(jsonString, habitListType);
-            titles = new ArrayList<String>();
+
             for (i = 0; i < habitList.size(); i++) {
                 if (UID.equals(habitList.get(i).getUserId())) {
                     titles.add(habitList.get(i).getTitle());
