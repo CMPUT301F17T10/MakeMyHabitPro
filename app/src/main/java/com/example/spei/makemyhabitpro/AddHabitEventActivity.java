@@ -9,12 +9,14 @@ package com.example.spei.makemyhabitpro;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,6 +29,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -155,8 +158,16 @@ public class AddHabitEventActivity extends AppCompatActivity {
             newEvent = new Event(habit, comment, id, UID);
 
             if (image != null ) {
-                newEvent.setImg(image);
-            }else {newEvent.setImg(img);}
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                image.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+                String encodeImage = Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT);
+                newEvent.setImg(encodeImage);
+            }else {
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                img.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+                String encodeImage1 = Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT);
+                newEvent.setImg(encodeImage1);
+            }
             if(location != null){
                 newEvent.setLocation(location);
             }
@@ -198,9 +209,13 @@ public class AddHabitEventActivity extends AppCompatActivity {
         }
 
 
-        Drawable drawable = this.getResources().getDrawable(R.drawable.download);
-        img = ((BitmapDrawable) drawable).getBitmap();
+        //Drawable drawable = this.getResources().getDrawable(R.drawable.download);
+        //img = ((BitmapDrawable) drawable).getBitmap();
+
+        img = BitmapFactory.decodeResource(getResources(),
+                R.drawable.download);
         imageView.setImageBitmap(img);
+
 
 
 

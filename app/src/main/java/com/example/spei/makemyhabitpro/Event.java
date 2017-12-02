@@ -30,7 +30,7 @@ public class Event implements Comparable<Event>{
     private String UID;
     private Habit habit;
     private Date happend;
-    private Bitmap img;
+    private String img;
     private String owner_comment;
     private String location;
     private ArrayList<String> pub_comment;
@@ -82,14 +82,14 @@ public class Event implements Comparable<Event>{
         return this.pub_comment;
     }
     public void setPub_comment(ArrayList<String> pub_comment){this.pub_comment = pub_comment;}
-    public Bitmap getImg(){
+    public String getImg(){
         return this.img;
     }
     public String getLocation(){
         return  this.location;
     }
 
-    public void setImg(Bitmap img) {
+    public void setImg(String img) {
         this.img = img;
     }
 
@@ -109,7 +109,7 @@ public class Event implements Comparable<Event>{
     public String toString() {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
-        return habit.getTitle() + "  " + owner_comment + " \n" + dateFormat.format(happend) + " \n";
+        return "Habit title: "+habit.getTitle()+", Comment: "+owner_comment+" \n"+dateFormat.format(happend);
 
         }
 

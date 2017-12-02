@@ -9,6 +9,7 @@ package com.example.spei.makemyhabitpro;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.Image;
 import android.net.Uri;
@@ -193,7 +194,11 @@ public class EventDetailActivity extends AppCompatActivity {
         if (comment != null && !comment.equals("") && comment.length() < 20) {
             event.setOwner_comment(comment);
             if (newImage != null ){
-                event.setImg(newImage);
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                newImage.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+                String encodeImage2 = Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT);
+
+                event.setImg(encodeImage2);
             }
             if(location != null){
                 event.setLocation(location);
@@ -272,7 +277,9 @@ public class EventDetailActivity extends AppCompatActivity {
         event = eventList.get(position);
         habit = event.getHabit();
         id = event.getId();
-        image = event.getImg();
+        String encodeImage4 = event.getImg();
+        byte [] encodeByte=Base64.decode(encodeImage4,Base64.DEFAULT);
+        image = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
         location = event.getLocation();
 
         if (!UID.equals(event.getUID())){
