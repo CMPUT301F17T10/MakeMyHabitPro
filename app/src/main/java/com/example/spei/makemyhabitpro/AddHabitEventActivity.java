@@ -51,7 +51,7 @@ import java.util.UUID;
  */
 public class AddHabitEventActivity extends AppCompatActivity {
 
-    private static final int RESULT_LOAD_IMAGE = 1;
+    private static final int RESULT_LOAD_IMAGE = 147;
     private static final String FILENAME="Eventl.SAV";
     private ArrayList<Event> EventList;
     private TextView titletext;
@@ -68,7 +68,7 @@ public class AddHabitEventActivity extends AppCompatActivity {
     private int position;
     private String id;
     private String habitS;
-    private  String UID;
+    private String UID;
     private Connection connection;
 
     @Override
@@ -94,10 +94,15 @@ public class AddHabitEventActivity extends AppCompatActivity {
 
 
         imageView = (ImageView) findViewById(R.id.imageView2);
+
+        img = BitmapFactory.decodeResource(getResources(),
+                R.drawable.download);
+        imageView.setImageBitmap(img);
+
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setResult(RESULT_OK);
+                imageView.setImageDrawable(null);
 
                 Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
@@ -112,6 +117,7 @@ public class AddHabitEventActivity extends AppCompatActivity {
 
                 image =  ((BitmapDrawable) imageView.getDrawable()).getBitmap();
 
+                int test = image.getByteCount();
                 if (image.getByteCount() >= 65536){
                     Toast.makeText(getApplicationContext(), " The image need to be under 65536 bytes.",Toast.LENGTH_SHORT).show();
                     image = null;
@@ -138,8 +144,18 @@ public class AddHabitEventActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RESULT_LOAD_IMAGE && requestCode == RESULT_OK && data != null) {
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
+
             Uri selectedImage = data.getData();
+
+//            try {
+//                Bitmap bitmap1 = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
+//                // Log.d(TAG, String.valueOf(bitmap));
+//
+//                imageView.setImageBitmap(bitmap1);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
             imageView.setImageURI(selectedImage);
         }
     }
@@ -207,16 +223,6 @@ public class AddHabitEventActivity extends AppCompatActivity {
 
             EventList = new ArrayList<Event>();
         }
-
-
-        //Drawable drawable = this.getResources().getDrawable(R.drawable.download);
-        //img = ((BitmapDrawable) drawable).getBitmap();
-
-        img = BitmapFactory.decodeResource(getResources(),
-                R.drawable.download);
-        imageView.setImageBitmap(img);
-
-
 
 
 
