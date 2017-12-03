@@ -64,13 +64,14 @@ public class LogInActivity extends AppCompatActivity {
                     }else{
                         local_user = logIn(Input_email,Input_pass);
                     }
-                    // 4.a check if username and password are OK
+
                     if(local_user != null )
                     {
                         // Not null and OK, launch the activity
                         Gson gson = new Gson();
                         String user=gson.toJson(local_user);
                         Toast.makeText(getApplicationContext(), "Welcome",Toast.LENGTH_SHORT).show();
+                        //online
                         if (conn){
                             updateUser();
                             getHabits();
@@ -124,6 +125,10 @@ public class LogInActivity extends AppCompatActivity {
 
         });
     }
+
+    /**
+     * this function is used to updateUser for exp and last log in
+     */
     protected void updateUser(){
 
         ElasticsearchUser.DeleteUser update= new ElasticsearchUser.DeleteUser();
@@ -134,6 +139,13 @@ public class LogInActivity extends AppCompatActivity {
             RegUserTask.execute(local_user);
         }
     }
+
+    /**
+     * offline login, just check local file for users
+     * @param Email the user name for log in
+     * @param Pass pass word
+     * @return null if failed(wrong pass or user not exist), user if find and match
+     */
     private User logIn(String Email,String Pass){
 
         if (registerd.isEmpty()){
@@ -149,6 +161,13 @@ public class LogInActivity extends AppCompatActivity {
         }
         return null;
     }
+
+    /**
+     * online version of log in
+     * @param Email the user name for log in
+     * @param Pass pass word
+     * @return null if failed(wrong pass or user not exist), user if find and match
+     */
     private User elogin(String Email,String Pass){
         if (!existedUser(Email)){
             return null;
@@ -168,6 +187,12 @@ public class LogInActivity extends AppCompatActivity {
         }
         return null;
     }
+
+    /**
+     * check the elastic search for user existence
+     * @param name user name
+     * @return true for find false for not find
+     */
     private boolean existedUser (String name) {
         ElasticsearchUser.IsExist isExist = new ElasticsearchUser.IsExist();
         isExist.execute(name);
@@ -182,6 +207,11 @@ public class LogInActivity extends AppCompatActivity {
             return false;
         }
     }
+
+    /**
+     * start the main activity and pass the user data
+     * @param u user data
+     */
     private void to_Main(String u){
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra(EXTRA_MESSAGE,u);
@@ -189,6 +219,9 @@ public class LogInActivity extends AppCompatActivity {
 
 
     }
+    /**
+     * If online, update the habits and events here
+     */
     public void onDestroy() {
 
         super.onDestroy();
@@ -199,6 +232,9 @@ public class LogInActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * update the local habits file into elastic search
+     */
     private void updateHabits(){
         String query= "{\n"+
                 "\"query\":"+ "{\n"+
@@ -243,6 +279,10 @@ public class LogInActivity extends AppCompatActivity {
             a.execute(ha);
         }
     }
+
+    /**
+     * update Events for elastic search
+     */
     private void updateEvents(){
         String query= "{\n"+
                 "\"query\""+":"+ "{\n"+
@@ -294,6 +334,10 @@ public class LogInActivity extends AppCompatActivity {
         loadFromFile();
 
     }
+
+    /**
+     * save the user to local
+     */
     private void saveInFile() {
         try {
             FileOutputStream fos = openFileOutput(FILENAME, Context.MODE_PRIVATE);//goes stream based on filename
@@ -312,6 +356,10 @@ public class LogInActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+    /**
+     * load the local users
+     */
     private void loadFromFile() {
         try {
             FileInputStream fis=openFileInput(FILENAME);
@@ -330,6 +378,10 @@ public class LogInActivity extends AppCompatActivity {
             registerd= new ArrayList<User>();
         }
     }
+
+    /**
+     * pull the habits from elastic search
+     */
     public void getHabits(){
         String query= "{\n"+
             "\"query\":"+ "{\n"+
@@ -358,6 +410,11 @@ public class LogInActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+    /**
+     * pull the events from elastic search
+     */
+
     public void getEvents(){
         String query= "{\n"+
                 "\"query\""+":"+ "{\n"+
