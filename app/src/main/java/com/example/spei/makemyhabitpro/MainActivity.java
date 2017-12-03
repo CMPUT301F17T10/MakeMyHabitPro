@@ -213,6 +213,7 @@ public class MainActivity extends AppCompatActivity
     }
     private void tMap(){
         Intent intent=new Intent(this,MapActivity.class);
+        intent.putExtra(EXTRA_MESSAGE,user_data);
         startActivityForResult(intent,RESULT_OK);
 
     }

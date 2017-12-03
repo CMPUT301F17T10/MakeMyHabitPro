@@ -28,11 +28,21 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.lang.reflect.Type;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -42,13 +52,24 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private LocationManager locationManager;
     private double lat;
     private double lng;
-
+    private String user_data;
+    private User local_user;
+    private ArrayList<String> friends;
+    private ArrayList<Event> eventList;
+    private static final String FILENAME="Eventl.SAV";
+    private ArrayList<String> uids;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
+        Intent uintent = getIntent();
+        user_data=  uintent.getStringExtra(LogInActivity.EXTRA_MESSAGE);
+        Gson gson = new Gson();
+        local_user=gson.fromJson(user_data,User.class);
+        friends=local_user.getFriends();
+        uids=new ArrayList<String>();
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (!(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
                 || locationManager.isProviderEnabled((LocationManager.NETWORK_PROVIDER)))) {
@@ -82,7 +103,35 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         mapFragment.getMapAsync(MapActivity.this);
 
     }
+    @Override
+    protected void onStart(){
+        super.onStart();
+        loadFromFile();
+        getUid();
+    }
+    private void getUid(){
+        uids.clear();
+        String uid;
+        for(String s:friends){
+            uid=findUid(s);
+            if (uid!=null) {
+                uids.add(uid);
+            }
 
+        }
+
+    }
+    private String findUid(String s){
+        ElasticsearchUser.GetUserTask g=new ElasticsearchUser.GetUserTask();
+        g.execute(s);
+        User u;
+        try{
+            u=g.get();
+            return u.getUid();
+        }catch (Exception e){
+            return null;
+        }
+    }
     @Override
     protected void onDestroy() {
         try {
@@ -176,9 +225,49 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                     .title("My Location"));
             //      .snippet("National Air and Space Museum"));
             mMap.moveCamera(CameraUpdateFactory.newLatLng(POSITION));
+            for (Event e: eventList){
+                String u=e.getUID();
+                if (!uids.contains(u)){
+                    continue;
+                }
+                Double la=e.getLatitude();
+                Double lon=e.getLontitude();
+                LatLng p=new LatLng(la,lon);
+                if (CalculationByDistance(POSITION,p)>5){
+                    Marker m=mMap.addMarker(new MarkerOptions().position(p).title(e.getHabit().getTitle()).icon(BitmapDescriptorFactory.defaultMarker(200)));
+                }else{
+                    Marker m=mMap.addMarker(new MarkerOptions().position(p).title(e.getHabit().getTitle()).icon(BitmapDescriptorFactory.defaultMarker(100)));
+                }
+
+
+            }
 
         }
 
+    }
+    public double CalculationByDistance(LatLng StartP, LatLng EndP) {
+        int Radius = 6371;// radius of earth in Km
+        double lat1 = StartP.latitude;
+        double lat2 = EndP.latitude;
+        double lon1 = StartP.longitude;
+        double lon2 = EndP.longitude;
+        double dLat = Math.toRadians(lat2 - lat1);
+        double dLon = Math.toRadians(lon2 - lon1);
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
+                + Math.cos(Math.toRadians(lat1))
+                * Math.cos(Math.toRadians(lat2)) * Math.sin(dLon / 2)
+                * Math.sin(dLon / 2);
+        double c = 2 * Math.asin(Math.sqrt(a));
+        double valueResult = Radius * c;
+        double km = valueResult / 1;
+        DecimalFormat newFormat = new DecimalFormat("####");
+        int kmInDec = Integer.valueOf(newFormat.format(km));
+        double meter = valueResult % 1000;
+        int meterInDec = Integer.valueOf(newFormat.format(meter));
+        Log.i("Radius Value", "" + valueResult + "   KM  " + kmInDec
+                + " Meter   " + meterInDec);
+
+        return Radius * c;
     }
     @Override
     public void onRequestPermissionsResult(int requestCode,
@@ -193,6 +282,28 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 }
                 return;
             }
+        }
+    }
+    private void loadFromFile() {
+        try {
+            FileInputStream fis = openFileInput(FILENAME);
+            BufferedReader in = new BufferedReader(new InputStreamReader(fis));
+
+            Gson gson = new Gson();
+
+
+            Type listType = new TypeToken<ArrayList<Event>>() {
+            }.getType();
+
+            eventList = gson.fromJson(in, listType);
+
+
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            eventList = new ArrayList<Event>();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            throw new RuntimeException();
         }
     }
 
