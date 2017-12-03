@@ -178,12 +178,16 @@ public class EventDetailActivity extends AppCompatActivity {
         locationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setResult(RESULT_OK);
+                if (connection.isConnected()){
 
 
-
+                    editLocation.setText();
+                }else {
+                    Toast.makeText(getApplicationContext(), "No internet connection!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
+
 
 
         saveButton = (Button) findViewById(R.id.save_edit);

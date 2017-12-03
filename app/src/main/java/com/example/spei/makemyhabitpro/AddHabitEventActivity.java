@@ -60,10 +60,11 @@ public class AddHabitEventActivity extends AppCompatActivity {
     private TextView titletext;
     private TextView detailtext;
     private EditText editComment;
+    private EditText location;
     private ImageView imageView;
     private Bitmap image;
     private Bitmap img;
-    private String location;
+    private EditText location;
     private Event newEvent;
     private Habit habit;
     private String comment;
@@ -134,6 +135,22 @@ public class AddHabitEventActivity extends AppCompatActivity {
                 }
 
 
+
+            }
+        });
+
+        location = (EditText) findViewById(R.id.editText2);
+        Button locationB = (Button) findViewById(R.id.button2);
+        locationB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (connection.isConnected()){
+
+
+                    location.setText();
+                }else {
+                    Toast.makeText(getApplicationContext(), "No internet connection!",Toast.LENGTH_SHORT).show();
+                }
 
             }
         });
