@@ -6,6 +6,7 @@
 
 package com.example.spei.makemyhabitpro;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -114,6 +115,8 @@ public class EventDetailActivity extends AppCompatActivity {
         locationButton = (Button) findViewById(R.id.locationbutton);
 
 
+        requestPermission(Manifest.permission.ACCESS_FINE_LOCATION,
+                LOCATION_REQUEST_CODE);
 
 
         loadFromFile();

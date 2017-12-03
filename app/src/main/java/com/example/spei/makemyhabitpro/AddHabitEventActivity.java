@@ -81,6 +81,8 @@ public class AddHabitEventActivity extends AppCompatActivity {
     private String habitS;
     private String UID;
     private Connection connection;
+    private User local_user;
+    private String user_data;
     private static final int LOCATION_REQUEST_CODE = 101;
     private String TAG = "MapDemo";
     private double lat=200;
@@ -96,7 +98,11 @@ public class AddHabitEventActivity extends AppCompatActivity {
         habitS = intent.getStringExtra(LogInActivity.EXTRA_MESSAGE);
         Gson gson = new Gson();
         habit = gson.fromJson(habitS, Habit.class);
-        UID = intent.getStringExtra("UID");
+
+        user_data=  intent.getStringExtra("User");
+        Gson gson1 = new Gson();
+        local_user=gson1.fromJson(user_data,User.class);
+        UID=local_user.getUid();
 
         connection = new Connection(this);
 
@@ -260,6 +266,7 @@ public class AddHabitEventActivity extends AppCompatActivity {
             saveInFile();
 
             habit.doIt();
+            local_user.add_exp();
             Toast.makeText(getApplicationContext(), " Add a new event",Toast.LENGTH_SHORT).show();
 
             finish();
