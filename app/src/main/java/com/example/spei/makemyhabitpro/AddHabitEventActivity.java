@@ -266,7 +266,14 @@ public class AddHabitEventActivity extends AppCompatActivity {
             saveInFile();
 
             habit.doIt();
-            local_user.add_exp();
+            if (connection.isConnected()){
+                local_user.add_exp();
+                ElasticsearchUser.DeleteUser d1=new ElasticsearchUser.DeleteUser();
+                d1.execute(local_user.getName());
+                ElasticsearchUser.RegUserTask r1= new ElasticsearchUser.RegUserTask();
+                r1.execute(local_user);
+            }
+
             Toast.makeText(getApplicationContext(), " Add a new event",Toast.LENGTH_SHORT).show();
 
             finish();
