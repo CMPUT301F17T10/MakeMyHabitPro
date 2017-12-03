@@ -76,12 +76,16 @@ public class User {
         if (!this.friends.contains(uid)){
             this.friends.add(uid);
         }
-        if(this.request.contains(uid)){
+        if(this.request!=null & this.request.contains(uid)){
         this.request.remove(uid);
         }
 
     }
-
+    public void reject(String uid){
+        if(this.request!=null & this.request.contains(uid)){
+            this.request.remove(uid);
+        }
+    }
     /**
      * check the uid is friend with User
      * @param uid

@@ -6,6 +6,7 @@
 
 package com.example.spei.makemyhabitpro;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -57,19 +58,40 @@ public class RequestListActivity extends AppCompatActivity {
         accept.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 setResult(RESULT_OK);
+                if (Select!=null){
                 if(accept()){
                     Toast.makeText(getApplicationContext(), "Accepted",Toast.LENGTH_SHORT).show();
                     end();
                 }else{
                     Toast.makeText(getApplicationContext(), "Sth goes wrong",Toast.LENGTH_SHORT).show();
-                    end();
                 }
+            }}
+        });
+        final Button reject = (Button)findViewById(R.id.reject);
+        reject.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                setResult(RESULT_OK);
+                if(Select!=null){
+                reject(Select);
+                Toast.makeText(getApplicationContext(), "Rejected",Toast.LENGTH_SHORT).show();
+                end();
+                }
+
             }
         });
 
         }
     private void end(){
+        Intent resultIntent = new Intent();
+        setResult(Activity.RESULT_OK, resultIntent);
         this.finish();
+    }
+    public void reject(String uid){
+        local_user.reject(uid);
+        ElasticsearchUser.DeleteUser d1=new ElasticsearchUser.DeleteUser();
+        d1.execute(local_user.getName());
+        ElasticsearchUser.RegUserTask r1= new ElasticsearchUser.RegUserTask();
+        r1.execute(local_user);
     }
     private boolean accept(){
         if (existedUser(Select)){
@@ -96,6 +118,7 @@ public class RequestListActivity extends AppCompatActivity {
         return false;
 
     }
+
     private boolean existedUser (String name) {
         ElasticsearchUser.IsExist isExist = new ElasticsearchUser.IsExist();
         isExist.execute(name);

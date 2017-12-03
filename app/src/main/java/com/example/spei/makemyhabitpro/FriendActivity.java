@@ -7,13 +7,14 @@
 package com.example.spei.makemyhabitpro;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -60,9 +61,22 @@ public class FriendActivity extends AppCompatActivity {
             public void onClick(View v){
                 setResult(RESULT_OK);
                 RequestList();
+
+
             }
         });
+        
     }
+    public void friends_update(){
+        friends.clear();
+        ArrayList<String> f=local_user.getFriends();
+        for(String s:f){
+            friends.add(s);
+        }
+
+
+    };
+
     private void SearchFriend(){
         Intent intent=new Intent(this,SearchFriendActivity.class);
         intent.putExtra(EXTRA_MESSAGE,user_data);
@@ -87,14 +101,56 @@ public class FriendActivity extends AppCompatActivity {
         startActivityForResult(intent,RESULT_OK);
 
     }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode==RESULT_OK){
+            friends_update();
+        }
+    }
+    @Override
+    public void onStart(){
+        super.onStart();
+        if(!search(local_user.getName())){
+            Toast.makeText(getApplicationContext(), "Sth wrong plz relog in",Toast.LENGTH_SHORT).show();
+        }else{
+            friends_update();
+        }
+        adapter.notifyDataSetChanged();
+
+    }
     private void AcceptRequest(){
 
     }
     private void RefuseRequest(){
 
     }
-    private void dataget(){
+    private boolean search(String searchTerm){
 
+        if (existedUser(searchTerm)){
+            ElasticsearchUser.GetUserTask g = new ElasticsearchUser.GetUserTask();
+            g.execute(searchTerm);
+            try {
+                local_user=g.get();
+            }catch (Exception e){
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
+    private boolean existedUser (String name) {
+        ElasticsearchUser.IsExist isExist = new ElasticsearchUser.IsExist();
+        isExist.execute(name);
+
+        try {
+            if (isExist.get()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            return false;
+        }
     }
 }
 
