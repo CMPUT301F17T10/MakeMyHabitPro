@@ -178,7 +178,7 @@ public class AddHabitEventActivity extends AppCompatActivity {
                     lng = location.getLongitude();
                     lat = location.getLatitude();
 
-                    locationE.setText(String.valueOf(lat)+", "+String.valueOf(lng));
+                    locationE.setText(String.valueOf(lat)+"\n"+String.valueOf(lng))
 
 
                 } catch (SecurityException e) {
