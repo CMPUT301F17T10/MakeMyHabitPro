@@ -81,6 +81,11 @@ public class User {
         }
 
     }
+    public void EFF(String uid){
+        if(this.friends!=null & this.friends.contains(uid)){
+            this.friends.remove(uid);
+        }
+    }
     public void reject(String uid){
         if(this.request!=null & this.request.contains(uid)){
             this.request.remove(uid);
@@ -143,5 +148,8 @@ public class User {
         String s="lvl "+Integer.toString(lvl);
 
         return s;
+    }
+    public void add_exp(){
+        this.exp=this.exp+10;
     }
 }

@@ -43,8 +43,7 @@ public class SearchFriendActivity extends AppCompatActivity {
         friends=new ArrayList<User>();
         this.adapter = new ArrayAdapter<User>(this,
                 R.layout.list_item, friends);//adapter converts tweet to string
-        Lt.setAdapter(new ArrayAdapter<User>(this,
-                android.R.layout.simple_list_item_1,friends));
+        Lt.setAdapter(adapter);
         Lt.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

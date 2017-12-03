@@ -79,7 +79,11 @@ public class RequestListActivity extends AppCompatActivity {
 
             }
         });
-
+        Connection c=new Connection(this);
+        if (!c.isConnected()){
+            reject.setEnabled(false);
+            accept.setEnabled(false);
+        }
         }
     private void end(){
         Intent resultIntent = new Intent();

@@ -27,7 +27,7 @@ public class FriendActivity extends AppCompatActivity {
     private ArrayAdapter<String> adapter;
     private String Select;
     public static final String EXTRA_MESSAGE = "com.example.MMHP.USERDATA";
-
+    private Connection c=new Connection(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,8 +40,7 @@ public class FriendActivity extends AppCompatActivity {
         friends=local_user.getFriends();
         this.adapter = new ArrayAdapter<String>(this,
                 R.layout.list_item, friends);//adapter converts tweet to string
-        Lt.setAdapter(new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1,friends));
+        Lt.setAdapter(adapter);
         Lt.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -65,7 +64,27 @@ public class FriendActivity extends AppCompatActivity {
 
             }
         });
-        
+        Button eff =(Button) findViewById(R.id.deleteuser);
+        eff.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                setResult(RESULT_OK);
+                local_user.EFF(Select);
+                friends_update();
+                adapter.notifyDataSetChanged();
+                Gson updateG=new Gson();
+                user_data=updateG.toJson(local_user,User.class);
+                ElasticsearchUser.DeleteUser d1=new ElasticsearchUser.DeleteUser();
+                d1.execute(local_user.getName());
+                ElasticsearchUser.RegUserTask r1= new ElasticsearchUser.RegUserTask();
+                r1.execute(local_user);
+            }
+        });
+
+        if (!c.isConnected()){
+            eff.setEnabled(false);
+            search.setEnabled(false);
+        }
+
     }
     public void friends_update(){
         friends.clear();
@@ -101,21 +120,20 @@ public class FriendActivity extends AppCompatActivity {
         startActivityForResult(intent,RESULT_OK);
 
     }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode==RESULT_OK){
-            friends_update();
-        }
-    }
+
     @Override
     public void onStart(){
         super.onStart();
-        if(!search(local_user.getName())){
-            Toast.makeText(getApplicationContext(), "Sth wrong plz relog in",Toast.LENGTH_SHORT).show();
-        }else{
-            friends_update();
+        if (c.isConnected()) {
+            if (!search(local_user.getName())) {
+                Toast.makeText(getApplicationContext(), "Sth wrong plz relog in", Toast.LENGTH_SHORT).show();
+            } else {
+                friends_update();
+            }
+            adapter.notifyDataSetChanged();
+            Gson updateG = new Gson();
+            user_data = updateG.toJson(local_user, User.class);
         }
-        adapter.notifyDataSetChanged();
 
     }
     private void AcceptRequest(){

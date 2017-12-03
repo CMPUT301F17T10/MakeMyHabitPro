@@ -187,7 +187,8 @@ public class DetailHabitActivity extends AppCompatActivity {
                 }
                 TextView messageTv=(TextView)findViewById(R.id.messageTv);
                 messageTv.setText("Should do "+String.valueOf(days)+" times");
-
+                TextView finishTimes=(TextView) findViewById(R.id.finishTimes);
+                finishTimes.setText("Finish "+String.valueOf(habit.getFinished())+" times");
 
                 //    EditText titleEt=(EditText)findViewById(R.id.titleEt);
                 //    EditText reasonEt=(EditText)findViewById(R.id.reasonEt);

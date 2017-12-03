@@ -14,6 +14,8 @@
     <ListView
         android:id="@+id/Friendlist"
         android:layout_width="match_parent"
+        android:choiceMode="singleChoice"
+        android:listSelector="@android:color/darker_gray"
         android:layout_height="278dp"
         android:layout_weight="0.33" />
 
@@ -37,6 +39,12 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.05"
         android:text="RequestList" />
+
+    <Button
+        android:id="@+id/deleteuser"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:text="E.F.F" />
 
 </LinearLayout>
 
