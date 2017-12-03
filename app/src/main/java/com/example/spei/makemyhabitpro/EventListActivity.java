@@ -70,7 +70,7 @@ public class EventListActivity extends AppCompatActivity {
             public void onClick(View view) {
                 setResult(RESULT_OK);
                 Intent intent = new Intent(EventListActivity.this, DoneHabitListActivity.class);
-                intent.putExtra("UID", UID);
+                intent.putExtra("user_data", user_data);
                 startActivityForResult(intent,RESULT_OK);
             }
         });

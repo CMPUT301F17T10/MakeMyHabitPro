@@ -32,7 +32,8 @@ public class Event implements Comparable<Event>{
     private Date happend;
     private String img;
     private String owner_comment;
-    private String location;
+    private double lat;
+    private double lng;
     private ArrayList<String> pub_comment;
 
 
@@ -42,7 +43,8 @@ public class Event implements Comparable<Event>{
         this.UID = UID;
         this.owner_comment = comment;
         happend = new Date();
-        location = "None";
+        this.lat = 200;
+        this.lng = 200;
 
         pub_comment = new ArrayList<String>();
     }
@@ -85,9 +87,7 @@ public class Event implements Comparable<Event>{
     public String getImg(){
         return this.img;
     }
-    public String getLocation(){
-        return  this.location;
-    }
+
 
     public void setImg(String img) {
         this.img = img;
@@ -97,8 +97,20 @@ public class Event implements Comparable<Event>{
         this.owner_comment = owner_comment;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public double getLat() {
+        return lat;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public double getLng() {
+        return lng;
+    }
+
+    public void setLng(double lng) {
+        this.lng = lng;
     }
 
     /**

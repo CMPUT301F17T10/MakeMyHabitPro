@@ -6,17 +6,25 @@
 
 package com.example.spei.makemyhabitpro;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.location.Location;
+import android.location.LocationManager;
 import android.media.Image;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -77,6 +85,11 @@ public class EventDetailActivity extends AppCompatActivity {
     private Button imageButton;
     private Button locationButton;
     private Connection connection;
+    private static final int LOCATION_REQUEST_CODE = 101;
+    private String TAG = "MapDemo";
+    private double lat=200;
+    private double lng=200;
+    private LocationManager locationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +115,8 @@ public class EventDetailActivity extends AppCompatActivity {
         locationButton = (Button) findViewById(R.id.locationbutton);
 
 
+        requestPermission(Manifest.permission.ACCESS_FINE_LOCATION,
+                LOCATION_REQUEST_CODE);
 
 
         loadFromFile();
@@ -137,13 +152,15 @@ public class EventDetailActivity extends AppCompatActivity {
         String encodeImage4 = event.getImg();
         byte [] encodeByte=Base64.decode(encodeImage4,Base64.DEFAULT);
         image = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-        location = event.getLocation();
+        lat = event.getLat();
+        lng = event.getLng();
 
         titletext.setText("Title: "+habit.getTitle());
         detailtext.setText("Detail: "+habit.getDetail());
         editComment.setText(event.getOwner_comment());
         imageView.setImageBitmap(image);
-        if (!location.equals("None")) {editLocation.setText(location);}
+        if(lat != 200 && lng != 200){editLocation.setText(String.valueOf(lat)+", "+String.valueOf(lng));}
+
 
 
 
@@ -178,7 +195,34 @@ public class EventDetailActivity extends AppCompatActivity {
         locationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setResult(RESULT_OK);
+                locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                if (!(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+                        || locationManager.isProviderEnabled((LocationManager.NETWORK_PROVIDER)))) {
+                    Toast.makeText(getApplicationContext(), "Please open network or GPS", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    startActivityForResult(intent, 0);
+                    return;
+                }
+
+                try {
+                    Location location;
+                    location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                    if (location == null) {
+                        Log.d(TAG, "onCreate.location = null");
+                        location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                    }
+
+
+                    lng = location.getLongitude();
+                    lat = location.getLatitude();
+
+                    editLocation.setText(String.valueOf(lat)+", "+String.valueOf(lng));
+
+
+                } catch (SecurityException e) {
+                    e.printStackTrace();
+                }
+
 
 
 
@@ -245,8 +289,9 @@ public class EventDetailActivity extends AppCompatActivity {
 
                 event.setImg(encodeImage2);
             }
-            if(location != null){
-                event.setLocation(location);
+            if(lat != 200 && lng != 200){
+                event.setLat(lat);
+                event.setLng(lng);
             }
 
 
@@ -399,6 +444,32 @@ public class EventDetailActivity extends AppCompatActivity {
         catch (IOException e) {
             // TODO Auto-generated catch block
             throw new RuntimeException();
+        }
+    }
+    protected void requestPermission(String permissionType, int
+            requestCode) {
+        int permission = ContextCompat.checkSelfPermission(this,
+                permissionType);
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{permissionType}, requestCode
+            );
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[]  grantResults) {
+        switch (requestCode) {
+            case LOCATION_REQUEST_CODE: {
+                if (grantResults.length == 0
+                        || grantResults[0] != PackageManager.PERMISSION_GRANTED)
+                {
+                    Toast.makeText(this,"Unable to show location permission required",
+                            Toast.LENGTH_LONG).show();
+                }
+                return;
+            }
         }
     }
 }

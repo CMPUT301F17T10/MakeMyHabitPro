@@ -6,17 +6,27 @@
 
 package com.example.spei.makemyhabitpro;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,6 +48,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -52,7 +63,7 @@ import java.util.UUID;
 public class AddHabitEventActivity extends AppCompatActivity {
 
     private static final int RESULT_LOAD_IMAGE = 147;
-    private static final String FILENAME="Eventl.SAV";
+    private static final String FILENAME = "Eventl.SAV";
     private ArrayList<Event> EventList;
     private TextView titletext;
     private TextView detailtext;
@@ -60,8 +71,8 @@ public class AddHabitEventActivity extends AppCompatActivity {
     private ImageView imageView;
     private Bitmap image;
     private Bitmap img;
-    private String location;
     private Event newEvent;
+    private EditText locationE;
     private Habit habit;
     private String comment;
     private String CurrentLocation;
@@ -70,6 +81,13 @@ public class AddHabitEventActivity extends AppCompatActivity {
     private String habitS;
     private String UID;
     private Connection connection;
+    private User local_user;
+    private String user_data;
+    private static final int LOCATION_REQUEST_CODE = 101;
+    private String TAG = "MapDemo";
+    private double lat=200;
+    private double lng=200;
+    private LocationManager locationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,10 +95,14 @@ public class AddHabitEventActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_habit_event);
 
         Intent intent = getIntent();
-        habitS =  intent.getStringExtra(LogInActivity.EXTRA_MESSAGE);
+        habitS = intent.getStringExtra(LogInActivity.EXTRA_MESSAGE);
         Gson gson = new Gson();
-        habit=gson.fromJson(habitS,Habit.class);
-        UID =  intent.getStringExtra("UID");
+        habit = gson.fromJson(habitS, Habit.class);
+
+        user_data=  intent.getStringExtra("User");
+        Gson gson1 = new Gson();
+        local_user=gson1.fromJson(user_data,User.class);
+        UID=local_user.getUid();
 
         connection = new Connection(this);
 
@@ -89,9 +111,11 @@ public class AddHabitEventActivity extends AppCompatActivity {
         titletext = (TextView) findViewById(R.id.habittextView1);
         detailtext = (TextView) findViewById(R.id.habitdetailtextView1);
 
-        titletext.setText("Title: "+habit.getTitle());
-        detailtext.setText("Detail: "+habit.getDetail());
+        titletext.setText("Title: " + habit.getTitle());
+        detailtext.setText("Detail: " + habit.getDetail());
 
+        requestPermission(Manifest.permission.ACCESS_FINE_LOCATION,
+                LOCATION_REQUEST_CODE);
 
         imageView = (ImageView) findViewById(R.id.imageView2);
 
@@ -115,18 +139,57 @@ public class AddHabitEventActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                image =  ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+                image = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
 
                 int test = image.getByteCount();
-                if (image.getByteCount() >= 65536*100){
-                    Toast.makeText(getApplicationContext(), " The image need to be under 65536 bytes.",Toast.LENGTH_SHORT).show();
+                if (image.getByteCount() >= 65536 * 100) {
+                    Toast.makeText(getApplicationContext(), " The image need to be under 65536 bytes.", Toast.LENGTH_SHORT).show();
                     image = null;
+                }
+
+
+            }
+        });
+
+        locationE = (EditText) findViewById(R.id.editText2);
+        Button locationB = (Button) findViewById(R.id.button2);
+        locationB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                if (!(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+                        || locationManager.isProviderEnabled((LocationManager.NETWORK_PROVIDER)))) {
+                    Toast.makeText(getApplicationContext(), "Please open network or GPS", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    startActivityForResult(intent, 0);
+                    return;
+                }
+
+                try {
+                    Location location;
+                    location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                    if (location == null) {
+                        Log.d(TAG, "onCreate.location = null");
+                        location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                    }
+
+
+                    lng = location.getLongitude();
+                    lat = location.getLatitude();
+
+                    locationE.setText(String.valueOf(lat)+", "+String.valueOf(lng));
+
+
+                } catch (SecurityException e) {
+                    e.printStackTrace();
                 }
 
 
 
             }
         });
+
 
         Button saveButton = (Button) findViewById(R.id.save);
 
@@ -184,8 +247,9 @@ public class AddHabitEventActivity extends AppCompatActivity {
                 String encodeImage1 = Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT);
                 newEvent.setImg(encodeImage1);
             }
-            if(location != null){
-                newEvent.setLocation(location);
+            if(lat != 200 && lng != 200){
+                newEvent.setLat(lat);
+                newEvent.setLng(lng);
             }
 
 
@@ -202,6 +266,14 @@ public class AddHabitEventActivity extends AppCompatActivity {
             saveInFile();
 
             habit.doIt();
+            if (connection.isConnected()){
+                local_user.add_exp();
+                ElasticsearchUser.DeleteUser d1=new ElasticsearchUser.DeleteUser();
+                d1.execute(local_user.getName());
+                ElasticsearchUser.RegUserTask r1= new ElasticsearchUser.RegUserTask();
+                r1.execute(local_user);
+            }
+
             Toast.makeText(getApplicationContext(), " Add a new event",Toast.LENGTH_SHORT).show();
 
             finish();
@@ -297,6 +369,37 @@ public class AddHabitEventActivity extends AppCompatActivity {
         catch (IOException e) {
             // TODO Auto-generated catch block
             throw new RuntimeException();
+        }
+    }
+
+
+
+
+
+    protected void requestPermission(String permissionType, int
+            requestCode) {
+        int permission = ContextCompat.checkSelfPermission(this,
+                permissionType);
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{permissionType}, requestCode
+            );
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[]  grantResults) {
+        switch (requestCode) {
+            case LOCATION_REQUEST_CODE: {
+                if (grantResults.length == 0
+                        || grantResults[0] != PackageManager.PERMISSION_GRANTED)
+                {
+                    Toast.makeText(this,"Unable to show location permission required",
+                            Toast.LENGTH_LONG).show();
+                }
+                return;
+            }
         }
     }
 }
