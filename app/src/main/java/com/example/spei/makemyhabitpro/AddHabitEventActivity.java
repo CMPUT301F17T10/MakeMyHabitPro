@@ -8,6 +8,7 @@ package com.example.spei.makemyhabitpro;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -15,6 +16,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.OpenableColumns;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.view.View;
@@ -30,6 +32,7 @@ import com.google.gson.reflect.TypeToken;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -69,6 +72,9 @@ public class AddHabitEventActivity extends AppCompatActivity {
     private String id;
     private String habitS;
     private String UID;
+    private long size;
+    private String user_data;
+    private User local_user;
     private Connection connection;
 
     @Override
@@ -80,7 +86,11 @@ public class AddHabitEventActivity extends AppCompatActivity {
         habitS =  intent.getStringExtra(LogInActivity.EXTRA_MESSAGE);
         Gson gson = new Gson();
         habit=gson.fromJson(habitS,Habit.class);
-        UID =  intent.getStringExtra("UID");
+
+        user_data=  intent.getStringExtra("User");
+        Gson gson1 = new Gson();
+        local_user=gson1.fromJson(user_data,User.class);
+        UID=local_user.getUid();
 
         connection = new Connection(this);
 
@@ -117,7 +127,7 @@ public class AddHabitEventActivity extends AppCompatActivity {
 
                 image =  ((BitmapDrawable) imageView.getDrawable()).getBitmap();
 
-                int test = image.getByteCount();
+                size = image.getByteCount();
                 if (image.getByteCount() >= 65536*100){
                     Toast.makeText(getApplicationContext(), " The image need to be under 65536 bytes.",Toast.LENGTH_SHORT).show();
                     image = null;
@@ -157,6 +167,8 @@ public class AddHabitEventActivity extends AppCompatActivity {
 //                e.printStackTrace();
 //            }
             imageView.setImageURI(selectedImage);
+
+
         }
     }
 
@@ -202,6 +214,7 @@ public class AddHabitEventActivity extends AppCompatActivity {
             saveInFile();
 
             habit.doIt();
+            local_user.add_exp();
             Toast.makeText(getApplicationContext(), " Add a new event",Toast.LENGTH_SHORT).show();
 
             finish();

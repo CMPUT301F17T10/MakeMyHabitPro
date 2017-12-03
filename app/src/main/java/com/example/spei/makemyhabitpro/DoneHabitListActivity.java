@@ -47,6 +47,7 @@ public class DoneHabitListActivity extends AppCompatActivity {
     private ArrayList<Habit> myHabitList;
     private ArrayAdapter<Habit> adapter;
     private ListView oldDoneHabitList;
+    private String user_data;
     private Connection connection;
 
     @Override
@@ -57,7 +58,8 @@ public class DoneHabitListActivity extends AppCompatActivity {
         oldDoneHabitList = (ListView) findViewById(R.id.habitlist);
 
         Intent intent = getIntent();
-        UID =  intent.getStringExtra("UID");
+        user_data=  intent.getStringExtra("user_data");
+
 
         connection = new Connection(this);
 
@@ -70,7 +72,7 @@ public class DoneHabitListActivity extends AppCompatActivity {
                 Gson gson = new Gson();
                 String habitS=gson.toJson(habit);
 
-                intent.putExtra("UID", UID);
+                intent.putExtra("User", user_data);
                 intent.putExtra(EXTRA_MESSAGE,habitS);
                 startActivityForResult(intent,RESULT_OK);
                 back();
