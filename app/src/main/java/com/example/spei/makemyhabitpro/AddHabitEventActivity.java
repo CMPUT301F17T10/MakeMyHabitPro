@@ -13,9 +13,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
@@ -49,7 +46,6 @@ import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -277,9 +273,9 @@ public class AddHabitEventActivity extends AppCompatActivity {
             habit.doIt();
             if (connection.isConnected()){
                 local_user.add_exp();
-                ElasticsearchUser.DeleteUser d1=new ElasticsearchUser.DeleteUser();
+                ElasticsearchUserController.DeleteUser d1=new ElasticsearchUserController.DeleteUser();
                 d1.execute(local_user.getName());
-                ElasticsearchUser.RegUserTask r1= new ElasticsearchUser.RegUserTask();
+                ElasticsearchUserController.RegUserTask r1= new ElasticsearchUserController.RegUserTask();
                 r1.execute(local_user);
             }
 

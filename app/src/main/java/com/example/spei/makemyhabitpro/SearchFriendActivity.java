@@ -70,9 +70,9 @@ public class SearchFriendActivity extends AppCompatActivity {
             public void onClick(View v){
                 User R_to = friends.get(0);
                 R_to.request(local_user.getName());
-                ElasticsearchUser.DeleteUser d=new ElasticsearchUser.DeleteUser();
+                ElasticsearchUserController.DeleteUser d=new ElasticsearchUserController.DeleteUser();
                 d.execute(R_to.getName());
-                ElasticsearchUser.RegUserTask r=new ElasticsearchUser.RegUserTask();
+                ElasticsearchUserController.RegUserTask r=new ElasticsearchUserController.RegUserTask();
                 r.execute(R_to);
                 end();
             }
@@ -85,7 +85,7 @@ public class SearchFriendActivity extends AppCompatActivity {
     private boolean search(){
         friends.clear();
         if (existedUser(searchTerm)){
-            ElasticsearchUser.GetUserTask g = new ElasticsearchUser.GetUserTask();
+            ElasticsearchUserController.GetUserTask g = new ElasticsearchUserController.GetUserTask();
             g.execute(searchTerm);
             try {
                 friends.add(g.get());
@@ -97,7 +97,7 @@ public class SearchFriendActivity extends AppCompatActivity {
         return false;
     }
     private boolean existedUser (String name) {
-        ElasticsearchUser.IsExist isExist = new ElasticsearchUser.IsExist();
+        ElasticsearchUserController.IsExist isExist = new ElasticsearchUserController.IsExist();
         isExist.execute(name);
 
         try {

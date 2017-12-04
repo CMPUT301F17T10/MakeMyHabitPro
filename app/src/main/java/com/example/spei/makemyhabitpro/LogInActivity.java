@@ -108,8 +108,8 @@ public class LogInActivity extends AppCompatActivity {
                     registerd.add(reg);
                     saveInFile();
                     if (conn){
-                    ElasticsearchUser.RegUserTask RegUserTask
-                            = new ElasticsearchUser.RegUserTask();
+                    ElasticsearchUserController.RegUserTask RegUserTask
+                            = new ElasticsearchUserController.RegUserTask();
                     RegUserTask.execute(reg);}
                     Toast.makeText(getApplicationContext(), "Signed Up",Toast.LENGTH_SHORT).show();
 
@@ -131,11 +131,11 @@ public class LogInActivity extends AppCompatActivity {
      */
     protected void updateUser(){
 
-        ElasticsearchUser.DeleteUser update= new ElasticsearchUser.DeleteUser();
+        ElasticsearchUserController.DeleteUser update= new ElasticsearchUserController.DeleteUser();
         if (local_user!=null){
             update.execute(local_user.getName());
-            ElasticsearchUser.RegUserTask RegUserTask
-                    = new ElasticsearchUser.RegUserTask();
+            ElasticsearchUserController.RegUserTask RegUserTask
+                    = new ElasticsearchUserController.RegUserTask();
             RegUserTask.execute(local_user);
         }
     }
@@ -172,7 +172,7 @@ public class LogInActivity extends AppCompatActivity {
         if (!existedUser(Email)){
             return null;
         }
-        ElasticsearchUser.GetUserTask get= new ElasticsearchUser.GetUserTask();
+        ElasticsearchUserController.GetUserTask get= new ElasticsearchUserController.GetUserTask();
         User u;
         get.execute(Email);
         try {
@@ -194,7 +194,7 @@ public class LogInActivity extends AppCompatActivity {
      * @return true for find false for not find
      */
     private boolean existedUser (String name) {
-        ElasticsearchUser.IsExist isExist = new ElasticsearchUser.IsExist();
+        ElasticsearchUserController.IsExist isExist = new ElasticsearchUserController.IsExist();
         isExist.execute(name);
 
         try {

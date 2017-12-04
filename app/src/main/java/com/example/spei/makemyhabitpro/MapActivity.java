@@ -122,7 +122,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
     }
     private String findUid(String s){
-        ElasticsearchUser.GetUserTask g=new ElasticsearchUser.GetUserTask();
+        ElasticsearchUserController.GetUserTask g=new ElasticsearchUserController.GetUserTask();
         g.execute(s);
         User u;
         try{

@@ -92,14 +92,14 @@ public class RequestListActivity extends AppCompatActivity {
     }
     public void reject(String uid){
         local_user.reject(uid);
-        ElasticsearchUser.DeleteUser d1=new ElasticsearchUser.DeleteUser();
+        ElasticsearchUserController.DeleteUser d1=new ElasticsearchUserController.DeleteUser();
         d1.execute(local_user.getName());
-        ElasticsearchUser.RegUserTask r1= new ElasticsearchUser.RegUserTask();
+        ElasticsearchUserController.RegUserTask r1= new ElasticsearchUserController.RegUserTask();
         r1.execute(local_user);
     }
     private boolean accept(){
         if (existedUser(Select)){
-            ElasticsearchUser.GetUserTask g = new ElasticsearchUser.GetUserTask();
+            ElasticsearchUserController.GetUserTask g = new ElasticsearchUserController.GetUserTask();
             g.execute(Select);
             User f=null;
             try {
@@ -108,14 +108,14 @@ public class RequestListActivity extends AppCompatActivity {
                 return false;
             }
             local_user.add_friend(Select);
-            ElasticsearchUser.DeleteUser d1=new ElasticsearchUser.DeleteUser();
+            ElasticsearchUserController.DeleteUser d1=new ElasticsearchUserController.DeleteUser();
             d1.execute(local_user.getName());
-            ElasticsearchUser.RegUserTask r1= new ElasticsearchUser.RegUserTask();
+            ElasticsearchUserController.RegUserTask r1= new ElasticsearchUserController.RegUserTask();
             r1.execute(local_user);
             f.add_friend(local_user.getName());
-            ElasticsearchUser.DeleteUser d2=new ElasticsearchUser.DeleteUser();
+            ElasticsearchUserController.DeleteUser d2=new ElasticsearchUserController.DeleteUser();
             d2.execute(f.getName());
-            ElasticsearchUser.RegUserTask r2= new ElasticsearchUser.RegUserTask();
+            ElasticsearchUserController.RegUserTask r2= new ElasticsearchUserController.RegUserTask();
             r2.execute(f);
             return true;
         }
@@ -124,7 +124,7 @@ public class RequestListActivity extends AppCompatActivity {
     }
 
     private boolean existedUser (String name) {
-        ElasticsearchUser.IsExist isExist = new ElasticsearchUser.IsExist();
+        ElasticsearchUserController.IsExist isExist = new ElasticsearchUserController.IsExist();
         isExist.execute(name);
 
         try {

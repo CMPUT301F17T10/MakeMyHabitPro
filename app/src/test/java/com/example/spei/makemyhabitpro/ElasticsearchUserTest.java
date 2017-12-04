@@ -15,7 +15,7 @@ import static junit.framework.Assert.assertNull;
 public class ElasticsearchUserTest {
     @Test
     public void getUserTest(){
-        ElasticsearchUser.GetUserTask get= new ElasticsearchUser.GetUserTask();
+        ElasticsearchUserController.GetUserTask get= new ElasticsearchUserController.GetUserTask();
         User u;
         try {
             u = get.get();
