@@ -52,7 +52,7 @@ import static com.example.spei.makemyhabitpro.R.id.imageView;
 import static com.example.spei.makemyhabitpro.R.id.saveBt;
 
 /**
- * This class shows a event
+ * This class shows a event information
  * user can change parameters of event and add comment
  * @author spei
  *
@@ -235,6 +235,13 @@ public class EventDetailActivity extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * get image uri and show the image on image view
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -249,6 +256,9 @@ public class EventDetailActivity extends AppCompatActivity {
 //    public void getEvent(){}
 //    public void editEventList(){}
 
+    /**
+     * after modification, save the event
+     */
     private void saveEvent(){
         comment = editComment.getText().toString();
         if (comment != null && !comment.equals("") && comment.length() < 20) {
@@ -282,6 +292,9 @@ public class EventDetailActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * delete a exist event
+     */
     private void deleteEvent(){
         Event deleteEvent = eventList.get(position);
 
@@ -301,7 +314,9 @@ public class EventDetailActivity extends AppCompatActivity {
         finish();
     }
 
-
+    /**
+     * set buttons enable if the event belongs to user
+     */
     @Override
     protected void onStart() {
         // TODO Auto-generated method stub
@@ -369,6 +384,11 @@ public class EventDetailActivity extends AppCompatActivity {
 //        }
 //    }
 
+    /**
+     * This mathod loads the json file.
+     * @throws RuntimeException
+     * @exception FileNotFoundException
+     */
     private void loadFromFile() {
         try {
             FileInputStream fis = openFileInput(FILENAME);
@@ -389,8 +409,9 @@ public class EventDetailActivity extends AppCompatActivity {
         }
     }
 
-
-
+    /**
+     * Saves EventList into FILENAME, using Gson
+     */
     private void saveInFile() {
         try {
             FileOutputStream fos = openFileOutput(FILENAME,

@@ -37,6 +37,19 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Map;
 
+/**
+ * This class is the main view class in MakeMyHabitPro class.
+ * It shows recent events
+ * @author spei
+ *
+ * @since 1.0
+ * @see HabitActivity
+ * @see java.io.BufferedReader
+ * @see EventListActivity
+ * @see FriendActivity
+ * @see HistoryListActivity
+ * @see MapActivity
+ */
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private static final String FILENAME="Eventl.SAV";
@@ -192,6 +205,9 @@ public class MainActivity extends AppCompatActivity
         startActivityForResult(intent,RESULT_OK);
     }
 
+    /**
+     * start the habit
+     */
     public void HabitA(){
         Intent intent = new Intent(this, HabitActivity.class);
         intent.putExtra(EXTRA_MESSAGE,user_data);
@@ -201,22 +217,38 @@ public class MainActivity extends AppCompatActivity
         //    startActivity(intent);
     }
 
+    /**
+     * start the todo activity
+     */
     public void Todo(){
         Intent intent = new Intent(this, TodoActivity.class);
         intent.putExtra(EXTRA_MESSAGE,user_data);
         startActivityForResult(intent,RESULT_OK);
     }
+
+    /**
+     * start friend activity
+     */
     private void Friend(){
         Intent intent=new Intent(this,FriendActivity.class);
         intent.putExtra(EXTRA_MESSAGE,user_data);
         startActivityForResult(intent,RESULT_OK);
     }
+
+    /**
+     * start map activity
+     */
     private void tMap(){
         Intent intent=new Intent(this,MapActivity.class);
         intent.putExtra(EXTRA_MESSAGE,user_data);
         startActivityForResult(intent,RESULT_OK);
 
     }
+
+    /**
+     * Sets up the adapter and refreshes the list whenever the activity is loaded.
+     * @see android.widget.ArrayAdapter
+     */
     @Override
     protected void onStart() {
         // TODO Auto-generated method stub
@@ -265,6 +297,11 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    /**
+     * This mathod loads the json file.
+     * @throws RuntimeException
+     * @exception FileNotFoundException
+     */
     private void loadFromFile() {
         try {
             FileInputStream fis = openFileInput(FILENAME);

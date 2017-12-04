@@ -47,6 +47,11 @@ public class EventList {
         return this.list;
     }
 
+    /**
+     * get event by id
+     * @param id
+     * @return the event
+     */
     public Event getById(String id){
         for (Event e :this.list){
             if (e.getId().equals(id)){

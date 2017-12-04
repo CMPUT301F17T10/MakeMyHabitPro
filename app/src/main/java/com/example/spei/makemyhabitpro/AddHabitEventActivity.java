@@ -207,6 +207,12 @@ public class AddHabitEventActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * get image uri and show the image on image view
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -285,6 +291,9 @@ public class AddHabitEventActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * get the event list
+     */
     @Override
     protected void onStart() {
         // TODO Auto-generated method stub
@@ -374,9 +383,11 @@ public class AddHabitEventActivity extends AppCompatActivity {
     }
 
 
-
-
-
+    /**
+     * ask for location permission
+     * @param permissionType
+     * @param requestCode
+     */
     protected void requestPermission(String permissionType, int
             requestCode) {
         int permission = ContextCompat.checkSelfPermission(this,
@@ -388,6 +399,12 @@ public class AddHabitEventActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * get the permission result
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[]  grantResults) {
