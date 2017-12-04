@@ -45,9 +45,9 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
+public class HisMapActivity extends FragmentActivity implements OnMapReadyCallback {
     private static final int LOCATION_REQUEST_CODE = 101;
-    private String TAG = "MapDemo";
+    private String TAG = "HisMap";
     private GoogleMap mMap;
     private LocationManager locationManager;
     private double lat;
@@ -58,14 +58,16 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private ArrayList<Event> eventList;
     private static final String FILENAME="Eventl.SAV";
     private ArrayList<String> uids;
-
+    public static final String HABIT_MESSAGE = "com.example.MMHP.HABITDATA";
+    private String Title;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_map);
+        setContentView(R.layout.activity_his_map);
         Intent uintent = getIntent();
         user_data=  uintent.getStringExtra(LogInActivity.EXTRA_MESSAGE);
+        Title=uintent.getStringExtra(HABIT_MESSAGE);
         Gson gson = new Gson();
         local_user=gson.fromJson(user_data,User.class);
         friends=local_user.getFriends();
@@ -98,9 +100,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         }
         requestPermission(Manifest.permission.ACCESS_FINE_LOCATION,
                 LOCATION_REQUEST_CODE);
-        MapFragment mapFragment = (MapFragment) getFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(MapActivity.this);
+        MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.hmap);
+        mapFragment.getMapAsync(HisMapActivity.this);
 
     }
     @Override
@@ -227,7 +228,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             mMap.moveCamera(CameraUpdateFactory.newLatLng(POSITION));
             for (Event e: eventList){
                 String u=e.getUID();
-                if (!uids.contains(u) &!local_user.getUid().equals(u)){
+                if (!local_user.getUid().equals(u)|!e.getHabit().getTitle().equals(Title)){
 
                     continue;
                 }

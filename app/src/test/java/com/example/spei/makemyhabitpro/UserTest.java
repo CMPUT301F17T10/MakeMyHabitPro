@@ -68,6 +68,6 @@ public class UserTest {
 
     @Test
     public void to_string() throws Exception {
-        assertEquals(user1.to_string(),"Name: test");
+        assertEquals(user1.toString(),"Name: test");
     }
 }

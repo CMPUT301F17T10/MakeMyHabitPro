@@ -63,10 +63,10 @@ public class EventTest extends ActivityInstrumentationTestCase2 {
         assertEquals("Url_img", event.getUrl_img());
     }*/
 
-    public void testLocation(){
+    /*public void testLocation(){
         Habit habit = new Habit("userId", "title", "reason", "detail", "type","startDate");
         Event event = new Event(habit, "comment", "id", "UID");
         event.setLocation("location");
         assertEquals("location", event.getLocation());
-    }
+    }*/
 }

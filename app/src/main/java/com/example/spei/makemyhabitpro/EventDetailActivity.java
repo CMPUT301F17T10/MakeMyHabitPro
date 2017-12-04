@@ -6,17 +6,25 @@
 
 package com.example.spei.makemyhabitpro;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.location.Location;
+import android.location.LocationManager;
 import android.media.Image;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -37,6 +45,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import static com.example.spei.makemyhabitpro.R.id.imageView;
@@ -77,6 +86,11 @@ public class EventDetailActivity extends AppCompatActivity {
     private Button imageButton;
     private Button locationButton;
     private Connection connection;
+    private static final int LOCATION_REQUEST_CODE = 101;
+    private String TAG = "MapDemo";
+    private double lat=200;
+    private double lng=200;
+    private LocationManager locationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +114,7 @@ public class EventDetailActivity extends AppCompatActivity {
         imageButton = (Button) findViewById(R.id.eventImageButton3);
 
         locationButton = (Button) findViewById(R.id.locationbutton);
+
 
 
 
@@ -137,13 +152,21 @@ public class EventDetailActivity extends AppCompatActivity {
         String encodeImage4 = event.getImg();
         byte [] encodeByte=Base64.decode(encodeImage4,Base64.DEFAULT);
         image = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-        location = event.getLocation();
+        lat = event.getLat();
+        lng = event.getLng();
 
+        editLocation.setEnabled(false);
+        locationButton.setEnabled(false);
         titletext.setText("Title: "+habit.getTitle());
         detailtext.setText("Detail: "+habit.getDetail());
         editComment.setText(event.getOwner_comment());
         imageView.setImageBitmap(image);
-        if (!location.equals("None")) {editLocation.setText(location);}
+        DecimalFormat df = new DecimalFormat("#.##");
+
+        if(lat != 200 && lng != 200){
+            editLocation.setText(String.valueOf(df.format(lat))+", "+String.valueOf(df.format(lng)));
+        }
+
 
 
 
@@ -175,15 +198,7 @@ public class EventDetailActivity extends AppCompatActivity {
         });
 
 
-        locationButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setResult(RESULT_OK);
 
-
-
-            }
-        });
 
 
         saveButton = (Button) findViewById(R.id.save_edit);
@@ -245,9 +260,7 @@ public class EventDetailActivity extends AppCompatActivity {
 
                 event.setImg(encodeImage2);
             }
-            if(location != null){
-                event.setLocation(location);
-            }
+
 
 
 //            if (connection.isConnected()){
@@ -398,4 +411,5 @@ public class EventDetailActivity extends AppCompatActivity {
             throw new RuntimeException();
         }
     }
+
 }

@@ -94,5 +94,21 @@
         android:background="#979797"
         android:text="Signup" />
 
+<<<<<<< HEAD
+=======
+    <TextView
+        android:id="@+id/error_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/Signup_button"
+        android:text="MakeMyHabitPro"
+        android:textAllCaps="true"
+        android:textSize="25dp"
+        android:textStyle="bold|italic"
+        tools:layout_editor_absoluteX="140dp"
+        tools:layout_editor_absoluteY="174dp" />
+>>>>>>> e7c37cbb866c41cfe488dcc1c449f93c3b2e68a2
 
 </LinearLayout>

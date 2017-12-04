@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity
     private static final String FILENAME="Eventl.SAV";
     private Map<String,String> messages;
     private HistoryListActivity his;
-    private MapActivity m;
     private EventListActivity el;
     private FriendActivity F;
 //    private HabitActivity h;
@@ -103,6 +102,10 @@ public class MainActivity extends AppCompatActivity
             }
         });
     }
+
+    /**
+     * end this activity
+     */
     private void end(){
         this.finish();
     }
@@ -138,15 +141,20 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * According to different click, go to different activity
+     * @param item the menu
+     * @return
+     */
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
+
         int id = item.getItemId();
 
         if (id == R.id.MyHabit) {
             HabitA();
-            // Handle the camera action
+
         } else if (id == R.id.Todo) {
             Todo();
         } else if (id == R.id.Eventlist) {
@@ -156,6 +164,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.Friend) {
             Friend();
         } else if (id == R.id.Map) {
+            tMap();
 
         }
 
@@ -163,12 +172,19 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-    public void dataget(){}
+
+    /**
+     * start the Historylist Activity
+     */
     public void Historylist(){
         Intent intent = new Intent(this, HistoryListActivity.class);
         intent.putExtra(EXTRA_MESSAGE,user_data);
         startActivityForResult(intent,RESULT_OK);
     }
+
+    /**
+     * start the Event
+     */
 
     public void Eventl(){
         Intent intent = new Intent(this, EventListActivity.class);
@@ -195,7 +211,12 @@ public class MainActivity extends AppCompatActivity
         intent.putExtra(EXTRA_MESSAGE,user_data);
         startActivityForResult(intent,RESULT_OK);
     }
+    private void tMap(){
+        Intent intent=new Intent(this,MapActivity.class);
+        intent.putExtra(EXTRA_MESSAGE,user_data);
+        startActivityForResult(intent,RESULT_OK);
 
+    }
     @Override
     protected void onStart() {
         // TODO Auto-generated method stub

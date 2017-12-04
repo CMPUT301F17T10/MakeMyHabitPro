@@ -43,6 +43,9 @@ public class HistoryListActivity extends AppCompatActivity {
     private String htype = "all";
     private String searchTerm="";
     private EditText searchEt;
+    private String Hselect;
+    public static final String USER_MESSAGE = "com.example.MMHP.USERDATA";
+    public static final String HABIT_MESSAGE = "com.example.MMHP.HABITDATA";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +76,13 @@ public class HistoryListActivity extends AppCompatActivity {
         this.adapter = new ArrayAdapter<Habit>(this,
                 R.layout.list_item, Habits);//adapter converts tweet to string
         this.Habitlist.setAdapter(adapter);
+        Habitlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Hselect=Habits.get(i).getTitle();
+                startMap();
+            }
+        });
         filter(htype);
         this.adapter.notifyDataSetChanged();
         Spinner typeSp=(Spinner)findViewById(R.id.historyType);
@@ -128,6 +138,12 @@ public class HistoryListActivity extends AppCompatActivity {
             htype =data.getStringExtra("MESSAGE");
 
         }
+    }
+    private void startMap(){
+        Intent intent = new Intent(this,HisMapActivity.class);
+        intent.putExtra(USER_MESSAGE,user_data);
+        intent.putExtra(HABIT_MESSAGE,Hselect);
+        startActivityForResult(intent,RESULT_OK);
     }
     private void search(Habit h){
         String tilte=h.getTitle();
