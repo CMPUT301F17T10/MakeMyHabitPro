@@ -164,7 +164,7 @@ public class EventDetailActivity extends AppCompatActivity {
         DecimalFormat df = new DecimalFormat("#.##");
 
         if(lat != 200 && lng != 200){
-            editLocation.setText(String.valueOf(df.format(lat))+"\n"+String.valueOf(df.format(lng)));
+            editLocation.setText(String.valueOf(df.format(lat))+", "+String.valueOf(df.format(lng)));
         }
 
 

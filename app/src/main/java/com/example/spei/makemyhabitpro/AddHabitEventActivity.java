@@ -181,7 +181,7 @@ public class AddHabitEventActivity extends AppCompatActivity {
 
                     DecimalFormat df = new DecimalFormat("#.##");
 
-                    locationE.setText(String.valueOf(df.format(lat))+"\n"+String.valueOf(df.format(lng)));
+                    locationE.setText(String.valueOf(df.format(lat))+", "+String.valueOf(df.format(lng)));
 
 
                 } catch (SecurityException e) {
