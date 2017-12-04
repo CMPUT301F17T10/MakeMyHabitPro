@@ -47,6 +47,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -178,7 +179,9 @@ public class AddHabitEventActivity extends AppCompatActivity {
                     lng = location.getLongitude();
                     lat = location.getLatitude();
 
-                    locationE.setText(String.valueOf(lat)+", "+String.valueOf(lng));
+                    DecimalFormat df = new DecimalFormat("#.##");
+
+                    locationE.setText(String.valueOf(df.format(lat))+", "+String.valueOf(df.format(lng)));
 
 
                 } catch (SecurityException e) {

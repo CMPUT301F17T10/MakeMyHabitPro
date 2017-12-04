@@ -45,6 +45,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import static com.example.spei.makemyhabitpro.R.id.imageView;
@@ -115,8 +116,7 @@ public class EventDetailActivity extends AppCompatActivity {
         locationButton = (Button) findViewById(R.id.locationbutton);
 
 
-        requestPermission(Manifest.permission.ACCESS_FINE_LOCATION,
-                LOCATION_REQUEST_CODE);
+
 
 
         loadFromFile();
@@ -155,11 +155,17 @@ public class EventDetailActivity extends AppCompatActivity {
         lat = event.getLat();
         lng = event.getLng();
 
+        editLocation.setEnabled(false);
+        locationButton.setEnabled(false);
         titletext.setText("Title: "+habit.getTitle());
         detailtext.setText("Detail: "+habit.getDetail());
         editComment.setText(event.getOwner_comment());
         imageView.setImageBitmap(image);
-        if(lat != 200 && lng != 200){editLocation.setText(String.valueOf(lat)+", "+String.valueOf(lng));}
+        DecimalFormat df = new DecimalFormat("#.##");
+
+        if(lat != 200 && lng != 200){
+            editLocation.setText(String.valueOf(df.format(lat))+", "+String.valueOf(df.format(lng)));
+        }
 
 
 
@@ -192,42 +198,7 @@ public class EventDetailActivity extends AppCompatActivity {
         });
 
 
-        locationButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                if (!(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
-                        || locationManager.isProviderEnabled((LocationManager.NETWORK_PROVIDER)))) {
-                    Toast.makeText(getApplicationContext(), "Please open network or GPS", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                    startActivityForResult(intent, 0);
-                    return;
-                }
 
-                try {
-                    Location location;
-                    location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                    if (location == null) {
-                        Log.d(TAG, "onCreate.location = null");
-                        location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                    }
-
-
-                    lng = location.getLongitude();
-                    lat = location.getLatitude();
-
-                    editLocation.setText(String.valueOf(lat)+", "+String.valueOf(lng));
-
-
-                } catch (SecurityException e) {
-                    e.printStackTrace();
-                }
-
-
-
-
-            }
-        });
 
 
         saveButton = (Button) findViewById(R.id.save_edit);
@@ -289,10 +260,7 @@ public class EventDetailActivity extends AppCompatActivity {
 
                 event.setImg(encodeImage2);
             }
-            if(lat != 200 && lng != 200){
-                event.setLat(lat);
-                event.setLng(lng);
-            }
+
 
 
 //            if (connection.isConnected()){
@@ -446,30 +414,5 @@ public class EventDetailActivity extends AppCompatActivity {
             throw new RuntimeException();
         }
     }
-    protected void requestPermission(String permissionType, int
-            requestCode) {
-        int permission = ContextCompat.checkSelfPermission(this,
-                permissionType);
-        if (permission != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{permissionType}, requestCode
-            );
-        }
-    }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[]  grantResults) {
-        switch (requestCode) {
-            case LOCATION_REQUEST_CODE: {
-                if (grantResults.length == 0
-                        || grantResults[0] != PackageManager.PERMISSION_GRANTED)
-                {
-                    Toast.makeText(this,"Unable to show location permission required",
-                            Toast.LENGTH_LONG).show();
-                }
-                return;
-            }
-        }
-    }
 }

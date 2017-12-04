@@ -48,6 +48,7 @@ public class DoneHabitListActivity extends AppCompatActivity {
     private ArrayAdapter<Habit> adapter;
     private ListView oldDoneHabitList;
     private String user_data;
+    private User local_user;
     private Connection connection;
 
     @Override
@@ -59,6 +60,9 @@ public class DoneHabitListActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         user_data = intent.getStringExtra("user_data");
+        Gson gson = new Gson();
+        local_user=gson.fromJson(user_data,User.class);
+        UID=local_user.getUid();
 
         connection = new Connection(this);
 
