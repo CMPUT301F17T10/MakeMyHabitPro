@@ -45,6 +45,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import static com.example.spei.makemyhabitpro.R.id.imageView;
@@ -160,9 +161,11 @@ public class EventDetailActivity extends AppCompatActivity {
         detailtext.setText("Detail: "+habit.getDetail());
         editComment.setText(event.getOwner_comment());
         imageView.setImageBitmap(image);
+        DecimalFormat df = new DecimalFormat("#.##");
+
         if(lat != 200 && lng != 200){
-            editLocation.setText(String.valueOf(lat)+"\n"+String.valueOf(lng))
-        ;}
+            editLocation.setText(String.valueOf(df.format(lat))+"\n"+String.valueOf(df.format(lng)));
+        }
 
 
 
