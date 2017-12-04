@@ -14,10 +14,10 @@
     <ListView
         android:id="@+id/rlist"
         android:layout_width="match_parent"
+        android:layout_height="564dp"
+        android:layout_weight="0.33"
         android:choiceMode="singleChoice"
-        android:listSelector="@android:color/darker_gray"
-        android:layout_height="278dp"
-        android:layout_weight="0.33" />
+        android:listSelector="@android:color/darker_gray" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,12 +31,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.01"
+        android:background="#67D580"
         android:text="ACCEPT" />
 
     <Button
         android:id="@+id/reject"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#ef5443"
         android:layout_weight="0.02"
         android:text="REJECT" />
 
