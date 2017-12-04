@@ -261,9 +261,6 @@ public class MainActivity extends AppCompatActivity
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
             mainList = new ArrayList<Event>();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            throw new RuntimeException();
         }
     }
 }

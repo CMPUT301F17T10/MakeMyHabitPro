@@ -1,226 +1,290 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2017Team X, CMPUT301, University of Alberta-All Rights Reserved
+  ~ You may use, distribute, or modify this code under terms and conditions of the Code of Student Behavior at University of Alberta.
+  ~ You can find a copy of the license in this project. Otherwise please contact spei@ualberta.ca
+  -->
+
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
 
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
         <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="293dp"
+            android:orientation="vertical">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="My Hbait"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+                android:id="@+id/textView7"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="#67D580"
+                android:gravity="center_horizontal"
+                android:text="Habit Detail"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textColor="#ffffff"
+                tools:layout_editor_absoluteY="567dp" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="65dp"
+                    android:layout_height="wrap_content"
+                    android:text="Title" />
+
+                <EditText
+                    android:id="@+id/titleEt"
+                    android:layout_width="362dp"
+                    android:layout_height="wrap_content"
+                    android:maxLength="20" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="65dp"
+                    android:layout_height="wrap_content"
+                    android:text="Reason" />
+
+                <EditText
+                    android:id="@+id/reasonEt"
+                    android:layout_width="358dp"
+                    android:layout_height="wrap_content"
+                    android:maxLength="30" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="65dp"
+                    android:layout_height="wrap_content"
+                    android:text="Common" />
+
+                <EditText
+                    android:id="@+id/commonEt"
+                    android:layout_width="352dp"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:text="Start Date" />
+
+                <EditText
+                    android:id="@+id/startDate"
+                    android:layout_width="345dp"
+                    android:layout_height="wrap_content"
+                    android:focusableInTouchMode="false"
+                    android:inputType="date"
+                    android:onClick="selectDate" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:text="Type" />
+
+                <Spinner
+                    android:id="@+id/typeSpinner"
+                    android:layout_width="377dp"
+                    android:layout_height="34dp" />
+            </LinearLayout>
 
         </LinearLayout>
+
         <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="65dp"
-                android:layout_height="wrap_content"
-                android:text="Title"/>
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:focusableInTouchMode="false"
-                android:id="@+id/titleEt"
-                />
+            android:layout_width="match_parent"
+            android:layout_height="296dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="220dp"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="195dp"
+                    android:layout_height="300dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:text="What day occur"
+                        android:textSize="20dp" />
+
+                    <CheckBox
+                        android:id="@+id/sunCheck"
+                        android:layout_width="167dp"
+                        android:layout_height="47dp"
+                        android:layout_gravity="left"
+                        android:text="Sun" />
+
+                    <CheckBox
+                        android:id="@+id/monCheck"
+                        android:layout_width="167dp"
+                        android:layout_height="47dp"
+                        android:layout_gravity="left"
+                        android:text="Mon" />
+
+                    <CheckBox
+                        android:id="@+id/tueCheck"
+                        android:layout_width="167dp"
+                        android:layout_height="43dp"
+                        android:layout_gravity="left"
+                        android:text="Tue" />
+
+                    <CheckBox
+                        android:id="@+id/wenCheck"
+                        android:layout_width="167dp"
+                        android:layout_height="47dp"
+                        android:layout_gravity="left"
+                        android:text="Wed" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="202dp"
+                android:layout_height="300dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="158dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <android.support.constraint.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="39dp"
+                            android:layout_weight="1">
+
+                        </android.support.constraint.ConstraintLayout>
+
+                        <CheckBox
+                            android:id="@+id/thuCheck"
+                            android:layout_width="167dp"
+                            android:layout_height="27dp"
+                            android:layout_gravity="left"
+                            android:layout_weight="1"
+                            android:text="Thu" />
+
+                        <CheckBox
+                            android:id="@+id/friCheck"
+                            android:layout_width="167dp"
+                            android:layout_height="29dp"
+                            android:layout_gravity="left"
+                            android:layout_weight="1"
+                            android:text="Fri" />
+
+                        <CheckBox
+                            android:id="@+id/satCheck"
+                            android:layout_width="167dp"
+                            android:layout_height="21dp"
+                            android:layout_gravity="left"
+                            android:layout_weight="1"
+                            android:text="Sat" />
+
+                        <android.support.constraint.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="64dp"
+                            android:layout_weight="1">
+
+                        </android.support.constraint.ConstraintLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="65dp"
-                android:layout_height="wrap_content"
-                android:text="Reason"/>
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/reasonEt"
-                android:maxLength="30"/>
 
-        </LinearLayout>
         <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="65dp"
-                android:layout_height="wrap_content"
-                android:text="Common"/>
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/commonEt"
-                />
+            android:layout_width="match_parent"
+            android:layout_height="69dp"
+            android:orientation="horizontal">
 
-        </LinearLayout>
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/deleteBt"
+                android:layout_width="135dp"
+                android:layout_height="70dp"
+                android:background="#ef5443"
+                android:gravity="center"
+                android:onClick="deleteHabit"
+                android:text="delete"
+                android:textColor="#ffffff" />
+
+            <Button
+                android:id="@+id/saveBt"
+                android:layout_width="135dp"
+                android:layout_height="70dp"
+                android:background="#67D580"
+                android:gravity="center"
+                android:onClick="saveHabit"
+                android:text="Update"
+                android:textColor="#ffffff" />
+
+            <Button
+                android:id="@+id/habitBack"
+                android:layout_width="139dp"
+                android:layout_height="70dp"
+                android:background="#979797"
+                android:gravity="center"
+                android:onClick="habitB"
+                android:text="Back"
+                android:textColor="#ffffff" />
 
             <TextView
-                android:layout_width="70dp"
-                android:layout_height="wrap_content"
-                android:text="Start Date"/>
-
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/startDate"
-                android:inputType="date"
-                android:focusableInTouchMode="false"
-                android:onClick="selectDate"
-                />
-        </LinearLayout>
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:text="Type"/>
-            <Spinner
-                android:id="@+id/typeSpinner"
-                android:layout_width="wrap_content"
+                android:id="@+id/messageTv"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
-        </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="20dp">
-
-        </LinearLayout>
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <LinearLayout
-                android:layout_width="50dp"
-                android:layout_height="wrap_content">
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/finishTimes"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="What day occur"/>
-                <CheckBox
-                    android:id="@+id/sunCheck"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:text="Sun"/>
-                <CheckBox
-                    android:id="@+id/monCheck"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:text="Mon"/>
-                <CheckBox
-                    android:id="@+id/tueCheck"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:text="Tue"/>
-                <CheckBox
-                    android:id="@+id/wenCheck"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:text="Wen"/>
-                <CheckBox
-                    android:id="@+id/thuCheck"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:text="Thu"/>
-                <CheckBox
-                    android:id="@+id/friCheck"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:text="Fri"/>
-                <CheckBox
-                    android:id="@+id/satCheck"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:text="Sat"/>
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <Button
-                    android:id="@+id/deleteBt"
-                    android:text="delete"
-                    android:onClick="deleteHabit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"/>
-                <Button
-                    android:id="@+id/saveBt"
-                    android:text="Update"
-                    android:onClick="saveHabit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"/>
-                <Button
-                    android:id="@+id/habitBack"
-                    android:onClick="habitB"
-                    android:text="Back"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/messageTv"    />
-
-                <TextView
-                    android:id="@+id/finishTimes"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="TextView" />
-
-
-            </LinearLayout>
+                android:text="TextView" />
 
 
         </LinearLayout>
-
     </LinearLayout>
-
-
-
-
 
 
 </android.support.constraint.ConstraintLayout>

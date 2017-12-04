@@ -20,10 +20,9 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
-        app:srcCompat="@android:drawable/star_big_on" />
+        android:layout_width="51dp"
+        android:layout_height="56dp"
+        app:srcCompat="@drawable/logo" />
 
     <TextView
         android:layout_width="match_parent"

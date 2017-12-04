@@ -17,6 +17,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="BACK"
+        android:background="#67D580"
+        android:textColor="#ffffff"
         tools:layout_editor_absoluteX="115dp"
         tools:layout_editor_absoluteY="109dp" />
 </android.support.constraint.ConstraintLayout>

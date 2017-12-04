@@ -16,27 +16,25 @@
         android:id="@+id/save_edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="20dp"
         android:text="Save Edit"
-        tools:layout_constraintBottom_creator="1"
-        android:layout_marginStart="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="19dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="16dp" />
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1" />
 
     <Button
         android:id="@+id/delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp"
         android:text="Delete"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintBottom_creator="1"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginEnd="7dp"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginBottom="19dp"
-        android:layout_marginRight="7dp" />
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintRight_creator="1" />
 
     <EditText
         android:id="@+id/comment"
@@ -172,14 +170,13 @@
         android:id="@+id/pub_comment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="19dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="20dp"
         android:text="Public comment"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_constraintBottom_creator="1"
         app:layout_constraintRight_toLeftOf="@+id/delete"
-        tools:layout_constraintRight_creator="1"
-        android:layout_marginEnd="12dp"
-        android:layout_marginRight="12dp" />
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintRight_creator="1" />
 
     <TextView
         android:id="@+id/textView3"

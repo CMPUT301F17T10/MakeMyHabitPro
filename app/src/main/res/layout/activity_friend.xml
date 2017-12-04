@@ -7,17 +7,30 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="fill_parent"
     android:orientation="vertical"
     android:weightSum="1">
 
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_weight="0.20"
+        android:background="#67D580"
+        android:gravity="center_horizontal"
+        android:text="My Friend"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="#ffffff"
+        tools:layout_editor_absoluteY="567dp" />
+
     <ListView
         android:id="@+id/Friendlist"
         android:layout_width="match_parent"
+        android:layout_height="556dp"
+        android:layout_weight="0.33"
         android:choiceMode="singleChoice"
-        android:listSelector="@android:color/darker_gray"
-        android:layout_height="278dp"
-        android:layout_weight="0.33" />
+        android:listSelector="@android:color/darker_gray" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,25 +39,39 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/Fsearchbutton"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.01"
-        android:text="Search" />
-
-    <Button
-        android:id="@+id/Request"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_weight="0.05"
-        android:text="RequestList" />
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/deleteuser"
-        android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:text="E.F.F" />
+        <Button
+            android:id="@+id/deleteuser"
+            android:layout_width="match_parent"
+            android:layout_height="59dp"
+            android:layout_weight="1"
+            android:background="#cacaca"
+            android:text="E.F.F"
+            android:textColor="#ffffff" />
+
+        <Button
+            android:id="@+id/Fsearchbutton"
+            android:layout_width="match_parent"
+            android:layout_height="59dp"
+            android:layout_weight="1"
+            android:background="#67D580"
+            android:text="Search"
+            android:textColor="#ffffff" />
+
+        <Button
+            android:id="@+id/Request"
+            android:layout_width="match_parent"
+            android:layout_height="57dp"
+            android:layout_weight="1"
+            android:background="#cacaca"
+            android:text="RequestList"
+            android:textColor="#ffffff" />
+    </LinearLayout>
 
 </LinearLayout>
 

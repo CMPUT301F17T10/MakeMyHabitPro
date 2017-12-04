@@ -157,10 +157,6 @@ public class HistoryListActivity extends AppCompatActivity {
             // TODO Auto-generated catch block
             Toast.makeText(getApplicationContext(), "No records Find",Toast.LENGTH_SHORT).show();
 
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            throw new RuntimeException();
         }
     }
 }
