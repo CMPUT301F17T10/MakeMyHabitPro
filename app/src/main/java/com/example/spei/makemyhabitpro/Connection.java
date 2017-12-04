@@ -26,6 +26,13 @@ import java.util.ArrayList;
  * Created by spei on 11/30/17.
  */
 
+/**
+ * Check the internet connection of app
+ *
+ * @author team 10
+ * @version  2.0
+ * @since 1.0
+ */
 public class Connection {
     private Context context;
     private ArrayList<Habit> addH = new ArrayList<Habit>();

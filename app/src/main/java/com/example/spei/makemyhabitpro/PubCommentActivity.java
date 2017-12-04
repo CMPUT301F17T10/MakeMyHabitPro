@@ -102,6 +102,10 @@ public class PubCommentActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Sets up the adapter and refreshes the list whenever the activity is loaded.
+     * @see android.widget.ArrayAdapter
+     */
     @Override
     protected void onStart() {
         // TODO Auto-generated method stub
@@ -136,6 +140,11 @@ public class PubCommentActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * This mathod loads the json file
+     * @throws RuntimeException
+     * @exception FileNotFoundException
+     */
     private void loadFromFile() {
         try {
             FileInputStream fis = openFileInput(FILENAME);
@@ -156,8 +165,9 @@ public class PubCommentActivity extends AppCompatActivity {
         }
     }
 
-
-
+    /**
+     * save public comment list into eventlist , using Gson
+     */
     private void saveInFile() {
         try {
             FileOutputStream fos = openFileOutput(FILENAME,

@@ -30,8 +30,8 @@ import java.util.Collections;
 import java.util.Comparator;
 
 /**
- * This class shows a event list for user
- * User add new event and check a exit event
+ * This class shows a user event list for user
+ * User add new event and check a exist event
  * @author spei
  *
  * @since 1.0
@@ -94,6 +94,10 @@ public class EventListActivity extends AppCompatActivity {
 //    public void getEventList() {}
 //    public void showList() {}
 
+    /**
+     * Sets up the adapter and refreshes the list whenever the activity is loaded.
+     * @see android.widget.ArrayAdapter
+     */
     @Override
     protected void onStart() {
         // TODO Auto-generated method stub
@@ -160,7 +164,11 @@ public class EventListActivity extends AppCompatActivity {
 
     }
 
-
+    /**
+     * This mathod loads the json file
+     * @throws RuntimeException
+     * @exception FileNotFoundException
+     */
     private void loadFromFile() {
         try {
             FileInputStream fis = openFileInput(FILENAME);
