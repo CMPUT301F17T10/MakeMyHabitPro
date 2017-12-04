@@ -23,7 +23,7 @@ import io.searchbox.core.Index;
  * Created by spei on 11/25/17.
  */
 
-public class ElasticsearchUserController {
+public class ElasticsearchUser {
     private static JestDroidClient client;
     public static void verifySettings() {
         if (client == null) {

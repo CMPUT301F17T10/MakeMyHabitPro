@@ -73,9 +73,9 @@ public class FriendActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
                 Gson updateG=new Gson();
                 user_data=updateG.toJson(local_user,User.class);
-                ElasticsearchUserController.DeleteUser d1=new ElasticsearchUserController.DeleteUser();
+                ElasticsearchUser.DeleteUser d1=new ElasticsearchUser.DeleteUser();
                 d1.execute(local_user.getName());
-                ElasticsearchUserController.RegUserTask r1= new ElasticsearchUserController.RegUserTask();
+                ElasticsearchUser.RegUserTask r1= new ElasticsearchUser.RegUserTask();
                 r1.execute(local_user);
             }
         });
@@ -145,7 +145,7 @@ public class FriendActivity extends AppCompatActivity {
     private boolean search(String searchTerm){
 
         if (existedUser(searchTerm)){
-            ElasticsearchUserController.GetUserTask g = new ElasticsearchUserController.GetUserTask();
+            ElasticsearchUser.GetUserTask g = new ElasticsearchUser.GetUserTask();
             g.execute(searchTerm);
             try {
                 local_user=g.get();
@@ -157,7 +157,7 @@ public class FriendActivity extends AppCompatActivity {
         return false;
     }
     private boolean existedUser (String name) {
-        ElasticsearchUserController.IsExist isExist = new ElasticsearchUserController.IsExist();
+        ElasticsearchUser.IsExist isExist = new ElasticsearchUser.IsExist();
         isExist.execute(name);
 
         try {

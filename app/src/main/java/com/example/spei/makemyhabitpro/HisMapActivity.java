@@ -123,7 +123,7 @@ public class HisMapActivity extends FragmentActivity implements OnMapReadyCallba
 
     }
     private String findUid(String s){
-        ElasticsearchUserController.GetUserTask g=new ElasticsearchUserController.GetUserTask();
+        ElasticsearchUser.GetUserTask g=new ElasticsearchUser.GetUserTask();
         g.execute(s);
         User u;
         try{

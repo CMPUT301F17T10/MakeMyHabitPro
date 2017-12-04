@@ -108,8 +108,8 @@ public class LogInActivity extends AppCompatActivity {
                     registerd.add(reg);
                     saveInFile();
                     if (conn){
-                    ElasticsearchUserController.RegUserTask RegUserTask
-                            = new ElasticsearchUserController.RegUserTask();
+                    ElasticsearchUser.RegUserTask RegUserTask
+                            = new ElasticsearchUser.RegUserTask();
                     RegUserTask.execute(reg);}
                     Toast.makeText(getApplicationContext(), "Signed Up",Toast.LENGTH_SHORT).show();
 
@@ -131,11 +131,11 @@ public class LogInActivity extends AppCompatActivity {
      */
     protected void updateUser(){
 
-        ElasticsearchUserController.DeleteUser update= new ElasticsearchUserController.DeleteUser();
+        ElasticsearchUser.DeleteUser update= new ElasticsearchUser.DeleteUser();
         if (local_user!=null){
             update.execute(local_user.getName());
-            ElasticsearchUserController.RegUserTask RegUserTask
-                    = new ElasticsearchUserController.RegUserTask();
+            ElasticsearchUser.RegUserTask RegUserTask
+                    = new ElasticsearchUser.RegUserTask();
             RegUserTask.execute(local_user);
         }
     }
@@ -172,7 +172,7 @@ public class LogInActivity extends AppCompatActivity {
         if (!existedUser(Email)){
             return null;
         }
-        ElasticsearchUserController.GetUserTask get= new ElasticsearchUserController.GetUserTask();
+        ElasticsearchUser.GetUserTask get= new ElasticsearchUser.GetUserTask();
         User u;
         get.execute(Email);
         try {
@@ -194,7 +194,7 @@ public class LogInActivity extends AppCompatActivity {
      * @return true for find false for not find
      */
     private boolean existedUser (String name) {
-        ElasticsearchUserController.IsExist isExist = new ElasticsearchUserController.IsExist();
+        ElasticsearchUser.IsExist isExist = new ElasticsearchUser.IsExist();
         isExist.execute(name);
 
         try {

@@ -273,9 +273,9 @@ public class AddHabitEventActivity extends AppCompatActivity {
             habit.doIt();
             if (connection.isConnected()){
                 local_user.add_exp();
-                ElasticsearchUserController.DeleteUser d1=new ElasticsearchUserController.DeleteUser();
+                ElasticsearchUser.DeleteUser d1=new ElasticsearchUser.DeleteUser();
                 d1.execute(local_user.getName());
-                ElasticsearchUserController.RegUserTask r1= new ElasticsearchUserController.RegUserTask();
+                ElasticsearchUser.RegUserTask r1= new ElasticsearchUser.RegUserTask();
                 r1.execute(local_user);
             }
 
