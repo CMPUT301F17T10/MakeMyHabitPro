@@ -32,10 +32,6 @@ public class ElasticsearchHabit {
 
     private static JestDroidClient client;
 
-
-    /**
-     * The function which add habit to elastic search
-     */
     public static class AddHabitTask extends AsyncTask<Habit, Void, Void> {
 
         @Override
@@ -48,16 +44,15 @@ public class ElasticsearchHabit {
                         .build();
 
                 try {
-                    // where is the client
                     DocumentResult result = client.execute(index);
                     if (result.isSucceeded()) {
-                        Log.d("In AsyncTask ID", result.getId());
+                        Log.d("In ID", result.getId());
                     } else {
-                        Log.i("Error", "Elasticsearch was not able to add the user.");
+                        Log.i("Error", "Elasticsearch was not able to add the habit.");
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Log.i("Error", "The application failed to build and send the user");
+                    Log.i("Error", "The application failed to build and send the habit");
                 }
 
             }
@@ -79,16 +74,15 @@ public class ElasticsearchHabit {
                         .index("cmput301f17t10").type("habit").build();
 
                 try {
-                    // where is the client
                     DocumentResult result = client.execute(delete);
                     if (result.isSucceeded()) {
-                        Log.d("In AsyncTask ID", result.getId());
+                        Log.d("In ID", result.getId());
                     } else {
-                        Log.i("Error", "Elasticsearch was not able to delete the user.");
+                        Log.i("Error", "Elasticsearch was not able to delete the Habit.");
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Log.i("Error", "The application failed to build and send the user");
+                    Log.i("Error", "The application failed to build and send the Habit");
                 }
 
             }
@@ -158,22 +152,15 @@ public class ElasticsearchHabit {
             verifySettings();
 
             ArrayList<Habit> habits = new ArrayList<Habit>();
-
-            // TODO Build the query
-            Search search = new Search.Builder(search_parameters[0])
-                    .addIndex("cmput301f17t10")
+            Search search = new Search.Builder(search_parameters[0]).addIndex("cmput301f17t10")
                     .addType("habit")
                     .build();
 
             try {
-                // TODO get the results of the query
-                Log.d("AAA",String.valueOf(search));
                 SearchResult result = client.execute(search);
                 if (result.isSucceeded()) {
                     List<Habit> foundHistories
                             =result.getSourceAsObjectList(Habit.class);
-                    //List<SearchResult.Hit<NormalTweet, Void>> hits = result.getHits(NormalTweet.class);
-
                     habits.addAll(foundHistories);
 
                 }
@@ -189,17 +176,10 @@ public class ElasticsearchHabit {
         }
     }
 
-
-
-
-    /**
-     * Verify settings.
-     */
     public static void verifySettings() {
         if (client == null) {
             DroidClientConfig.Builder builder = new DroidClientConfig.Builder("http://cmput301.softwareprocess.es:8080");
             DroidClientConfig config = builder.build();
-
             JestClientFactory factory = new JestClientFactory();
             factory.setDroidClientConfig(config);
             client = (JestDroidClient) factory.getObject();

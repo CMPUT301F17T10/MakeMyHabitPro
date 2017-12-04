@@ -65,7 +65,13 @@ public class TodoActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * read the habit from the file and get the today date to check is today has habit or not
+     * @return
+     * @throws java.text.ParseException
+     */
     @RequiresApi(api = Build.VERSION_CODES.N)
+
     private List<String> getData() throws java.text.ParseException {
         List<String> data = new ArrayList<String>();
         int week=getWeek(getToday());

@@ -65,6 +65,8 @@ public class AddHabitActivity extends AppCompatActivity {
     private CheckBox sunCh,monCh,tueCh,wenCh,thuCh,friCh,satCh;
     private List<String> titles;
 
+
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +98,10 @@ public class AddHabitActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * save the habit to habitlist and save to file
+     * @param view
+     */
     public void saveNewHabit(View view){
         Gson gson = new Gson();
         local_user = gson.fromJson(user_data, User.class);
@@ -149,6 +155,10 @@ public class AddHabitActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * delete the habit from file
+     * @param view
+     */
 
     public void selectDate(View view){
         //create date picker
@@ -184,6 +194,11 @@ public class AddHabitActivity extends AppCompatActivity {
         dialog.show();
 
     }
+
+    /**
+     * save to file
+     * @param content
+     */
     private void writeFile(String content){
         try{
             FileOutputStream fos=openFileOutput(FILENAME, Context.MODE_PRIVATE);
@@ -192,6 +207,11 @@ public class AddHabitActivity extends AppCompatActivity {
         }catch(Exception e){
             e.printStackTrace();}
     }
+
+    /**
+     * load from file
+     * @return
+     */
     private String readFile(){
         String str="";
         try{

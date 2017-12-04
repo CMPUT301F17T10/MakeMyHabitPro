@@ -204,6 +204,11 @@ public class DetailHabitActivity extends AppCompatActivity {
         }
     }
     //button
+
+    /**
+     * delete the habit from file
+     * @param view
+     */
     public void deleteHabit(View view){
         Gson gson = new Gson();
         Type habitListType = new TypeToken<ArrayList<Habit>>(){}.getType();
@@ -218,6 +223,10 @@ public class DetailHabitActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * save the habit after edit
+     * @param view
+     */
     public void saveHabit(View view){
         Gson gson3 = new Gson();
         Type habitListType = new TypeToken<ArrayList<Habit>>(){}.getType();
@@ -233,12 +242,20 @@ public class DetailHabitActivity extends AppCompatActivity {
         this.finish();
     }
 
-
+    /**
+     * call the add habit activity
+     * @param view
+     */
     public void addHabit(View view){
         Intent intent = new Intent(this, AddHabitActivity.class);
         intent.putExtra(EXTRA_MESSAGE,user_data);
         startActivityForResult(intent,RESULT_OK);
     }
+
+    /**
+     * select the date as YYYY/MM/DD
+     * @param view
+     */
     public void selectDate(View view){
         //create date picker
         Calendar calendar = Calendar.getInstance();
@@ -249,7 +266,7 @@ public class DetailHabitActivity extends AppCompatActivity {
                     public void onDateSet(DatePicker datePicker,
                                           int year, int month, int dayOfMonth) {
                         EditText editText =(EditText) findViewById(R.id.startDate);
-                        //Calendar月份是从0开始,所以month要加1
+
                         String startDt=Integer.toString(year);
                         if (month + 1 < 10) {
                             startDt = startDt + "/" + "0" + Integer.toString(month + 1);
@@ -273,6 +290,11 @@ public class DetailHabitActivity extends AppCompatActivity {
         dialog.show();
 
     }
+
+    /**
+     * back to the habit activity
+     * @param view
+     */
     public void habitB(View view){
         Intent intent = new Intent(this, HabitActivity.class);
         intent.putExtra(EXTRA_MESSAGE,user_data);
@@ -280,6 +302,11 @@ public class DetailHabitActivity extends AppCompatActivity {
         this.finish();
     }
     //       /button
+
+    /**
+     * save to file
+     * @param content
+     */
     private void writeFile(String content){
         try{
             FileOutputStream fos=openFileOutput(FILENAME, Context.MODE_PRIVATE);
@@ -288,6 +315,11 @@ public class DetailHabitActivity extends AppCompatActivity {
         }catch(Exception e){
             e.printStackTrace();}
     }
+
+    /**
+     * load from file
+     * @return
+     */
     private String readFile(){
         String str="";
         try{
@@ -300,6 +332,12 @@ public class DetailHabitActivity extends AppCompatActivity {
         }
         return str;
     }
+
+    /**
+     * get habit title, reason,common, start date and the week plan
+     * @param uer
+     * @return
+     */
     public Habit getHabit(String uer) {
         Habit habit = new Habit();
         habit.setTitle(titleSelect.toString());
@@ -364,6 +402,13 @@ public class DetailHabitActivity extends AppCompatActivity {
         //   Date curDate = new Date(System.currentTimeMillis());
 
     }
+
+    /**
+     * get the date from start date to today and check how many times should this habit do from start date to today
+     * @param beginDate
+     * @param endDate
+     * @return
+     */
     public static List getDatesBetweenTwoDate(String beginDate, String endDate) {
         Date beginD=null;
         Date endD = null;
@@ -396,6 +441,7 @@ public class DetailHabitActivity extends AppCompatActivity {
         listDate.add(endD);
         return listDate;
     }
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     private String getToday(){
         android.icu.text.SimpleDateFormat formatter=new android.icu.text.SimpleDateFormat("yyyy/MM/dd/");

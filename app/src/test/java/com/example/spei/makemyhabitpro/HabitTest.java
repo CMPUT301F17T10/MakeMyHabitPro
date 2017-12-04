@@ -12,7 +12,6 @@
 ///**
 // * Created by spei on 11/18/17.
 // */
-//
 //public class HabitTest {
 //    @Test
 //    public void addEvent() throws Exception {
@@ -58,7 +57,7 @@
 //
 //        habit.addEvent(event);
 //        assertEquals(dateFormat.format(habit.getLastActive_Date()),dateFormat.format(test));
-//    }
+//}
 //
 //    @Test
 //    public void compareTo() throws Exception {
