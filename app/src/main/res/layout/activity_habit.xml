@@ -26,7 +26,8 @@
     <ListView
         android:id="@+id/habitLt"
         android:layout_width="wrap_content"
-        android:layout_height="564dp">
+        android:layout_height="387dp"
+        android:layout_weight="0.95">
 
     </ListView>
 

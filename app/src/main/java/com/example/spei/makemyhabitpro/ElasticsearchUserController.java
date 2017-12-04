@@ -29,7 +29,6 @@ public class ElasticsearchUserController {
         if (client == null) {
             DroidClientConfig.Builder builder = new DroidClientConfig.Builder("http://cmput301.softwareprocess.es:8080");
             DroidClientConfig config = builder.build();
-
             JestClientFactory factory = new JestClientFactory();
             factory.setDroidClientConfig(config);
             client = (JestDroidClient) factory.getObject();
@@ -47,7 +46,7 @@ public class ElasticsearchUserController {
                     // where is the client
                     DocumentResult result = client.execute(index);
                     if (result.isSucceeded()) {
-                        Log.d("In AsyncTask ID", result.getId());
+                        Log.d("In ID", result.getId());
                         //user.setAid(result.getId());
                     } else {
                         Log.i("Error", "Elasticsearch was not able to add the user.");
@@ -67,17 +66,13 @@ public class ElasticsearchUserController {
         protected User doInBackground(String... strings) {
             verifySettings();
             User foundUser;
-
-            Get get = new Get.Builder("cmput301f17t10", strings[0]) //index, id
+            Get get = new Get.Builder("cmput301f17t10", strings[0])
                     .type("user")
                     .build();
-
-            Log.i("Get", get.toString());
             try {
                 JestResult result = client.execute(get);
                 if (result.isSucceeded()) {
                     foundUser = result.getSourceAsObject(User.class);
-
                 } else {
                    foundUser=null;
                 }
@@ -130,7 +125,6 @@ public class ElasticsearchUserController {
             if (user == null) {
                 return false;
             }
-
             return true;
         }
     }

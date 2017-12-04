@@ -31,10 +31,6 @@ import io.searchbox.core.SearchResult;
 public class ElasticsearchEvent {
     private static JestDroidClient client;
 
-
-    /**
-     * The function which add event to elastic search
-     */
     public static class AddEventTask extends AsyncTask<Event, Void, Void> {
 
         @Override
@@ -48,13 +44,13 @@ public class ElasticsearchEvent {
                     // where is the client
                     DocumentResult result = client.execute(index);
                     if (result.isSucceeded()) {
-                        Log.d("In AsyncTask ID", result.getId());
+                        Log.d("In ID", result.getId());
                     } else {
-                        Log.i("Error", "Elasticsearch was not able to add the user.");
+                        Log.i("Error", "Elasticsearch was not able to add the Event.");
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Log.i("Error", "The application failed to build and send the user");
+                    Log.i("Error", "The application failed to build and send the Event");
                 }
 
             }
@@ -64,9 +60,7 @@ public class ElasticsearchEvent {
 
 
 
-    /**
-     * The function which add event to elastic search
-     */
+
     public static class DeleteEventTask extends AsyncTask<Event, Void, Void> {
 
         @Override
@@ -82,13 +76,13 @@ public class ElasticsearchEvent {
                     // where is the client
                     DocumentResult result = client.execute(delete);
                     if (result.isSucceeded()) {
-                        Log.d("In AsyncTask ID", result.getId());
+                        Log.d("In ID", result.getId());
                     } else {
-                        Log.i("Error", "Elasticsearch was not able to add the user.");
+                        Log.i("Error", "Elasticsearch was not able to delete the event.");
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Log.i("Error", "The application failed to build and send the user");
+                    Log.i("Error", "The application failed to build and delete the event");
                 }
 
             }
@@ -111,7 +105,7 @@ public class ElasticsearchEvent {
             Event event=null;
             Get get = new Get.Builder("cmput301f17t10", params[0]).type("event").build();
 
-            Log.d("eventtest", params[0]);
+            Log.d("event test", params[0]);
 
             try {
                 JestResult result = client.execute(get);
@@ -131,7 +125,7 @@ public class ElasticsearchEvent {
 
 
 
-    // TODO we need a function which gets tweets from elastic search
+
     public static class GetEvents extends AsyncTask<String, Void,ArrayList<Event>> {
         @Override
         protected ArrayList<Event> doInBackground(String... search_parameters) {
@@ -147,13 +141,12 @@ public class ElasticsearchEvent {
                     .build();
 
             try {
-                // TODO get the results of the query
-                //Log.d("AAA",String.valueOf(search_parameters[0]));
+
                 SearchResult result = client.execute(search);
                 if (result.isSucceeded()) {
                     List<Event> foundHistories
                             =result.getSourceAsObjectList(Event.class);
-                    //List<SearchResult.Hit<NormalTweet, Void>> hits = result.getHits(NormalTweet.class);
+
                     for (Event e:foundHistories){
                         events.add(e);
                     }
@@ -184,7 +177,6 @@ public class ElasticsearchEvent {
         if (client == null) {
             DroidClientConfig.Builder builder = new DroidClientConfig.Builder("http://cmput301.softwareprocess.es:8080");
             DroidClientConfig config = builder.build();
-
             JestClientFactory factory = new JestClientFactory();
             factory.setDroidClientConfig(config);
             client = (JestDroidClient) factory.getObject();
